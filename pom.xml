@@ -156,7 +156,12 @@
             <artifactId>spring-data-commons</artifactId>
             <version>2.2.5.RELEASE</version>
         </dependency>
-
+        <!-- https://mvnrepository.com/artifact/dev.valora.commons/spring-security-jpa-auditing -->
+        <dependency>
+            <groupId>dev.valora.commons</groupId>
+            <artifactId>spring-security-jpa-auditing</artifactId>
+            <version>1.1.0</version>
+        </dependency>
     </dependencies>
 
     <build>

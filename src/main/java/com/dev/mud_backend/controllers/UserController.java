@@ -1,5 +1,7 @@
 package com.dev.mud_backend.controllers;
 
+import com.dev.mud_backend.models.User;
+import com.dev.mud_backend.services.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
