@@ -1,6 +1,6 @@
 package com.dev.mud_backend.services;
 
-import org.springframework.security.core.userdetails.User;
+import com.dev.mud_backend.models.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;

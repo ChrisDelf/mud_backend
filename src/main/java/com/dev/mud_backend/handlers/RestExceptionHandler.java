@@ -2,6 +2,8 @@ package com.dev.mud_backend.handlers;
 
 import com.dev.mud_backend.exceptions.ResourceFoundException;
 import com.dev.mud_backend.exceptions.ResourceNotFoundException;
+import com.dev.mud_backend.exceptions.ValidationError;
+import com.dev.mud_backend.models.ErrorDetail;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

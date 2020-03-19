@@ -14,18 +14,23 @@ import java.util.List;
 
 
 @Entity
-@Table(name ="users")
+@Table(name = "maps")
 public class Map {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long roomid;
 
-
+    @Column(nullable = false,
+            unique = false)
     private long x;
 
+    @Column(nullable = false,
+            unique = false)
     private long y;
 
+    @Column(nullable = false,
+            unique = false)
     private String roomType;
 
     public Map() {
