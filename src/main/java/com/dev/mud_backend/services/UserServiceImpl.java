@@ -3,15 +3,12 @@ package com.dev.mud_backend.services;
 
 import com.dev.mud_backend.exceptions.ResourceFoundException;
 import com.dev.mud_backend.exceptions.ResourceNotFoundException;
-import com.dev.mud_backend.models.Role;
-import com.dev.mud_backend.models.UserRoles;
-import com.dev.mud_backend.models.Useremail;
+import com.dev.mud_backend.models.*;
 import com.dev.mud_backend.repository.RoleRepository;
 import com.dev.mud_backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -40,7 +37,7 @@ public class UserServiceImpl implements UserDetailsService, UserService
         {
             throw new UsernameNotFoundException("Invalid username or password.");
         }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getAuthority);
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getAuthority());
     }
 
     public User findUserById(long id) throws ResourceNotFoundException
@@ -108,7 +105,6 @@ public class UserServiceImpl implements UserDetailsService, UserService
             newUser.getUseremails()
                     .add(new Useremail(newUser, ue.getUseremail()));
         }
-
 
         return userrepos.save(newUser);
     }
