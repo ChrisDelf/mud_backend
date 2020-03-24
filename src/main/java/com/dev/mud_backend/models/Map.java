@@ -21,25 +21,13 @@ public class Map {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long roomid;
 
-    @Column(nullable = false,
-            unique = false)
-    private long x;
 
-    @Column(nullable = false,
-            unique = false)
-    private long y;
-
-    @Column(nullable = false,
-            unique = false)
-    private String roomType;
 
     public Map() {
     }
 
     public Map(long x, long y, String roomType) {
-        this.x = x;
-        this.y = y;
-        this.roomType = roomType;
+
 
     }
 
@@ -47,27 +35,5 @@ public class Map {
         return roomid;
     }
 
-    public long getX() {
-        return x;
-    }
 
-    public long getY() {
-        return y;
-    }
-
-    public String getRoomType() {
-        return roomType;
-    }
-
-    public void setX(long x) {
-        this.x = x;
-    }
-
-    public void setY(long y) {
-        this.y = y;
-    }
-
-    public void setRoomType(String roomType) {
-        this.roomType = roomType;
-    }
 }
