@@ -15,23 +15,47 @@ public class CreateDungeon {
 
     private int roomsizerange;
 
+    private int [][] gridArray = new int[500][500];
+
     List<Long> grid = new ArrayList<>();
 
     Room room;
 
-    public boolean isValidRoomPlacement(ArrayList grid, Room room) {
+    public CreateDungeon() {
+    }
+
+    public CreateDungeon(long gridwidth, long gridheight, int maxrooms, int roomsizerange, int[][] gridArray) {
+        this.gridwidth = gridwidth;
+        this.gridheight = gridheight;
+        this.maxrooms = maxrooms;
+        this.roomsizerange = roomsizerange;
+        this.gridArray = gridArray;
+    }
+
+
+
+    public boolean isValidRoomPlacement(int[][] grid, Room room) {
         int x = room.getX();
         int y = room.getY();
         int height = room.getRoomheight();
         int width = room.getRoomwidth();
 
-        if (y < 1 && y+height > grid.size() - 1){
+        if (y < 1 && y+ height > grid.length - 1){
             return false;
         }
-        if (x < 1 && x + width > grid.size() - 1){
+        if (x < 1 && x + width > grid.length - 1){
             return false;
         }
+        int yy = y;
+        int xx = x;
+        for ( int i = y-1; yy < (height + 1); i++) {
+            yy ++;
+            for( int j = x-1; xx <(width +1); j++){
+                 String roomType = room.getRoomType();
+                System.out.println(grid[i][j]);
+            }
 
+        }
 
 
         return true;
