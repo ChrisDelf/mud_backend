@@ -3,6 +3,7 @@ package com.dev.mud_backend;
 import com.dev.mud_backend.models.Room;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class CreateDungeon {
@@ -15,7 +16,7 @@ public class CreateDungeon {
 
     private int roomsizerange;
 
-    private int [][] gridArray = new int[500][500];
+    ArrayList<Room> gridArray = new ArrayList<Room>();
 
     List<Long> grid = new ArrayList<>();
 
@@ -24,7 +25,7 @@ public class CreateDungeon {
     public CreateDungeon() {
     }
 
-    public CreateDungeon(long gridwidth, long gridheight, int maxrooms, int roomsizerange, int[][] gridArray) {
+    public CreateDungeon(long gridwidth, long gridheight, int maxrooms, int roomsizerange, ArrayList gridArray) {
         this.gridwidth = gridwidth;
         this.gridheight = gridheight;
         this.maxrooms = maxrooms;
@@ -34,16 +35,16 @@ public class CreateDungeon {
 
 
 
-    public boolean isValidRoomPlacement(int[][] grid, Room room) {
+    public boolean isValidRoomPlacement(ArrayList grid, Room room) {
         int x = room.getX();
         int y = room.getY();
         int height = room.getRoomheight();
         int width = room.getRoomwidth();
 
-        if (y < 1 && y+ height > grid.length - 1){
+        if (y < 1 && y+ height > grid.size() - 1){
             return false;
         }
-        if (x < 1 && x + width > grid.length - 1){
+        if (x < 1 && x + width > grid.size() - 1){
             return false;
         }
         int yy = y;
@@ -52,8 +53,15 @@ public class CreateDungeon {
             yy ++;
             for( int j = x-1; xx <(width +1); j++){
                  String roomType = room.getRoomType();
-                System.out.println(grid[i][j]);
+            if (grid.contains(room));{
+                if (room.getRoomType() == "floor"){
+
+                    return false;
+                    }
+
+                }
             }
+            xx = x;
 
         }
 
