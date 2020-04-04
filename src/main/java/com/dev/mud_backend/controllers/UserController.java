@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -173,12 +175,11 @@ public class UserController
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
-    @GetMapping("/test")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @GetMapping(value ="/test", produces = {"application/json"})
     public ResponseEntity<?> getTest(HttpServletRequest request) {
+        ArrayList<ArrayList> dungeonArray = DungeonCreator.generateGrid(50,50,10);
 
-        DungeonCreator dungeon = new DungeonCreator(30,20,5,4,);
-
-        return new ResponseEntity<>(HttpStatus.OK);
+        return  new ResponseEntity<>(dungeonArray,HttpStatus.OK);
     }
 }
