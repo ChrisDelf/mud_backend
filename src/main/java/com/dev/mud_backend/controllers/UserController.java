@@ -1,5 +1,6 @@
 package com.dev.mud_backend.controllers;
 
+import com.dev.mud_backend.DungeonCreator;
 import com.dev.mud_backend.models.User;
 import com.dev.mud_backend.services.UserService;
 import io.swagger.annotations.ApiOperation;
@@ -171,5 +172,13 @@ public class UserController
         userService.addUserRole(userid, roleid);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<?> getTest(HttpServletRequest request) {
+
+        DungeonCreator dungeon = new DungeonCreator(30,20,5,4,);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

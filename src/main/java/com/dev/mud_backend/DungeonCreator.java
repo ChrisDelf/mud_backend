@@ -5,36 +5,53 @@ import com.dev.mud_backend.models.Cell;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateDungeon {
+public class DungeonCreator {
+//
+//    private long gridwidth;
+//
+//    private long gridheight;
+//
+//    private int maxrooms;
+//
+//    private int roomsizerange;
+//
+//    ArrayList<ArrayList> gridArray;
+//
+//    List<Long> grid = new ArrayList<>();
+//
+//
+////    public CreateDungeon() {
+////    }
+//
+//    public DungeonCreator(long gridwidth, long gridheight, int maxrooms, int roomsizerange) {
+//        this.gridwidth = gridwidth;
+//        this.gridheight = gridheight;
+//        this.maxrooms = maxrooms;
+//        this.roomsizerange = roomsizerange;
+//        this.gridArray = new ArrayList<ArrayList>();
+//    }
 
-    private long gridwidth;
+    public static ArrayList<ArrayList> generateGrid(long gridwidth, long gridheight, int maxrooms){
+        ArrayList<ArrayList> gridArray = new ArrayList<>();
+        int i = 0;
+        while (i < gridheight);
+        {
 
-    private long gridheight;
+            gridArray.add(new ArrayList<Cell>);
 
-    private int maxrooms;
 
-    private int roomsizerange;
 
-    ArrayList<Cell> gridArray = new ArrayList<Cell>();
 
-    List<Long> grid = new ArrayList<>();
 
-    Cell cell;
+        }
 
-    public CreateDungeon() {
+
+
     }
 
-    public CreateDungeon(long gridwidth, long gridheight, int maxrooms, int roomsizerange, ArrayList gridArray) {
-        this.gridwidth = gridwidth;
-        this.gridheight = gridheight;
-        this.maxrooms = maxrooms;
-        this.roomsizerange = roomsizerange;
-        this.gridArray = gridArray;
-    }
 
 
-
-    public boolean isValidRoomPlacement(, ArrayList grid, Cell cell) {
+    public boolean isValidRoomPlacement(Cell cell) {
         int x = cell.getX();
         int y = cell.getY();
 
@@ -51,7 +68,7 @@ public class CreateDungeon {
             yy ++;
             for( int j = x-1; xx <(gridwidth +1); j++){
                  String roomType = cell.getRoomType();
-            if (grid.contains(cell));{
+            if (gridArray.contains(i));{
                 if (cell.getRoomType() == "floor"){
 
                     return false;
