@@ -1,60 +1,75 @@
 package com.dev.mud_backend;
 
-import com.dev.mud_backend.models.Room;
+import com.dev.mud_backend.models.Cell;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
-public class CreateDungeon {
+public class DungeonCreator {
+//
+//    private long gridwidth;
+//
+//    private long gridheight;
+//
+//    private int maxrooms;
+//
+//    private int roomsizerange;
+//
+//    ArrayList<ArrayList> gridArray;
+//
+//    List<Long> grid = new ArrayList<>();
+//
+//
+////    public CreateDungeon() {
+////    }
+//
+//    public DungeonCreator(long gridwidth, long gridheight, int maxrooms, int roomsizerange) {
+//        this.gridwidth = gridwidth;
+//        this.gridheight = gridheight;
+//        this.maxrooms = maxrooms;
+//        this.roomsizerange = roomsizerange;
+//        this.gridArray = new ArrayList<ArrayList>();
+//    }
 
-    private long gridwidth;
+    public static ArrayList<ArrayList> generateGrid(long gridwidth, long gridheight, int maxrooms){
+        ArrayList<ArrayList> gridArray = new ArrayList<>();
+        int i = 0;
+        while (i < gridheight);
+        {
 
-    private long gridheight;
+            gridArray.add(new ArrayList<Cell>);
 
-    private int maxrooms;
 
-    private int roomsizerange;
 
-    ArrayList<Room> gridArray = new ArrayList<Room>();
 
-    List<Long> grid = new ArrayList<>();
 
-    Room room;
+        }
 
-    public CreateDungeon() {
+
+
     }
 
-    public CreateDungeon(long gridwidth, long gridheight, int maxrooms, int roomsizerange, ArrayList gridArray) {
-        this.gridwidth = gridwidth;
-        this.gridheight = gridheight;
-        this.maxrooms = maxrooms;
-        this.roomsizerange = roomsizerange;
-        this.gridArray = gridArray;
-    }
 
 
+    public boolean isValidRoomPlacement(Cell cell) {
+        int x = cell.getX();
+        int y = cell.getY();
 
-    public boolean isValidRoomPlacement(ArrayList grid, Room room) {
-        int x = room.getX();
-        int y = room.getY();
-        int height = room.getRoomheight();
-        int width = room.getRoomwidth();
 
-        if (y < 1 && y+ height > grid.size() - 1){
+        if (y < 1 && y+ gridheight > grid.size() - 1){
             return false;
         }
-        if (x < 1 && x + width > grid.size() - 1){
+        if (x < 1 && x + gridwidth > grid.size() - 1){
             return false;
         }
         int yy = y;
         int xx = x;
-        for ( int i = y-1; yy < (height + 1); i++) {
+        for ( int i = y-1; yy < (gridheight + 1); i++) {
             yy ++;
-            for( int j = x-1; xx <(width +1); j++){
-                 String roomType = room.getRoomType();
-            if (grid.contains(room));{
-                if (room.getRoomType() == "floor"){
+            for( int j = x-1; xx <(gridwidth +1); j++){
+                 String roomType = cell.getRoomType();
+            if (gridArray.contains(i));{
+                if (cell.getRoomType() == "floor"){
 
                     return false;
                     }

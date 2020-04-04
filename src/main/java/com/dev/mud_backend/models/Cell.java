@@ -4,7 +4,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-public class Room {
+public class Cell {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,44 +17,24 @@ public class Room {
 
     private String roomType;
 
-    private int roomheight;
-
-    private int roomwidth;
 
 
-    public Room() {
+    public Cell() {
     }
 
-    public Room(int x, int y, String roomType, int roomheight, int roomwidth) {
+    public Cell(int x, int y, String roomType, int roomheight, int roomwidth) {
         this.x = x;
         this.y = y;
         this.roomType = roomType;
-        this.roomheight = roomheight;
-        this.roomwidth = roomwidth;
-    }
 
-    public void setRoomid(long roomid) {
-        this.roomid = roomid;
-    }
-
-    public int getRoomheight() {
-        return roomheight;
-    }
-
-    public void setRoomheight(int roomheight) {
-        this.roomheight = roomheight;
-    }
-
-    public int getRoomwidth() {
-        return roomwidth;
-    }
-
-    public void setRoomwidth(int roomwidth) {
-        this.roomwidth = roomwidth;
     }
 
     public long getRoomid() {
         return roomid;
+    }
+
+    public void setRoomid(long roomid) {
+        this.roomid = roomid;
     }
 
     public int getX() {
@@ -80,4 +60,8 @@ public class Room {
     public void setRoomType(String roomType) {
         this.roomType = roomType;
     }
+
+
 }
+
+
