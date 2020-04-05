@@ -1,44 +1,21 @@
-package com.dev.mud_backend;
+package com.dev.mud_backend.services;
 
 import com.dev.mud_backend.models.Cell;
 import com.dev.mud_backend.repository.CellRepository;
-import com.dev.mud_backend.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.IntStream;
 
-public class DungeonCreator {
+@Service(value = "dungeonCreatorService")
+public class DungeonCreatorImpl implements DungeonCreatorService{
 
     @Autowired
     CellRepository cellRepo;
-//
-//    private long gridwidth;
-//
-//    private long gridheight;
-//
-//    private int maxrooms;
-//
-//    private int roomsizerange;
-//
-//    ArrayList<ArrayList> gridArray;
-//
-//    List<Long> grid = new ArrayList<>();
-//
-//
-////    public CreateDungeon() {
-////    }
-//
-//    public DungeonCreator(long gridwidth, long gridheight, int maxrooms, int roomsizerange) {
-//        this.gridwidth = gridwidth;
-//        this.gridheight = gridheight;
-//        this.maxrooms = maxrooms;
-//        this.roomsizerange = roomsizerange;
-//        this.gridArray = new ArrayList<ArrayList>();
-//    }
 
+
+    @Override
     public ArrayList<ArrayList> generateGrid(int gridwidth, int gridheight, int maxrooms) {
         ArrayList<ArrayList> gridArray = new ArrayList<ArrayList>();
         int i = 0;
@@ -65,7 +42,5 @@ public class DungeonCreator {
 
         return gridArray;
     }
-    }
 
-
-
+}

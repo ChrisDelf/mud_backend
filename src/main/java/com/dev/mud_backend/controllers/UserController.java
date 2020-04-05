@@ -2,6 +2,8 @@ package com.dev.mud_backend.controllers;
 
 import com.dev.mud_backend.DungeonCreator;
 import com.dev.mud_backend.models.User;
+import com.dev.mud_backend.repository.CellRepository;
+import com.dev.mud_backend.services.DungeonCreatorService;
 import com.dev.mud_backend.services.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -30,7 +32,14 @@ public class UserController
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
+    CellRepository cellRepo;
+
+    @Autowired
+    private DungeonCreatorService dungeonCreatorService;
+
+    @Autowired
     private UserService userService;
+
 
     @GetMapping(value = "/users",
             produces = {"application/json"})
@@ -175,10 +184,10 @@ public class UserController
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+//    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value ="/test", produces = {"application/json"})
     public ResponseEntity<?> getTest(HttpServletRequest request) {
-        ArrayList<ArrayList> dungeonArray = DungeonCreator.generateGrid(50,50,10);
+        ArrayList<ArrayList> dungeonArray = dungeonCreatorService.generateGrid(50,50,5);
 
         return  new ResponseEntity<>(dungeonArray,HttpStatus.OK);
     }
