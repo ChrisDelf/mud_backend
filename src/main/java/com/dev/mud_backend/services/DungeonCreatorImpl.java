@@ -57,24 +57,41 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
 
         Random rand = new Random();
 
-        Room north = new Room();
+
 
 
 
         // creating a possible north room
+        Room north = new Room();
         north.setHeight(rand.ints(mini,(maxi+1)).findFirst().getAsInt());
         System.out.print(north.getHeight());
         north.setWidth(rand.ints(mini,(maxi+1)).findFirst().getAsInt());
-        north.setX(rand.ints(room.getX(),(room.getX() + room.getHeight())).findFirst().getAsInt());
-        north.setY(room.getY() - (north.getHeight()));
+        north.setX(rand.ints(room.getX(),(room.getX() + room.getWidth())).findFirst().getAsInt());
+        north.setY(room.getY() - (north.getHeight())-1);
         // creating the door
         // chose the smallest max
-        int doorMax = Math.min((north.getX() + north.getWidth()),(room.getY() + north.getHeight()));
+        int doorMaxN = Math.min((north.getX() + north.getWidth()),(room.getY() + north.getHeight()));
 
-        north.setDoorX(rand.ints(north.getX(),doorMax+1).findFirst().getAsInt());
+        north.setDoorX(rand.ints(north.getX(),doorMaxN+1).findFirst().getAsInt());
         north.setDoorY(room.getY()-1);
 
         roomValues.add(north);
+
+        //creating a possible east room
+        Room east = new Room();
+        east.setHeight(rand.ints(mini,(maxi+1)).findFirst().getAsInt());
+
+        east.setWidth(rand.ints(mini,(maxi+1)).findFirst().getAsInt());
+        east.setX(room.getX() + (room.getWidth())+1);
+        east.setY(rand.ints(room.getY(),(room.getY() + room.getHeight())).findFirst().getAsInt());
+        // creating the door
+        // chose the smallest max
+        int doorMaxE = Math.min((east.getX() + east.getWidth()),(room.getY() + east.getHeight()));
+
+        east.setDoorX(east.getX()-1);
+        east.setDoorY(rand.ints(east.getY(),doorMaxE-1).findFirst().getAsInt());
+
+        roomValues.add(east);
 
 
 
