@@ -1,7 +1,4 @@
 # mud_backend
-initial commit of java mud project
-
-
 
 # 
 This is a backend that creates a dungeon with randomly generated rooms. Users can move 
