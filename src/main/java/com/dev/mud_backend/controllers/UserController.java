@@ -1,6 +1,7 @@
 package com.dev.mud_backend.controllers;
 
 import com.dev.mud_backend.DungeonCreator;
+import com.dev.mud_backend.models.Room;
 import com.dev.mud_backend.models.User;
 import com.dev.mud_backend.repository.CellRepository;
 import com.dev.mud_backend.services.DungeonCreatorService;
@@ -188,6 +189,19 @@ public class UserController
     @GetMapping(value ="/test", produces = {"application/json"})
     public ResponseEntity<?> getTest(HttpServletRequest request) {
         ArrayList<ArrayList> dungeonArray = dungeonCreatorService.generateGrid(50,50,5);
+
+        Room room = new Room();
+        room.setHeight(4);
+        room.setWidth(5);
+        room.setY(30);
+        room.setX(30);
+        int[] myRangeArray = new int[2];
+        myRangeArray[0] = 4;
+        myRangeArray[1] = 9;
+
+
+
+        dungeonCreatorService.createFromSeed(dungeonArray,room,myRangeArray);
 
         return  new ResponseEntity<>(dungeonArray,HttpStatus.OK);
     }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.stream.IntStream;
 
 @Service(value = "dungeonCreatorService")
@@ -48,10 +49,28 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
     @Override
     public PlacedRooms createFromSeed(ArrayList<ArrayList> grid, Room room, int[] roomRange)
     {
+
         int mini = roomRange[0];
         int maxi = roomRange[1];
 
         ArrayList<Room> roomValues = new ArrayList<Room>();
+
+        Random rand = new Random();
+
+        Room north = new Room();
+
+
+
+        // creating a possible north room
+        north.setHeight(rand.ints(mini,(maxi+1)).findFirst().getAsInt());
+        System.out.print(north.getHeight());
+        north.setWidth(rand.ints(mini,(maxi+1)).findFirst().getAsInt());
+        north.setX(rand.ints(room.getX(),(room.getX() + room.getHeight())).findFirst().getAsInt());
+        north.setY(room.getY() - (north.getHeight()-1));
+        // creating the door
+        north.setDoorX(rand.nextInt());
+
+
 
 
 
