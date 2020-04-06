@@ -13,7 +13,8 @@ public class Cell {
 //    private int x;
 //
 //    private int y;
-
+    @Column(nullable = false,
+            unique = false)
     private String roomType;
 
 

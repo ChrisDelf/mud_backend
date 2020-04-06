@@ -1,6 +1,8 @@
 package com.dev.mud_backend.services;
 
 import com.dev.mud_backend.models.Cell;
+import com.dev.mud_backend.models.PlacedRooms;
+import com.dev.mud_backend.models.Room;
 import com.dev.mud_backend.repository.CellRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,4 +45,16 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
         return gridArray;
     }
 
+    @Override
+    public PlacedRooms createFromSeed(ArrayList<ArrayList> grid, Room room, int[] roomRange)
+    {
+        int mini = roomRange[0];
+        int maxi = roomRange[1];
+
+        ArrayList<Room> roomValues = new ArrayList<Room>();
+
+
+
+        return null;
+    }
 }
