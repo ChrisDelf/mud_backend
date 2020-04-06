@@ -196,8 +196,8 @@ public class UserController
         room.setY(30);
         room.setX(30);
         int[] myRangeArray = new int[2];
-        myRangeArray[0] = 4;
-        myRangeArray[1] = 9;
+        myRangeArray[0] = 3;
+        myRangeArray[1] = 5;
 
 
 

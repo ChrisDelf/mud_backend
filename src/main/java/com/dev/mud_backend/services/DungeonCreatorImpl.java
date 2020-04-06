@@ -66,9 +66,17 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
         System.out.print(north.getHeight());
         north.setWidth(rand.ints(mini,(maxi+1)).findFirst().getAsInt());
         north.setX(rand.ints(room.getX(),(room.getX() + room.getHeight())).findFirst().getAsInt());
-        north.setY(room.getY() - (north.getHeight()-1));
+        north.setY(room.getY() - (north.getHeight()));
         // creating the door
-        north.setDoorX(rand.nextInt());
+        // chose the smallest max
+        int doorMax = Math.min((north.getX() + north.getWidth()),(room.getY() + north.getHeight()));
+
+        north.setDoorX(rand.ints(north.getX(),doorMax+1).findFirst().getAsInt());
+        north.setDoorY(room.getY()-1);
+
+        roomValues.add(north);
+
+
 
 
 
