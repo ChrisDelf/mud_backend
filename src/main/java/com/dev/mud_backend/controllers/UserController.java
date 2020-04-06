@@ -2,6 +2,8 @@ package com.dev.mud_backend.controllers;
 
 import com.dev.mud_backend.DungeonCreator;
 import com.dev.mud_backend.models.User;
+import com.dev.mud_backend.repository.CellRepository;
+import com.dev.mud_backend.services.DungeonCreatorService;
 import com.dev.mud_backend.services.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -9,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -19,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -28,7 +32,14 @@ public class UserController
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
+    CellRepository cellRepo;
+
+    @Autowired
+    private DungeonCreatorService dungeonCreatorService;
+
+    @Autowired
     private UserService userService;
+
 
     @GetMapping(value = "/users",
             produces = {"application/json"})
@@ -173,12 +184,11 @@ public class UserController
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
-    @GetMapping("/test")
+//    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @GetMapping(value ="/test", produces = {"application/json"})
     public ResponseEntity<?> getTest(HttpServletRequest request) {
+        ArrayList<ArrayList> dungeonArray = dungeonCreatorService.generateGrid(50,50,5);
 
-        DungeonCreator dungeon = new DungeonCreator(30,20,5,4,);
-
-        return new ResponseEntity<>(HttpStatus.OK);
+        return  new ResponseEntity<>(dungeonArray,HttpStatus.OK);
     }
 }

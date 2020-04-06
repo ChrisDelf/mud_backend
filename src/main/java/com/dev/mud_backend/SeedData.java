@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 
 @Transactional
-//@Component
+@Component
 public class SeedData implements CommandLineRunner {
 
 
@@ -68,7 +68,6 @@ public class SeedData implements CommandLineRunner {
 
         u3.getUseremails()
                 .add(new Useremail(u3, "barnbarn@email.local"));
-
 
     }
 }
