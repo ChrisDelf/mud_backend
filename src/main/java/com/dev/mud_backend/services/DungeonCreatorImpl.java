@@ -53,7 +53,8 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
         int roomX = room.getX();
         int roomY = room.getY();
 
-        if (type == null);{
+        if (type == null) ;
+        {
             type = "Floor";
         }
 //        IntStream.range(roomY, (room.getX()+room.getHeight())).forEach(n ->{
@@ -65,22 +66,24 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
 //
 //        });
 
-        for (int i = roomY; i >= (room.getHeight() + room.getY()); i++){
+        for (int i = roomY; i >= (room.getHeight() + room.getY()); i++) {
 
-            for(int j = roomX; j >= (room.getWidth() + room.getX()); j++){
+            for (int j = roomX; j >= (room.getWidth() + room.getX()); j++) {
 
-                if (type == "Floor");{
-                 grid.get(i).get(j);
+                if (type == "Floor") {
+
+                    grid.get(i).get(j);
+
+                }
+
 
             }
 
 
+
         }
-
-
         return null;
     }
-
     @Override
     public PlacedRooms createFromSeed(ArrayList<ArrayList> grid, Room room, int[] roomRange)
     {
