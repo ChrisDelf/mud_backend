@@ -63,38 +63,73 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
 
         // creating a possible north room
         Room north = new Room();
+        // generating random height and width of the room
         north.setHeight(rand.ints(mini,(maxi+1)).findFirst().getAsInt());
-        System.out.print(north.getHeight());
         north.setWidth(rand.ints(mini,(maxi+1)).findFirst().getAsInt());
+        // X and Y being set
         north.setX(rand.ints(room.getX(),(room.getX() + room.getWidth())).findFirst().getAsInt());
-        north.setY(room.getY() - (north.getHeight())-1);
+        north.setY((room.getY() - (north.getHeight()))-1);
         // creating the door
         // chose the smallest max
-        int doorMaxN = Math.min((north.getX() + north.getWidth()),(room.getY() + north.getHeight()));
+        int doorMaxN = Math.min((north.getX() + north.getWidth()),(room.getX() + room.getWidth()));
 
-        north.setDoorX(rand.ints(north.getX(),doorMaxN+1).findFirst().getAsInt());
+        north.setDoorX(rand.ints(north.getX(),doorMaxN).findFirst().getAsInt());
         north.setDoorY(room.getY()-1);
 
         roomValues.add(north);
 
         //creating a possible east room
         Room east = new Room();
+        // generating random height and width of the room
         east.setHeight(rand.ints(mini,(maxi+1)).findFirst().getAsInt());
-
         east.setWidth(rand.ints(mini,(maxi+1)).findFirst().getAsInt());
+        // X and Y being set
         east.setX(room.getX() + (room.getWidth())+1);
         east.setY(rand.ints(room.getY(),(room.getY() + room.getHeight())).findFirst().getAsInt());
         // creating the door
         // chose the smallest max
-        int doorMaxE = Math.min((east.getX() + east.getWidth()),(room.getY() + east.getHeight()));
+        int doorMaxE = Math.min((east.getY() + east.getHeight()),(room.getY() + room.getHeight()));
 
         east.setDoorX(east.getX()-1);
-        east.setDoorY(rand.ints(east.getY(),doorMaxE-1).findFirst().getAsInt());
+        east.setDoorY(rand.ints(east.getY(),doorMaxE).findFirst().getAsInt());
 
         roomValues.add(east);
 
+        //creating a possible west room
+
+        Room west = new Room();
+        // generating random height and width of the room
+        west.setHeight(rand.ints(mini,(maxi+1)).findFirst().getAsInt());
+        west.setWidth(rand.ints(mini,(maxi+1)).findFirst().getAsInt());
+        // X and Y being set
+        west.setX(room.getX()-(west.getWidth()+1));
+        west.setY(rand.ints(room.getY(),(room.getY() + room.getHeight())).findFirst().getAsInt());
+        //Creating a door
+        int doorMaxW = Math.min((west.getY() + west.getHeight()),(room.getY() + room.getHeight()));
+
+        west.setDoorX(room.getX()-1);
+        west.setDoorY(rand.ints(west.getY(),doorMaxW).findFirst().getAsInt());
+
+        roomValues.add(west);
 
 
+        //creating a possible south room
+
+        Room south = new Room();
+        // generating random height and width of the room
+        south.setHeight(rand.ints(mini,(maxi+1)).findFirst().getAsInt());
+        south.setWidth(rand.ints(mini,(maxi+1)).findFirst().getAsInt());
+        // X and Y being set
+        south.setX(rand.ints(room.getX(),(room.getX() + room.getWidth())).findFirst().getAsInt());
+        south.setY(room.getY() + (room.getHeight())+1);
+        //creating a door
+
+        int doorMaxS = Math.min((south.getX() + south.getWidth()),(room.getX() + room.getWidth()));
+
+        south.setDoorX(rand.ints(south.getX(),doorMaxS).findFirst().getAsInt());
+        south.setDoorY(room.getY()+room.getHeight());
+
+        roomValues.add(south);
 
 
 
