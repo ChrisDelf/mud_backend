@@ -32,6 +32,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
             j = 0;
 
             IntStream.range(0, gridwidth).forEach(n -> {
+                System.out.println(n);
                 Cell cell = new Cell();
                 cell.setRoomType("Wall");
                 cellRepo.save(cell);
@@ -47,6 +48,40 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
     }
 
     @Override
+    public ArrayList<ArrayList> placedCells(ArrayList<ArrayList> grid, Room room, String type) {
+
+        int roomX = room.getX();
+        int roomY = room.getY();
+
+        if (type == null);{
+            type = "Floor";
+        }
+//        IntStream.range(roomY, (room.getX()+room.getHeight())).forEach(n ->{
+//
+//            roomY++;
+//
+//
+//
+//
+//        });
+
+        for (int i = roomY; i >= (room.getHeight() + room.getY()); i++){
+
+            for(int j = roomX; j >= (room.getWidth() + room.getX()); j++){
+
+                if (type == "Floor");{
+                 grid.get(i).get(j);
+
+            }
+
+
+        }
+
+
+        return null;
+    }
+
+    @Override
     public PlacedRooms createFromSeed(ArrayList<ArrayList> grid, Room room, int[] roomRange)
     {
 
@@ -56,10 +91,6 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
         ArrayList<Room> roomValues = new ArrayList<Room>();
 
         Random rand = new Random();
-
-
-
-
 
         // creating a possible north room
         Room north = new Room();
@@ -131,9 +162,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
 
         roomValues.add(south);
 
-
-
-
         return null;
     }
+
 }

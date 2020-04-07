@@ -22,7 +22,6 @@ public class Map {
     private long roomid;
 
 
-
     public Map() {
     }
 
