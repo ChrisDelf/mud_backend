@@ -47,32 +47,31 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
         return gridArray;
     }
 
+
     @Override
-    public ArrayList<ArrayList> placedCells(ArrayList<ArrayList> grid, Room room, String type) {
+    public boolean isValidRoomPlacement(ArrayList<ArrayList<Cell>> grid, Room room) {
 
-        int roomX = room.getX();
+        // making sure the cells aren't out of bounds of the grid
+
         int roomY = room.getY();
+        int roomX = room.getX();
 
-        if (type == null) ;
-        {
-            type = "Floor";
+        if (roomY < 1 || (roomY + room.getHeight() > grid.size() - 1)) {
+            return false;
+
         }
-//        IntStream.range(roomY, (room.getX()+room.getHeight())).forEach(n ->{
-//
-//            roomY++;
-//
-//
-//
-//
-//        });
+
+        if (roomX < 1 || roomX + room.getWidth() > grid.get(0).size()) {
+            return false;
+        }
 
         for (int i = roomY; i >= (room.getHeight() + room.getY()); i++) {
 
             for (int j = roomX; j >= (room.getWidth() + room.getX()); j++) {
 
-                if (type == "Floor") {
+                if (grid.get(i).get(j).getRoomType() == "Floor") {
 
-                    grid.get(i).get(j);
+                    return false;
 
                 }
 
@@ -82,8 +81,44 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
 
 
         }
-        return null;
+        return true;
     }
+
+
+    @Override
+    public ArrayList<ArrayList<Cell>> placedCells(ArrayList<ArrayList <Cell>> grid, Room room, String type) {
+
+        int roomX = room.getX();
+        int roomY = room.getY();
+
+        if (type == null) ;
+        {
+            type = "Floor";
+        }
+
+        for (int i = roomY; i >= (room.getHeight() + room.getY()); i++) {
+
+            for (int j = roomX; j >= (room.getWidth() + room.getX()); j++) {
+
+                if (type == "Floor") {
+
+                    grid.get(i).get(j).setRoomType("Floor");
+
+                }
+                else if (type == "Door"){
+                    grid.get(i).get(j).setRoomType("Floor");
+
+                }
+
+
+            }
+
+
+
+        }
+        return grid;
+    }
+
     @Override
     public PlacedRooms createFromSeed(ArrayList<ArrayList> grid, Room room, int[] roomRange)
     {
