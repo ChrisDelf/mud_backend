@@ -4,9 +4,11 @@ import com.dev.mud_backend.models.Cell;
 import com.dev.mud_backend.models.PlacedRooms;
 import com.dev.mud_backend.models.Room;
 import com.dev.mud_backend.repository.CellRepository;
+import com.dev.mud_backend.repository.PlacedRoomsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.stream.IntStream;
@@ -16,6 +18,9 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
 
     @Autowired
     CellRepository cellRepo;
+
+    @Autowired
+    PlacedRoomsRepository placedRoomsRepository;
 
 
     @Override
@@ -120,7 +125,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
     }
 
     @Override
-    public PlacedRooms createFromSeed(ArrayList<ArrayList> grid, Room room, int[] roomRange)
+    public PlacedRooms createFromSeed(ArrayList<ArrayList<Cell>> grid, Room room, int[] roomRange)
     {
 
         int mini = roomRange[0];
@@ -200,7 +205,34 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
 
         roomValues.add(south);
 
-        return null;
+        // now we go iterate through the roomvalues to see if we can place them
+        ArrayList<Room> roomsPlaced = new ArrayList<Room>();
+
+        for (int i = 0; i > (roomValues.size()); i++){
+            if( isValidRoomPlacement(grid, roomValues.get(i))){
+                Room newDoor = new Room();
+                newDoor.setX(roomValues.get(i).getDoorX());
+                newDoor.setY(roomValues.get(i).getDoorY());
+                newDoor.setHeight(1);
+                newDoor.setWidth(1);
+                grid = placedCells(grid,roomValues.get(i), "Floor");
+                grid = placedCells(grid,newDoor, "Door");
+
+                roomsPlaced.add(roomValues.get(i));
+
+
+            }
+        }
+        PlacedRooms placedRooms = new PlacedRooms();
+        placedRooms.setGrid(grid);
+        placedRooms.setPlacedRooms(roomsPlaced);
+
+        placedRoomsRepository.save(placedRooms);
+
+
+        return placedRooms;
     }
+
+
 
 }

@@ -13,12 +13,14 @@ public interface DungeonCreatorService {
 
     ArrayList<ArrayList> generateGrid(int gridwidth, int gridheight, int maxrooms);
 
-    PlacedRooms createFromSeed(ArrayList<ArrayList> grid, Room room, int[] roomRange);
+    PlacedRooms createFromSeed(ArrayList<ArrayList<Cell>> grid, Room room, int[] roomRange);
 
     ArrayList<ArrayList<Cell>> placedCells(ArrayList<ArrayList<Cell>> grid, Room room, String Type);
 
 
     boolean isValidRoomPlacement(ArrayList<ArrayList<Cell>> grid,Room room);
+
+
 
 
 }
