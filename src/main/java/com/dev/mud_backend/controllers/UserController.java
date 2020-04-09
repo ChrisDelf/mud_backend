@@ -1,6 +1,8 @@
 package com.dev.mud_backend.controllers;
 
 import com.dev.mud_backend.DungeonCreator;
+import com.dev.mud_backend.models.Cell;
+import com.dev.mud_backend.models.PlacedRooms;
 import com.dev.mud_backend.models.Room;
 import com.dev.mud_backend.models.User;
 import com.dev.mud_backend.repository.CellRepository;
@@ -188,7 +190,7 @@ public class UserController
 //    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value ="/test", produces = {"application/json"})
     public ResponseEntity<?> getTest(HttpServletRequest request) {
-        ArrayList<ArrayList> dungeonArray = dungeonCreatorService.generateGrid(50,50,5);
+        ArrayList<ArrayList<Cell>> dungeonArray = dungeonCreatorService.generateGrid(50,50,5);
 
         Room room = new Room();
         room.setHeight(4);
@@ -199,10 +201,15 @@ public class UserController
         myRangeArray[0] = 3;
         myRangeArray[1] = 5;
 
+        PlacedRooms seedRoom = new PlacedRooms();
+        seedRoom.getPlacedRooms().add(room);
 
 
-        dungeonCreatorService.createFromSeed(dungeonArray,room,myRangeArray);
 
-        return  new ResponseEntity<>(dungeonArray,HttpStatus.OK);
+//        dungeonCreatorService.createFromSeed(dungeonArray,room,myRangeArray);
+        System.out.println(seedRoom.getPlacedRooms().size());
+        seedRoom = dungeonCreatorService.growMap(seedRoom, seedRoom.getPlacedRooms(),0, 10,myRangeArray);
+
+        return  new ResponseEntity<>(seedRoom,HttpStatus.OK);
     }
 }
