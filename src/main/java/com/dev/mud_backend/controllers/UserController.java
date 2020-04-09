@@ -190,26 +190,43 @@ public class UserController
 //    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value ="/test", produces = {"application/json"})
     public ResponseEntity<?> getTest(HttpServletRequest request) {
-        ArrayList<ArrayList<Cell>> dungeonArray = dungeonCreatorService.generateGrid(50,50,5);
+        PlacedRooms dungeonArray = dungeonCreatorService.generateGrid(50,50,2);
 
-        Room room = new Room();
-        room.setHeight(4);
-        room.setWidth(5);
-        room.setY(30);
-        room.setX(30);
-        int[] myRangeArray = new int[2];
-        myRangeArray[0] = 3;
-        myRangeArray[1] = 5;
 
-        PlacedRooms seedRoom = new PlacedRooms();
-        seedRoom.getPlacedRooms().add(room);
+        ArrayList<ArrayList<String>> visualGrid = new ArrayList<>();
+        int y = 0;
+        for (int i = 0; i < dungeonArray.getGrid().size(); i++)
+        {
+            ArrayList<String> row_string = new ArrayList<>();
+            for(int j = 0; j < dungeonArray.getGrid().get(y).size() - 1; j++) {
 
+                if (dungeonArray.getGrid().get(i).get(j).getRoomType() == "Floor") {
+
+                    row_string.add("f");
+                }
+                if (dungeonArray.getGrid().get(i).get(j).getRoomType() == "Wall") {
+
+                    row_string.add("W");
+                }
+                if (dungeonArray.getGrid().get(i).get(j).getRoomType() == "Door") {
+
+                    row_string.add("D");
+                }
+
+
+            }
+            row_string.add("\n");
+            y++;
+            visualGrid.add(row_string);
+
+        }
+        System.out.println(visualGrid);
 
 
 //        dungeonCreatorService.createFromSeed(dungeonArray,room,myRangeArray);
-        System.out.println(seedRoom.getPlacedRooms().size());
-        seedRoom = dungeonCreatorService.growMap(seedRoom, seedRoom.getPlacedRooms(),0, 10,myRangeArray);
+//        System.out.println(seedRoom.getPlacedRooms().size());
+//        seedRoom = dungeonCreatorService.growMap(seedRoom, seedRoom.getPlacedRooms(),0, 10,myRangeArray);
 
-        return  new ResponseEntity<>(seedRoom,HttpStatus.OK);
+        return  new ResponseEntity<>(dungeonArray,HttpStatus.OK);
     }
 }

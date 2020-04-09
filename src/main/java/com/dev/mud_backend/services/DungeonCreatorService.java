@@ -12,11 +12,11 @@ import java.util.ArrayList;
 
 public interface DungeonCreatorService {
 
-    ArrayList<ArrayList<Cell>> generateGrid(int gridwidth, int gridheight, int maxrooms);
+    PlacedRooms generateGrid(int gridwidth, int gridheight, int maxrooms);
 
     PlacedRooms createFromSeed(ArrayList<ArrayList<Cell>> grid, Room room, int[] roomRange);
 
-    ArrayList<ArrayList<Cell>> placedCells(ArrayList<ArrayList<Cell>> grid, Room room, String Type);
+    ArrayList<ArrayList<Cell>> placeCells(ArrayList<ArrayList<Cell>> grid, Room room, String Type);
 
 
     boolean isValidRoomPlacement(ArrayList<ArrayList<Cell>> grid,Room room);
