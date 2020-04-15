@@ -26,23 +26,33 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
     public PlacedRooms generateGrid(int gridwidth, int gridheight, int maxrooms) {
         ArrayList<ArrayList<Cell>> gridArray = new ArrayList<ArrayList<Cell>>();
         int i = 0;
-        int j = 0;
 
         while (i < gridheight)
         {
             ArrayList<Cell> row = new ArrayList<Cell>();
             gridArray.add(row);
 
-            j = 0;
 
-            IntStream.range(0, gridwidth).forEach(n -> {
+            for(int j = 0; j < gridwidth; j++){
 
                 Cell cell = new Cell();
                 cell.setRoomType("Wall");
+                cell.setX(j);
+                cell.setY(i);
                 cellRepo.save(cell);
                 row.add(cell);
 
-            });
+            }
+//            IntStream.range(0, gridwidth).forEach(n -> {
+//
+//                Cell cell = new Cell();
+//                cell.setRoomType("Wall");
+//                cell.setX(n);
+//                cell.setY(i);
+//                cellRepo.save(cell);
+//                row.add(cell);
+//
+//            });
 
             i++;
 
