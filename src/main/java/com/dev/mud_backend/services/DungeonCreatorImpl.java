@@ -21,6 +21,14 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
     @Autowired
     PlacedRoomsRepository placedRoomsRepository;
 
+    @Override
+    public ArrayList<Cell> getMap() {
+
+    ArrayList<Cell> returnArray = new ArrayList<>();
+
+        cellRepo.findAll().iterator().forEachRemaining(returnArray::add);
+        return returnArray;
+    }
 
     @Override
     public PlacedRooms generateGrid(int gridwidth, int gridheight, int maxrooms) {

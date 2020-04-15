@@ -23,6 +23,8 @@ public interface DungeonCreatorService {
 
     PlacedRooms growMap(PlacedRooms roomsPlaced, ArrayList<Room> seedRoom, int counter, int maxRooms, int [] roomRange);
 
+    ArrayList<Cell> getMap();
+
 
 
 }
