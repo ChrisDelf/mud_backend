@@ -8,7 +8,6 @@ import com.dev.mud_backend.repository.PlacedRoomsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.stream.IntStream;
@@ -22,34 +21,69 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
     @Autowired
     PlacedRoomsRepository placedRoomsRepository;
 
+    @Override
+    public ArrayList<Cell> getMap() {
+
+    ArrayList<Cell> returnArray = new ArrayList<>();
+
+        cellRepo.findAll().iterator().forEachRemaining(returnArray::add);
+        return returnArray;
+    }
 
     @Override
-    public ArrayList<ArrayList<Cell>> generateGrid(int gridwidth, int gridheight, int maxrooms) {
+    public PlacedRooms generateGrid(int gridwidth, int gridheight, int maxrooms) {
         ArrayList<ArrayList<Cell>> gridArray = new ArrayList<ArrayList<Cell>>();
         int i = 0;
-        int j = 0;
 
         while (i < gridheight)
         {
             ArrayList<Cell> row = new ArrayList<Cell>();
             gridArray.add(row);
 
-            j = 0;
 
-            IntStream.range(0, gridwidth).forEach(n -> {
-                System.out.println(n);
+            for(int j = 0; j < gridwidth; j++){
+
                 Cell cell = new Cell();
                 cell.setRoomType("Wall");
+                cell.setX(j);
+                cell.setY(i);
                 cellRepo.save(cell);
                 row.add(cell);
 
-            });
+            }
+//            IntStream.range(0, gridwidth).forEach(n -> {
+//
+//                Cell cell = new Cell();
+//                cell.setRoomType("Wall");
+//                cell.setX(n);
+//                cell.setY(i);
+//                cellRepo.save(cell);
+//                row.add(cell);
+//
+//            });
 
             i++;
 
         }
+        Room room = new Room();
+        room.setHeight(4);
+        room.setWidth(5);
+        room.setY(30);
+        room.setX(30);
+        int[] myRangeArray = new int[2];
+        myRangeArray[0] = 3;
+        myRangeArray[1] = 5;
 
-        return gridArray;
+
+
+        PlacedRooms seedRoom = new PlacedRooms();
+        seedRoom.setGrid(placeCells(gridArray,room, "Floor"));
+        seedRoom.getPlacedRooms().add(room);
+        seedRoom.setGrid(gridArray);
+        seedRoom = growMap(seedRoom, seedRoom.getPlacedRooms(),0, 10,myRangeArray);
+
+//        return gridArray;
+        return seedRoom;
     }
 
 
@@ -62,23 +96,23 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
         int roomX = room.getX();
 
         if (roomY < 1 || (roomY + room.getHeight() > grid.size() - 1)) {
-            System.out.println("Isvalid first if");
+
             return false;
 
         }
 
         if (roomX < 1 || roomX + room.getWidth() > grid.get(0).size()) {
-            System.out.println(roomX);
-            System.out.println("Isvalid second if");
+
+
             return false;
         }
 
-        for (int i = roomY; i <= (room.getHeight() + room.getY()); i++) {
+        for (int i = roomY; i-1 < (room.getHeight() + room.getY()); i++) {
 
-            for (int j = roomX; j <= (room.getWidth() + room.getX()); j++) {
+            for (int j = roomX; j-1 < (room.getWidth() + room.getX()); j++) {
 
                 if (grid.get(i).get(j).getRoomType() == "Floor") {
-                    System.out.println("Isvalid third if");
+
                     return false;
 
                 }
@@ -89,33 +123,35 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
 
 
         }
-        System.out.println("True");
+
         return true;
     }
 
 
     @Override
-    public ArrayList<ArrayList<Cell>> placedCells(ArrayList<ArrayList <Cell>> grid, Room room, String type) {
+    public ArrayList<ArrayList<Cell>> placeCells(ArrayList<ArrayList <Cell>> grid, Room room, String type) {
 
         int roomX = room.getX();
         int roomY = room.getY();
 
-        if (type == null) ;
+        if (type == null)
         {
             type = "Floor";
         }
 
-        for (int i = roomY; i <= (room.getHeight() + room.getY()); i++) {
+        for (int i = roomY; i < (room.getHeight() + room.getY()); i++) {
 
-            for (int j = roomX; j <= (room.getWidth() + room.getX()); j++) {
+            for (int j = roomX; j < (room.getWidth() + room.getX()); j++) {
 
                 if (type == "Floor") {
 
                     grid.get(i).get(j).setRoomType("Floor");
+                    cellRepo.save(grid.get(i).get(j));
 
                 }
                 else if (type == "Door"){
-                    grid.get(i).get(j).setRoomType("Floor");
+                    grid.get(i).get(j).setRoomType("Door");
+                    cellRepo.save(grid.get(i).get(j));
 
                 }
 
@@ -125,7 +161,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
 
 
         }
-        System.out.println("Return of placecells" + grid);
+
         return grid;
     }
 
@@ -209,20 +245,22 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
 
         roomValues.add(south);
 
+
+
         // now we go iterate through the roomvalues to see if we can place them
-        ArrayList<Room> roomsPlaced = new ArrayList<Room>();
-        System.out.println("roomsPlaced"+ roomValues.size());
+        ArrayList<Room> roomsPlaced = new ArrayList<>();
+
 
         for (int i = 0; i < roomValues.size(); i++){
-            System.out.println("Yragh");
+
             if( isValidRoomPlacement(grid, roomValues.get(i))){
                 Room newDoor = new Room();
                 newDoor.setX(roomValues.get(i).getDoorX());
                 newDoor.setY(roomValues.get(i).getDoorY());
                 newDoor.setHeight(1);
                 newDoor.setWidth(1);
-                grid = placedCells(grid,roomValues.get(i), "Floor");
-                grid = placedCells(grid,newDoor, "Door");
+                grid = placeCells(grid,roomValues.get(i), "Floor");
+                grid = placeCells(grid,newDoor, "Door");
 
                 roomsPlaced.add(roomValues.get(i));
 
@@ -234,27 +272,27 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
         placedRooms.setPlacedRooms(roomsPlaced);
 
 
-        System.out.println("Inside of create from seed" + placedRooms.getGrid());
+
         return placedRooms;
     }
 
     @Override
     public PlacedRooms growMap(PlacedRooms roomsPlaced, ArrayList<Room> seedRooms, int counter, int maxRooms, int [] roomRange) {
-        System.out.println("PlaceRooms size"+ roomsPlaced.getPlacedRooms().size());
+
         if ((counter + roomsPlaced.getPlacedRooms().size() > maxRooms) || seedRooms.size() == 0) {
-            placedRoomsRepository.save(roomsPlaced);
+//            placedRoomsRepository.save(roomsPlaced);
             return roomsPlaced;
         }
 
         if (seedRooms.size() > 0)
         {
-            System.out.println("WE got to second if");
+
             roomsPlaced = createFromSeed(roomsPlaced.getGrid(), seedRooms.remove(0), roomRange);
 
         }
         PlacedRooms rooms = new PlacedRooms();
         rooms = roomsPlaced;
-        System.out.println("WHen we get here there shoulde be a grid" + roomsPlaced.getGrid());
+
         for (int i = 0; i < rooms.getPlacedRooms().size(); i++)
         {
             seedRooms.add(rooms.getPlacedRooms().get(i));

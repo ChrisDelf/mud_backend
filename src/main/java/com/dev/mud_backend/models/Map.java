@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -19,7 +20,9 @@ public class Map {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long roomid;
+    private long mapid;
+
+
 
 
     public Map() {
@@ -31,7 +34,7 @@ public class Map {
     }
 
     public long getRoomid() {
-        return roomid;
+        return mapid;
     }
 
 
