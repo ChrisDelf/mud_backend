@@ -229,4 +229,15 @@ public class UserController
 
         return  new ResponseEntity<>(dungeonArray,HttpStatus.OK);
     }
+    @GetMapping(value ="/getMap", produces = {"application/json"})
+    public ResponseEntity<?> grabMap(HttpServletRequest request){
+        ArrayList<Cell> mapArray = new ArrayList<Cell>();
+
+        mapArray = dungeonCreatorService.getMap();
+
+
+
+
+        return new ResponseEntity<> (mapArray, HttpStatus.OK);
+    }
 }
