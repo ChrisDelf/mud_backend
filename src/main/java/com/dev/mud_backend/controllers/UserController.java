@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -188,8 +189,8 @@ public class UserController
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 //    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @GetMapping(value ="/test", produces = {"application/json"})
-    public ResponseEntity<?> getTest(HttpServletRequest request) {
+    @GetMapping(value ="/test/{userid}", produces = {"application/json"})
+    public ResponseEntity<?> getTest(@Valid @PathVariable String userid) {
         PlacedRooms dungeonArray = dungeonCreatorService.generateGrid(50,50,2);
 
 
@@ -229,8 +230,13 @@ public class UserController
 
         return  new ResponseEntity<>(dungeonArray,HttpStatus.OK);
     }
-    @GetMapping(value ="/getmap", produces = {"application/json"})
-    public ResponseEntity<?> grabMap(HttpServletRequest request){
+    @GetMapping (value = "/display/{username}", produces = {"application/json"})
+    public ResponseEntity<?> getUserInfo(@Valid @PathVariable String username){
+        UserDetails tempUser = userService.loadUserByUsername(username);
+    return new ResponseEntity<>(tempUser, HttpStatus.OK);
+    }
+    @GetMapping(value ="/getmap/{userid}", produces = {"application/json"})
+    public ResponseEntity<?> grabMap(@Valid @PathVariable String userid){
         ArrayList<Cell> mapArray = new ArrayList<Cell>();
 
         mapArray = dungeonCreatorService.getMap();
