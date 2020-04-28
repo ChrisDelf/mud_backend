@@ -41,6 +41,13 @@ public class User extends Auditable
      @JsonIgnoreProperties("user")
      private List<Useremail> useremails = new ArrayList<>();
 
+     @ApiModelProperty(notes = "email is not required", example = "email@email.com", required = false)
+     @OneToMany(mappedBy = "user",
+             cascade = CascadeType.ALL,
+             orphanRemoval = true)
+     @JsonIgnoreProperties("user")
+     private List<Map> userMap = new ArrayList<>();
+
 
 
 
@@ -60,7 +67,13 @@ public class User extends Auditable
          this.userroles = userRoles;
      }
 
+     public List<Map> getUserMap() {
+         return userMap;
+     }
 
+     public void setUserMap(List<Map> userMap) {
+         this.userMap = userMap;
+     }
 
      public long getUserid()
      {
