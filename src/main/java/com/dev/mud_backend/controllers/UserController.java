@@ -233,6 +233,7 @@ public class UserController
     @GetMapping (value = "/display/{username}", produces = {"application/json"})
     public ResponseEntity<?> getUserInfo(@Valid @PathVariable String username){
         UserDetails tempUser = userService.loadUserByUsername(username);
+
     return new ResponseEntity<>(tempUser, HttpStatus.OK);
     }
     @GetMapping(value ="/getmap/{userid}", produces = {"application/json"})
