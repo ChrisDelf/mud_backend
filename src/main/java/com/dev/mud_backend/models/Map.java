@@ -22,6 +22,7 @@ public class Map {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long mapid;
 
+    @Column(length = 100000000)
     String grid;
 
     @ManyToOne
