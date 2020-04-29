@@ -22,8 +22,10 @@ public class Map {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long mapid;
 
-    @Column(length = 100000000)
-    String grid;
+    private int width;
+
+    private int height;
+
 
     @ManyToOne
     @JoinColumn(name = "userid",
@@ -35,23 +37,34 @@ public class Map {
     public Map() {
     }
 
-    public Map(long mapid, String grid, User user) {
+    public Map(long mapid, String grid, User user,int width, int height) {
         this.mapid = mapid;
-        this.grid = grid;
+        this.width = width;
+        this.height = height;
         this.user = user;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 
     public long getRoomid() {
         return mapid;
     }
 
-    public String getGrid() {
-        return grid;
-    }
 
-    public void setGrid(String grid) {
-        this.grid = grid;
-    }
 
     public long getMapid() {
         return mapid;

@@ -228,8 +228,10 @@ public class UserController
         System.out.println(visualGrid);
 
         Map newMap = new Map();
-//        newMap.setGrid(dungeonArray.getGrid().iterator().toString());
+//        newMap.setGrid(dungeonArray.toString());
         newMap.setUser(userService.findUserById(userid));
+        newMap.setWidth(50);
+        newMap.setHeight(50);
 
         mapRepo.save(newMap);
 
