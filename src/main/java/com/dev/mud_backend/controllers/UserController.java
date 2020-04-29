@@ -1,12 +1,11 @@
 package com.dev.mud_backend.controllers;
 
 import com.dev.mud_backend.DungeonCreator;
-import com.dev.mud_backend.models.Cell;
-import com.dev.mud_backend.models.PlacedRooms;
-import com.dev.mud_backend.models.Room;
-import com.dev.mud_backend.models.User;
+import com.dev.mud_backend.models.*;
 import com.dev.mud_backend.repository.CellRepository;
+import com.dev.mud_backend.repository.MapRepository;
 import com.dev.mud_backend.services.DungeonCreatorService;
+import com.dev.mud_backend.services.MapService;
 import com.dev.mud_backend.services.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -44,6 +43,11 @@ public class UserController
     @Autowired
     private UserService userService;
 
+    @Autowired
+    MapRepository mapRepo;
+
+    @Autowired
+    private MapService mapService;
 
     @GetMapping(value = "/users",
             produces = {"application/json"})
@@ -190,7 +194,7 @@ public class UserController
     }
 //    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value ="/test/{userid}", produces = {"application/json"})
-    public ResponseEntity<?> getTest(@Valid @PathVariable String userid) {
+    public ResponseEntity<?> getTest(@Valid @PathVariable long userid) {
         PlacedRooms dungeonArray = dungeonCreatorService.generateGrid(50,50,2);
 
 
@@ -223,6 +227,12 @@ public class UserController
         }
         System.out.println(visualGrid);
 
+        Map newMap = new Map();
+//        newMap.setGrid(dungeonArray.getGrid().iterator().toString());
+        newMap.setUser(userService.findUserById(userid));
+
+        mapRepo.save(newMap);
+
 
 //        dungeonCreatorService.createFromSeed(dungeonArray,room,myRangeArray);
 //        System.out.println(seedRoom.getPlacedRooms().size());
@@ -238,14 +248,15 @@ public class UserController
     return new ResponseEntity<>(userid, HttpStatus.OK);
     }
     @GetMapping(value ="/getmap/{userid}", produces = {"application/json"})
-    public ResponseEntity<?> grabMap(@Valid @PathVariable String userid){
-        ArrayList<Cell> mapArray = new ArrayList<Cell>();
+    public ResponseEntity<?> grabMap(@Valid @PathVariable Long userid){
+//        ArrayList<Cell> mapArray = new ArrayList<Cell>();
+        List<Map> mapList = new ArrayList<>();
 
-        mapArray = dungeonCreatorService.getMap();
+        mapList = mapService.getMap(userid);
 
 
 
 
-        return new ResponseEntity<> (mapArray, HttpStatus.OK);
+        return new ResponseEntity<> (mapList, HttpStatus.OK);
     }
 }
