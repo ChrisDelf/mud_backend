@@ -47,6 +47,16 @@ public class UserServiceImpl implements UserDetailsService, UserService
     }
 
     @Override
+    public Long findUserID(String name) {
+        User user = userrepos.findByUsername(name);
+        if (user == null)
+        {
+            throw new UsernameNotFoundException("Invalid username or password.");
+        }
+        return user.getUserid();
+    }
+
+    @Override
     public List<User> findAll()
     {
         List<User> list = new ArrayList<>();
