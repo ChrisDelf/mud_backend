@@ -26,6 +26,9 @@ public class Map {
 
     private int height;
 
+    @Column(length = 1000000)
+    String grid;
+
 
     @ManyToOne
     @JoinColumn(name = "userid",
@@ -42,6 +45,14 @@ public class Map {
         this.width = width;
         this.height = height;
         this.user = user;
+    }
+
+    public String getGrid() {
+        return grid;
+    }
+
+    public void setGrid(String grid) {
+        this.grid = grid;
     }
 
     public int getWidth() {

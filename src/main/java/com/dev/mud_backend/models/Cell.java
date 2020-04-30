@@ -1,5 +1,7 @@
 package com.dev.mud_backend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
@@ -17,6 +19,12 @@ public class Cell {
     @Column(nullable = false,
             unique = false)
     private String roomType;
+
+//    @ManyToOne
+//    @JoinColumn(name = "mapid",
+//            nullable = false)
+//    @JsonIgnoreProperties("cells")
+//    private User user;
 
 
 

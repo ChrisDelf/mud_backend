@@ -7,7 +7,11 @@ import com.dev.mud_backend.repository.MapRepository;
 import com.dev.mud_backend.services.DungeonCreatorService;
 import com.dev.mud_backend.services.MapService;
 import com.dev.mud_backend.services.UserService;
+import com.google.gson.Gson;
+import com.google.gson.internal.$Gson$Preconditions;
 import io.swagger.annotations.ApiOperation;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.h2.util.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +30,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -227,8 +232,12 @@ public class UserController
         }
         System.out.println(visualGrid);
 
+        Gson gson = new Gson();
+
+        String json = gson.toJson(dungeonArray.getGrid());
+
         Map newMap = new Map();
-//        newMap.setGrid(dungeonArray.toString());
+        newMap.setGrid(json);
         newMap.setUser(userService.findUserById(userid));
         newMap.setWidth(50);
         newMap.setHeight(50);
@@ -253,12 +262,19 @@ public class UserController
     public ResponseEntity<?> grabMap(@Valid @PathVariable Long userid){
 //        ArrayList<Cell> mapArray = new ArrayList<Cell>();
         List<Map> mapList = new ArrayList<>();
+        List<Map> gridList = new ArrayList<>();
 
         mapList = mapService.getMap(userid);
+    for( int i = 0; i < mapList.size(); i++)
+    {
+       Map tempMap = new Map();
+       tempMap.setGrid(mapList.get(i).getGrid());
+       tempMap.setHeight(mapList.get(i).getHeight());
+       tempMap.setWidth(mapList.get(i).getWidth());
+       tempMap.setMapid(mapList.get(i).getMapid());
+        gridList.add(tempMap);
+    }
 
-
-
-
-        return new ResponseEntity<> (mapList, HttpStatus.OK);
+        return new ResponseEntity<> (gridList, HttpStatus.OK);
     }
 }
