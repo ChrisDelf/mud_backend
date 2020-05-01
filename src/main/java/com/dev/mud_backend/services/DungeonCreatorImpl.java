@@ -21,6 +21,9 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
     @Autowired
     PlacedRoomsRepository placedRoomsRepository;
 
+    @Autowired
+    private CellService cellService;
+
     @Override
     public ArrayList<Cell> getMap() {
 
@@ -31,7 +34,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
     }
 
     @Override
-    public PlacedRooms generateGrid(int gridwidth, int gridheight, int maxrooms) {
+    public PlacedRooms generateGrid(int gridwidth, int gridheight, int maxrooms, long mapid) {
         ArrayList<ArrayList<Cell>> gridArray = new ArrayList<ArrayList<Cell>>();
         int i = 0;
 
@@ -47,6 +50,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
                 cell.setRoomType("Wall");
                 cell.setX(j);
                 cell.setY(i);
+                cell.setMapid(mapid);
                 cellRepo.save(cell);
                 row.add(cell);
 
@@ -73,6 +77,8 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
         int[] myRangeArray = new int[2];
         myRangeArray[0] = 3;
         myRangeArray[1] = 5;
+
+
 
 
 

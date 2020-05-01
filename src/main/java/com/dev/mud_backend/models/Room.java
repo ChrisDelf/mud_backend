@@ -22,6 +22,8 @@ public class Room {
 
     private int doorX;
 
+
+
     public Room() {
     }
 
