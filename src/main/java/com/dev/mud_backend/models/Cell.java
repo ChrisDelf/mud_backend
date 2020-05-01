@@ -24,7 +24,10 @@ public class Cell {
 //    @JoinColumn(name = "mapid",
 //            nullable = false)
 //    @JsonIgnoreProperties("cells")
-//    private User user;
+//    private Map map;
+
+    private long mapid;
+
 
 
 
@@ -36,6 +39,14 @@ public class Cell {
 //        this.y = y;
         this.roomType = roomType;
 
+    }
+
+    public long getMapid() {
+        return mapid;
+    }
+
+    public void setMapid(long mapid) {
+        this.mapid = mapid;
     }
 
     public long getRoomid() {

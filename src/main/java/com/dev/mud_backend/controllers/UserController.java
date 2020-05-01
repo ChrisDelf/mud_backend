@@ -200,7 +200,16 @@ public class UserController
 //    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value ="/test/{userid}", produces = {"application/json"})
     public ResponseEntity<?> getTest(@Valid @PathVariable long userid) {
-        PlacedRooms dungeonArray = dungeonCreatorService.generateGrid(50,50,2);
+
+        Map newMap = new Map();
+        newMap.setWidth(50);
+        newMap.setHeight(50);
+        newMap.setPlayerx(32);
+        newMap.setPlayery(32);
+        newMap.setUser(userService.findUserById(userid));
+        mapRepo.save(newMap);
+
+        PlacedRooms dungeonArray = dungeonCreatorService.generateGrid(50,50,2, newMap.getMapid());
 
 
         ArrayList<ArrayList<String>> visualGrid = new ArrayList<>();
@@ -236,13 +245,11 @@ public class UserController
 
         String json = gson.toJson(dungeonArray.getGrid());
 
-        Map newMap = new Map();
+
         newMap.setGrid(json);
-        newMap.setUser(userService.findUserById(userid));
-        newMap.setWidth(50);
-        newMap.setHeight(50);
 
         mapRepo.save(newMap);
+
 
 
 //        dungeonCreatorService.createFromSeed(dungeonArray,room,myRangeArray);
@@ -268,6 +275,9 @@ public class UserController
     for( int i = 0; i < mapList.size(); i++)
     {
        Map tempMap = new Map();
+//        Gson gson = new Gson();
+//       int [][] dataGrid = gson.fromJson(mapList.get(i).getGrid(), int[][].class);
+
        tempMap.setGrid(mapList.get(i).getGrid());
        tempMap.setHeight(mapList.get(i).getHeight());
        tempMap.setWidth(mapList.get(i).getWidth());

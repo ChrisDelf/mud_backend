@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public interface DungeonCreatorService {
 
-    PlacedRooms generateGrid(int gridwidth, int gridheight, int maxrooms);
+    PlacedRooms generateGrid(int gridwidth, int gridheight, int maxrooms, long mapid);
 
     PlacedRooms createFromSeed(ArrayList<ArrayList<Cell>> grid, Room room, int[] roomRange);
 

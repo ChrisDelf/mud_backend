@@ -26,6 +26,10 @@ public class Map {
 
     private int height;
 
+    private int playerx;
+
+    private int playery;
+
     @Column(length = 1000000)
     String grid;
 
@@ -37,6 +41,8 @@ public class Map {
     private User user;
 
 
+
+
     public Map() {
     }
 
@@ -45,6 +51,22 @@ public class Map {
         this.width = width;
         this.height = height;
         this.user = user;
+    }
+
+    public int getPlayerx() {
+        return playerx;
+    }
+
+    public void setPlayerx(int playerx) {
+        this.playerx = playerx;
+    }
+
+    public int getPlayery() {
+        return playery;
+    }
+
+    public void setPlayery(int playery) {
+        this.playery = playery;
     }
 
     public String getGrid() {
