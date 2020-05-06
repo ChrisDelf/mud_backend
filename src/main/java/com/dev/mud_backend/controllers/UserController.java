@@ -287,4 +287,34 @@ public class UserController
 
         return new ResponseEntity<> (gridList, HttpStatus.OK);
     }
+
+    // need to give the user his player location.
+    @GetMapping(value ="/playerlocation/{mapid}", produces = {"application/json"})
+    public ResponseEntity<?> getUserPosition(@Valid @PathVariable Long mapid){
+        Map tempMap = new Map();
+
+        tempMap = mapService.getPlayerLocation(mapid);
+
+        Map resMap = new Map();
+
+        resMap.setPlayerx(tempMap.getPlayerx());
+        resMap.setPlayery(tempMap.getPlayery());
+        resMap.setGrid(tempMap.getGrid());
+        resMap.setWidth(tempMap.getWidth());
+        resMap.setHeight(tempMap.getHeight());
+
+
+        return new ResponseEntity<>(resMap, HttpStatus.OK);
+    }
+
+    @PutMapping(value ="/moveplayer/{mapid}")
+    public ResponseEntity<?> movePlayer(
+            @RequestBody
+                    Map updateMap,
+            @PathVariable long mapid
+    )
+    {
+        mapService.updatePlayer(updateMap, mapid);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
