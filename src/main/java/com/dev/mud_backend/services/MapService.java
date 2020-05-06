@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface MapService {
     List<Map> getMap(Long userid);
+    Map getPlayerLocation(Long mapid);
 }
