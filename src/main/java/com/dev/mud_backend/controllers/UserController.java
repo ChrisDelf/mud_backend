@@ -213,33 +213,33 @@ public class UserController
 
 
         ArrayList<ArrayList<String>> visualGrid = new ArrayList<>();
-        int y = 0;
-        for (int i = 0; i < dungeonArray.getGrid().size(); i++)
-        {
-            ArrayList<String> row_string = new ArrayList<>();
-            for(int j = 0; j < dungeonArray.getGrid().get(y).size() - 1; j++) {
-
-                if (dungeonArray.getGrid().get(i).get(j).getRoomType() == "Floor") {
-
-                    row_string.add("f");
-                }
-                if (dungeonArray.getGrid().get(i).get(j).getRoomType() == "Wall") {
-
-                    row_string.add("W");
-                }
-                if (dungeonArray.getGrid().get(i).get(j).getRoomType() == "Door") {
-
-                    row_string.add("D");
-                }
-
-
-            }
-            row_string.add("\n");
-            y++;
-            visualGrid.add(row_string);
-
-        }
-        System.out.println(visualGrid);
+//        int y = 0;
+//        for (int i = 0; i < dungeonArray.getGrid().size(); i++)
+//        {
+//            ArrayList<String> row_string = new ArrayList<>();
+//            for(int j = 0; j < dungeonArray.getGrid().get(y).size() - 1; j++) {
+//
+//                if (dungeonArray.getGrid().get(i).get(j).getRoomType() == "Floor") {
+//
+//                    row_string.add("f");
+//                }
+//                if (dungeonArray.getGrid().get(i).get(j).getRoomType() == "Wall") {
+//
+//                    row_string.add("W");
+//                }
+//                if (dungeonArray.getGrid().get(i).get(j).getRoomType() == "Door") {
+//
+//                    row_string.add("D");
+//                }
+//
+//
+//            }
+//            row_string.add("\n");
+//            y++;
+//            visualGrid.add(row_string);
+//
+//        }
+//        System.out.println(visualGrid);
 
         Gson gson = new Gson();
 
@@ -249,14 +249,14 @@ public class UserController
         newMap.setGrid(json);
 
         mapRepo.save(newMap);
-
+        System.out.println("Dungeon array"+ dungeonArray);
 
 
 //        dungeonCreatorService.createFromSeed(dungeonArray,room,myRangeArray);
 //        System.out.println(seedRoom.getPlacedRooms().size());
 //        seedRoom = dungeonCreatorService.growMap(seedRoom, seedRoom.getPlacedRooms(),0, 10,myRangeArray);
 
-        return  new ResponseEntity<>(dungeonArray,HttpStatus.OK);
+        return  new ResponseEntity<>(dungeonArray.getGrid(),HttpStatus.OK);
     }
     @GetMapping (value = "/display/{username}", produces = {"application/json"})
     public ResponseEntity<?> getUserInfo(@Valid @PathVariable String username){
