@@ -310,11 +310,11 @@ public class UserController
     @PutMapping(value ="/moveplayer/{mapid}")
     public ResponseEntity<?> movePlayer(
             @RequestBody
-                    User updateUser,
+                    Map updateMap,
             @PathVariable long mapid
     )
     {
-
-        return null;
+        mapService.updatePlayer(updateMap, mapid);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
