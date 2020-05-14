@@ -33,4 +33,4 @@ build/
 
 ### SeedData ###
 
-.idea/src/main/com.dev.mud_backend/SeeData.java
+.idea/**/SeeData.java
