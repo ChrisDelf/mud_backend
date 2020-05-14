@@ -29,3 +29,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### SeedData ###
+.src/main/com.dev.mud_backend/SeeData.java

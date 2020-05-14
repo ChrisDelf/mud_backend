@@ -41,6 +41,7 @@ public class MapServiceImpl implements MapService {
 
     @Override
     public Map updatePlayer(Map playerMap, long mapid) {
+
         Map tempMap = new Map();
         tempMap = mapRepo.findById(mapid).orElseThrow(() -> new EntityNotFoundException(Long.toString(mapid)));
         tempMap.setPlayerx(playerMap.getPlayerx());

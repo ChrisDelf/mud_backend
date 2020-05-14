@@ -249,7 +249,7 @@ public class UserController
         newMap.setGrid(json);
 
         mapRepo.save(newMap);
-        System.out.println("Dungeon array"+ dungeonArray);
+
 
 
 //        dungeonCreatorService.createFromSeed(dungeonArray,room,myRangeArray);
@@ -314,6 +314,7 @@ public class UserController
             @PathVariable long mapid
     )
     {
+
         mapService.updatePlayer(updateMap, mapid);
         return new ResponseEntity<>(HttpStatus.OK);
     }
