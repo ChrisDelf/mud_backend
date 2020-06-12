@@ -1,9 +1,14 @@
 package com.dev.mud_backend.models;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+
+@Entity
+@Table(name = "monsters")
 public class Monster {
 
     @Id
@@ -24,6 +29,23 @@ public class Monster {
     private long intellect;
 
     private long stamina;
+
+    @OneToMany(mappedBy = "monster",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    @JsonIgnoreProperties("monster")
+    private List<Item> itemsList = new ArrayList<>();
+
+
+
+    public Monster(String monsterName, long monsterHealth, long strength, long agility, long intellect, long stamina) {
+        this.monsterName = monsterName;
+        this.monsterHealth = monsterHealth;
+        this.strength = strength;
+        this.agility = agility;
+        this.intellect = intellect;
+        this.stamina = stamina;
+    }
 
     public String getMonsterName() {
         return monsterName;

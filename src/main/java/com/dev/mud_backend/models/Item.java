@@ -1,9 +1,12 @@
 package com.dev.mud_backend.models;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.*;
+
+
+@Entity
+@Table(name = "items")
 public class Item {
 
 
@@ -24,6 +27,27 @@ public class Item {
 
     private long damage;
 
+    @ManyToOne
+    @JoinColumn(name = "playerid",
+            nullable = false)
+    @JsonIgnoreProperties("itemslist")
+    private Player player;
+
+    @ManyToOne
+    @JoinColumn(name = "monsterid",
+                nullable = false)
+    @JsonIgnoreProperties("itemslist")
+    private  Monster monster;
+
+    public Item(String itemname, String itemtype, String itemposition, long cost, long weight, long damage, Player player) {
+        this.itemname = itemname;
+        this.itemtype = itemtype;
+        this.itemposition = itemposition;
+        this.cost = cost;
+        this.weight = weight;
+        this.damage = damage;
+        this.player = player;
+    }
 
     public String getItemname() {
         return itemname;
