@@ -5,10 +5,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.parameters.P;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/game")
@@ -53,8 +51,8 @@ public class GameController {
 
     // update
     // /player/combatAction
-    @PutMapping(value ="player/combatAction", produces = {"application/json"})
-    public  ResponseEntity<?> playerCombat(long monserId){
+    @PutMapping(value ="/player/combatAction", produces = {"application/json"})
+    public  ResponseEntity<?> playerCombat(long montserId){
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -64,18 +62,40 @@ public class GameController {
     // ---------------------- Monster Actions
     // update
     /// /monster/pickupItem/
+    @PutMapping(value = "/monster/itemAction", produces = {"application/json"})
+    public ResponseEntity<?> monsterItem(long monsterId){
 
-    // update
-    // /monster/dropItem/
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
 
     //Get
     // /monster/checkInventory/
+    @GetMapping(value = "/monster/checkInventory", produces = {"application/json"})
+    public ResponseEntity<?> monsterInvetory(long monsterId){
+
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 
     // ----------------------- Game Actions
     // delete
     // /monsterDefeat/
 
+    @DeleteMapping(value = "/game/monsterdeath", produces = {"application/json"})
+    public ResponseEntity<?> monsterDeath(long monsterId){
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     // update
     // /playerDefeat/
+
+    @PutMapping(value = "/game/playerdefeat", produces = {"application/json"})
+    public ResponseEntity<?> playerDefeat(long playerId){
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
