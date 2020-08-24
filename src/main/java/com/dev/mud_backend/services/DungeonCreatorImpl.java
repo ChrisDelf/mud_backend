@@ -1,6 +1,7 @@
 package com.dev.mud_backend.services;
 
 import com.dev.mud_backend.models.Cell;
+import com.dev.mud_backend.models.Monster;
 import com.dev.mud_backend.models.PlacedRooms;
 import com.dev.mud_backend.models.Room;
 import com.dev.mud_backend.repository.CellRepository;
@@ -23,6 +24,9 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
 
     @Autowired
     private CellService cellService;
+
+    @Autowired
+    private MonsterService monsterService;
 
     @Override
     public ArrayList<Cell> getMap() {
@@ -260,6 +264,22 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
         for (int i = 0; i < roomValues.size(); i++){
 
             if( isValidRoomPlacement(grid, roomValues.get(i))){
+//                int x;
+//                int y;
+//                x = roomValues.get(i).getX();
+//                y = roomValues.get(i).getY();
+
+                // placing monster in random room //
+                ArrayList<Integer> monsterCoor = new ArrayList<Integer>();
+                // creating a new instance of a monster
+                int monsterX;
+                int monsterY;
+                Monster roomMonster = new Monster("Goblin",12,2,4,1,5);
+                roomMonster.setMonsterX(rand.ints(roomValues.get(i).getX(),roomValues.get(i).getX() + roomValues.get(i).getWidth()).findFirst().getAsInt());
+                roomMonster.setMonsterY(rand.ints(roomValues.get(i).getY(),roomValues.get(i).getY() + roomValues.get(i).getHeight()).findFirst().getAsInt());
+
+
+
                 Room newDoor = new Room();
                 newDoor.setX(roomValues.get(i).getDoorX());
                 newDoor.setY(roomValues.get(i).getDoorY());

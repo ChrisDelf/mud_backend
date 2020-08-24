@@ -40,6 +40,12 @@ public class Map {
     @JsonIgnoreProperties("maps")
     private User user;
 
+    @OneToMany
+    @JoinColumn(name="mapid",
+    nullable = true)
+    @JsonIgnoreProperties("maps")
+    private Monster monster;
+
 
 
 
