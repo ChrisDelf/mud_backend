@@ -167,6 +167,8 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
                 else if (type == "Monster"){
                     grid.get(i).get(j).setRoomType("Monster");
                     cellRepo.save(grid.get(i).get(j));
+                    // hello what is going on?
+                    
                 }
 
 
