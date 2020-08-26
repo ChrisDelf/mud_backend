@@ -30,10 +30,19 @@ public class Monster {
 
     private long stamina;
 
-    @OneToMany(mappedBy = "monster",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    @JsonIgnoreProperties("monster")
+    private long monsterX;
+
+    private long monsterY;
+
+
+
+    @ManyToOne
+    @JoinColumn(name = "mapid", nullable = false)
+    @JsonIgnoreProperties("monsters")
+    private long mapid;
+
+
+
     private List<Item> itemsList = new ArrayList<>();
 
 
@@ -45,6 +54,22 @@ public class Monster {
         this.agility = agility;
         this.intellect = intellect;
         this.stamina = stamina;
+    }
+
+    public long getMonsterX() {
+        return monsterX;
+    }
+
+    public void setMonsterX(long monsterX) {
+        this.monsterX = monsterX;
+    }
+
+    public long getMonsterY() {
+        return monsterY;
+    }
+
+    public void setMonsterY(long monsterY) {
+        this.monsterY = monsterY;
     }
 
     public String getMonsterName() {
