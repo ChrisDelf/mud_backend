@@ -2,6 +2,8 @@ package com.dev.mud_backend.services;
 
 import com.dev.mud_backend.models.Monster;
 
+import java.util.ArrayList;
+
 public class MonsterServiceImpl implements MonsterService  {
     @Override
     public Monster MonsterStats(long id) {
@@ -20,6 +22,11 @@ public class MonsterServiceImpl implements MonsterService  {
 
     @Override
     public String MonsterDeath(long monsterId) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<Monster> GenerateMonsters(int monsterLimit) {
         return null;
     }
 }
