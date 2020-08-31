@@ -34,11 +34,16 @@ public class Monster {
 
     private int monsterY;
 
-    @OneToMany(mappedBy = "monster",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    @JsonIgnoreProperties("monster")
-    private List<Item> itemsList = new ArrayList<>();
+//    @OneToMany(mappedBy = "monster",
+//            cascade = CascadeType.ALL,
+//            orphanRemoval = true)
+//    @JsonIgnoreProperties("monster")
+//    private List<Item> itemsList = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "mapid", nullable = false)
+    @JsonIgnoreProperties("monsters")
+    private Map map;
 
     public Monster() {
 

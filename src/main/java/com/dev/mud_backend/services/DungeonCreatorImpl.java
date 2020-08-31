@@ -25,6 +25,9 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
     @Autowired
     private CellService cellService;
 
+    @Autowired
+    private MonsterService monsterService;
+
     @Override
     public ArrayList<Cell> getMap() {
 
