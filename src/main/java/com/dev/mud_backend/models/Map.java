@@ -40,11 +40,12 @@ public class Map {
     @JsonIgnoreProperties("maps")
     private User user;
 
-    @OneToMany
-    @JoinColumn(name="mapid",
-    nullable = true)
-    @JsonIgnoreProperties("maps")
-    private Monster monster;
+
+    @OneToMany(mappedBy="map",
+            cascade = CascadeType.ALL,
+    orphanRemoval = true)
+    @JsonIgnoreProperties("map")
+    private List<Monster> mapMonsters = new ArrayList<>();
 
 
 

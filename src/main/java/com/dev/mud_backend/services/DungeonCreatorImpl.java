@@ -149,6 +149,8 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
             type = "Floor";
         }
 
+
+
         for (int i = roomY; i < (room.getHeight() + room.getY()); i++) {
 
             for (int j = roomX; j < (room.getWidth() + room.getX()); j++) {
@@ -158,6 +160,10 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
                     grid.get(i).get(j).setRoomType("Floor");
                     cellRepo.save(grid.get(i).get(j));
 
+                }
+                if (type == "Monster")  {
+                    grid.get(i).get(j).setRoomType("Monster");
+                    cellRepo.save(grid.get(i).get(j));
                 }
                 else if (type == "Door"){
                     grid.get(i).get(j).setRoomType("Door");
@@ -270,29 +276,31 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
         for (int i = 0; i < roomValues.size(); i++){
 
             if( isValidRoomPlacement(grid, roomValues.get(i))){
-//                int x;
-//                int y;
-//                x = roomValues.get(i).getX();
-//                y = roomValues.get(i).getY();
 
-                // placing monster in random room //
-                ArrayList<Integer> monsterCoor = new ArrayList<Integer>();
-                // creating a new instance of a monster
-                int monsterX;
-                int monsterY;
-                Monster roomMonster = new Monster("Goblin",12,2,4,1,5);
-                roomMonster.setMonsterX(rand.ints(roomValues.get(i).getX(),roomValues.get(i).getX() + roomValues.get(i).getWidth()).findFirst().getAsInt());
-                roomMonster.setMonsterY(rand.ints(roomValues.get(i).getY(),roomValues.get(i).getY() + roomValues.get(i).getHeight()).findFirst().getAsInt());
-
-
-
+                // Creating a door
                 Room newDoor = new Room();
                 newDoor.setX(roomValues.get(i).getDoorX());
                 newDoor.setY(roomValues.get(i).getDoorY());
                 newDoor.setHeight(1);
                 newDoor.setWidth(1);
+                // Creating a monster
+                Monster newMonster = new Monster("Gobo",5,2,2,1,1);
+                newMonster.setMonsterX(rand.ints(roomValues.get(i).getX() + roomValues.get(i).getWidth()).findFirst().getAsInt());
+                newMonster.setMonsterY(rand.ints(roomValues.get(i).getY() + roomValues.get(i).getHeight()).findFirst().getAsInt());
+                Room newMonsterPlacement = new Room();
+                newMonsterPlacement.setDoorX(newMonster.getMonsterX());
+                newMonsterPlacement.setDoorY(newMonster.getMonsterY());
+                newMonsterPlacement.setHeight(1);
+                newMonsterPlacement.setWidth(1);
+
+
+                // Placing the cells to create the room
+                // for the room it self
                 grid = placeCells(grid,roomValues.get(i), "Floor");
+                // for the door
                 grid = placeCells(grid,newDoor, "Door");
+                // for the monster
+                grid = placeCells(grid,newMonsterPlacement,"Monster");
 
                 roomsPlaced.add(roomValues.get(i));
 
