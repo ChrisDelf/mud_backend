@@ -40,6 +40,14 @@ public class Map {
     @JsonIgnoreProperties("maps")
     private User user;
 
+
+
+    @OneToMany(mappedBy="map",
+            cascade = CascadeType.ALL,
+    orphanRemoval = true)
+    @JsonIgnoreProperties("map")
+    private List<Monster> mapMonsters = new ArrayList<>();
+
     public Map() {
     }
 

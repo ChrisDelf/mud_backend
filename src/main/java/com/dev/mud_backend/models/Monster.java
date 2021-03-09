@@ -58,6 +58,7 @@ public class Monster {
         this.stamina = stamina;
     }
 
+
     public int getMonsterX() {
         return monsterX;
     }
@@ -73,6 +74,7 @@ public class Monster {
     public int getMonsterY() {
         return monsterY;
     }
+
 
     public String getMonsterName() {
         return monsterName;
