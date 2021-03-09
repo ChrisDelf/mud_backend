@@ -1,9 +1,13 @@
 package com.dev.mud_backend.models;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "rooms")
 public class Room {
 
     @Id
@@ -22,8 +26,20 @@ public class Room {
 
     private int doorX;
 
+    private int monsterLimit;
 
+//    @OneToMany(mappedBy="room",
+//            cascade = CascadeType.ALL,
+//            orphanRemoval = true)
+//    @JsonIgnoreProperties("room")
+//    private ArrayList<Monster> monsters = new ArrayList<Monster>();
 
+//    @OneToMany(mappedBy="room"
+//            //cascade = CascadeType.ALL,
+//           // orphanRemoval = true//
+//    )
+//    @JsonIgnoreProperties("room")
+//    private ArrayList<Cell> cells = new ArrayList<Cell>();
 
     public Room() {
     }
@@ -37,10 +53,18 @@ public class Room {
         this.doorX = doorX;
     }
 
+    public int getMonsterLimit() {
+        return monsterLimit;
+    }
+
+    public void setMonsterLimit(int monsterLimit) {
+        this.monsterLimit = monsterLimit;
+    }
+
+
     public long getRoomId() {
         return roomId;
     }
-
 
     public int getX() {
         return x;
@@ -89,4 +113,16 @@ public class Room {
     public void setDoorX(int doorX) {
         this.doorX = doorX;
     }
+
+   // public ArrayList<Monster> getMonstersList() {
+   //     return monsters;
+   // }
+
+  //  public void setMonstersList(ArrayList<Monster> monstersList) {
+    //    this.monsters = monstersList;
+   // }
+
+
+
+
 }

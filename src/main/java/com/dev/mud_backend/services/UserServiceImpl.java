@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service(value = "userService")
@@ -40,9 +41,11 @@ public class UserServiceImpl implements UserDetailsService, UserService
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getAuthority());
     }
 
+    @Transactional
+    @Override
     public User findUserById(long id) throws ResourceNotFoundException
     {
-        return userrepos.findById(id)
+        return Optional.ofNullable(userrepos.findById(id))
                 .orElseThrow(() -> new ResourceNotFoundException("User id " + id + " not found!"));
     }
 
@@ -70,7 +73,7 @@ public class UserServiceImpl implements UserDetailsService, UserService
     @Override
     public void delete(long id)
     {
-        userrepos.findById(id)
+        Optional.ofNullable(userrepos.findById(id))
                 .orElseThrow(() -> new ResourceNotFoundException("User id " + id + " not found!"));
         userrepos.deleteById(id);
     }
@@ -167,26 +170,26 @@ public class UserServiceImpl implements UserDetailsService, UserService
     @Override
     public void deleteUserRole(long userid, long roleid)
     {
-        userrepos.findById(userid)
+        Optional.ofNullable(userrepos.findById(userid))
                 .orElseThrow(() -> new ResourceNotFoundException("User id " + userid + " not found!"));
         rolerepos.findById(roleid)
                 .orElseThrow(() -> new ResourceNotFoundException("Role id " + roleid + " not found!"));
 
-//        if (rolerepos.checkUserRolesCombo(userid, roleid)
-//                .getCount() > 0)
-//        {
-//            rolerepos.deleteUserRoles(userid, roleid);
-//        } else
-//        {
-//            throw new ResourceNotFoundException("Role and User Combination Does Not Exists");
-//        }
+  //     if (rolerepos.checkUserRolesCombo(userid, roleid)
+   //             .getCount() > 0)
+  //      {
+   //        rolerepos.deleteUserRoles(userid, roleid);
+   //    } else
+   //   {
+   //       throw new ResourceNotFoundException("Role and User Combination Does Not Exists");
+   //    }
     }
 
     @Transactional
     @Override
     public void addUserRole(long userid, long roleid)
     {
-        userrepos.findById(userid)
+        Optional.ofNullable(userrepos.findById(userid))
                 .orElseThrow(() -> new ResourceNotFoundException("User id " + userid + " not found!"));
         rolerepos.findById(roleid)
                 .orElseThrow(() -> new ResourceNotFoundException("Role id " + roleid + " not found!"));

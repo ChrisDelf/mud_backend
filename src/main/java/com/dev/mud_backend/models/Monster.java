@@ -41,15 +41,15 @@ public class Monster {
 //    private List<Item> itemsList = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "mapid", nullable = false)
+    @JoinColumn(name = "roomId", nullable = false)
     @JsonIgnoreProperties("monsters")
-    private Map map;
+    private Room room;
 
     public Monster() {
 
     }
 
-    public Monster(String monsterName, long monsterHealth, long strength, long agility, long intellect, long stamina) {
+    public Monster( String monsterName, long monsterHealth, long strength, long agility, long intellect, long stamina) {
         this.monsterName = monsterName;
         this.monsterHealth = monsterHealth;
         this.strength = strength;
@@ -73,8 +73,6 @@ public class Monster {
     public int getMonsterY() {
         return monsterY;
     }
-
-
 
     public String getMonsterName() {
         return monsterName;
@@ -122,5 +120,9 @@ public class Monster {
 
     public void setStamina(long stamina) {
         this.stamina = stamina;
+    }
+
+    public long getMonsterid() {
+        return monsterid;
     }
 }

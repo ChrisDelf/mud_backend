@@ -161,10 +161,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
                     cellRepo.save(grid.get(i).get(j));
 
                 }
-                if (type == "Monster")  {
-                    grid.get(i).get(j).setRoomType("Monster");
-                    cellRepo.save(grid.get(i).get(j));
-                }
+
                 else if (type == "Door"){
                     grid.get(i).get(j).setRoomType("Door");
                     cellRepo.save(grid.get(i).get(j));
@@ -276,24 +273,18 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
                 newDoor.setY(roomValues.get(i).getDoorY());
                 newDoor.setHeight(1);
                 newDoor.setWidth(1);
+
                 // Creating a monster
                 Monster newMonster = new Monster("Gobo",5,2,2,1,1);
                 newMonster.setMonsterX(rand.ints(roomValues.get(i).getX() + roomValues.get(i).getWidth()).findFirst().getAsInt());
                 newMonster.setMonsterY(rand.ints(roomValues.get(i).getY() + roomValues.get(i).getHeight()).findFirst().getAsInt());
-                Room newMonsterPlacement = new Room();
-                newMonsterPlacement.setDoorX(newMonster.getMonsterX());
-                newMonsterPlacement.setDoorY(newMonster.getMonsterY());
-                newMonsterPlacement.setHeight(1);
-                newMonsterPlacement.setWidth(1);
-
-
                 // Placing the cells to create the room
                 // for the room it self
                 grid = placeCells(grid,roomValues.get(i), "Floor");
                 // for the door
                 grid = placeCells(grid,newDoor, "Door");
-                // for the monster
-                grid = placeCells(grid,newMonsterPlacement,"Monster");
+
+
 
                 roomsPlaced.add(roomValues.get(i));
 
