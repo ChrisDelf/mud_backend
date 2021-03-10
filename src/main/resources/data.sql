@@ -1,0 +1,48 @@
+DELETE
+FROM users;
+
+DELETE
+FROM userroles;
+
+DELETE
+FROM useremails;
+
+DELETE
+FROM rooms;
+
+DELETE
+FROM monsters;
+
+DELETE
+FROM cells;
+
+DELETE
+FROM maps;
+
+CREATE TABLE rooms(
+roomid INTEGER AUTO_INCREMENT PRIMARY KEY ,
+x INTEGER DEFAULT NULL,
+y INTEGER DEFAULT NULL,
+height INTEGER DEFAULT NULL,
+width INTEGER DEFAULT NULL,
+doorY INTEGER DEFAULT NULL,
+doorX INTEGER DEFAULT NULL,
+monsterLimit  INTEGER DEFAULT NULL,
+monsters VARCHAR(250) DEFAULT NULL,
+)
+
+CREATE TABLE monsters(
+monsterid INT PRIMARY KEY,
+monsterName VARCHAR(250) DEFAULT NULL,
+monsterHealth INT DEFAULT NULL,
+strength INT DEFAULT NULL,
+agility INT DEFAULT NULL,
+intellect INT DEFAULT NULL,
+stamina INT DEFAULT NULL,
+monsterX INT DEFAULT NULL,
+monsterY INT DEFAULT NULL,
+
+)
+
+
+alter sequence hibernate_sequence restart with 20;

@@ -20,11 +20,11 @@ public class Cell {
             unique = false)
     private String roomType;
 
-//    @ManyToOne
-//    @JoinColumn(name = "mapid",
-//            nullable = false)
-//    @JsonIgnoreProperties("cells")
-//    private Map map;
+//   @ManyToOne
+//   @JoinColumn(name = "roomid",
+//           nullable = false)
+//   @JsonIgnoreProperties("cells")
+//   private Room room;
 
     private long mapid;
 
