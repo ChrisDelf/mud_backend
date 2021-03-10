@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
+
 @Service(value = "monsterService")
 public class MonsterServiceImpl implements MonsterService  {
     @Autowired
@@ -16,10 +18,9 @@ public class MonsterServiceImpl implements MonsterService  {
     @Autowired
     MonsterRepository monsterRepo;
 
-
     @Override
-    public ArrayList<ArrayList> MonsterStats(long m_id, long room_id) {
-        ArrayList<ArrayList> return_list = new ArrayList<ArrayList>();
+    public List<ArrayList> MonsterStats(long m_id, long room_id) {
+        List<ArrayList> return_list = new ArrayList<ArrayList>();
     return return_list;
     }
 
