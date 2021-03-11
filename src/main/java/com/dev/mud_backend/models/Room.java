@@ -28,11 +28,11 @@ public class Room {
 
     private int monsterLimit;
 
-//    @OneToMany(mappedBy="room",
-//            cascade = CascadeType.ALL,
-//            orphanRemoval = true)
-//    @JsonIgnoreProperties("room")
-//    private ArrayList<Monster> monsters = new ArrayList<Monster>();
+    @OneToMany(mappedBy="room",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    @JsonIgnoreProperties("room")
+    private List<Monster> monsters = new ArrayList<Monster>();
 
 //    @OneToMany(mappedBy="room"
 //            //cascade = CascadeType.ALL,
@@ -114,13 +114,13 @@ public class Room {
         this.doorX = doorX;
     }
 
-   // public ArrayList<Monster> getMonstersList() {
-   //     return monsters;
-   // }
+    public List<Monster> getMonstersList() {
+        return monsters;
+    }
 
-  //  public void setMonstersList(ArrayList<Monster> monstersList) {
-    //    this.monsters = monstersList;
-   // }
+    public void setMonstersList(List<Monster> monsters) {
+        this.monsters = monsters;
+    }
 
 
 
