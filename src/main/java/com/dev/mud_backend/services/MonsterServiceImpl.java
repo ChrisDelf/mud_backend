@@ -9,19 +9,32 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service(value = "monsterService")
 public class MonsterServiceImpl implements MonsterService  {
     @Autowired
-    RoomRepository roomRepo;
+    private RoomRepository roomRepo;
 
     @Autowired
-    MonsterRepository monsterRepo;
+    private MonsterRepository monsterRepo;
+
+    @Autowired
+    private RoomService roomService;
 
     @Override
-    public List<ArrayList> MonsterStats(long m_id, long room_id) {
-        List<ArrayList> return_list = new ArrayList<ArrayList>();
-    return return_list;
+    public Monster MonsterStats(long m_id, long room_id) {
+        // instantiate the monster that we are going pull the stats int
+        Monster target_monster = new Monster();
+        // first we need to find if the room exist
+        Room target_room = roomRepo.findByRoomId(room_id);
+        // if we don't find a room
+        if (target_room == null){
+            return target_monster;
+        }
+        target_monster = roomService.getMonster(target_room, m_id);
+
+        return target_monster;
     }
 
     @Override

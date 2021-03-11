@@ -5,5 +5,5 @@ import com.dev.mud_backend.models.Monster;
 import org.springframework.data.repository.CrudRepository;
 
 public interface MonsterRepository extends CrudRepository<Monster, Long> {
-  //  Monster findMonsterById(long monsterid);
+   //Monster findMonsterById(long monsterid);
 }
