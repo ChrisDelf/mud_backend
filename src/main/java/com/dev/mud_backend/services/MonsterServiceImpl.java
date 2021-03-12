@@ -1,8 +1,10 @@
 package com.dev.mud_backend.services;
 
 import com.dev.mud_backend.models.Monster;
+import com.dev.mud_backend.models.Player;
 import com.dev.mud_backend.models.Room;
 import com.dev.mud_backend.repository.MonsterRepository;
+import com.dev.mud_backend.repository.PlayerRepository;
 import com.dev.mud_backend.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,12 @@ public class MonsterServiceImpl implements MonsterService  {
 
     @Autowired
     private RoomService roomService;
+
+    @Autowired
+    private PlayerService playerService;
+
+    @Autowired
+    private PlayerRepository playerRepo;
 
     @Override
     public Monster MonsterStats(long m_id, long room_id) {
@@ -41,8 +49,16 @@ public class MonsterServiceImpl implements MonsterService  {
     public long MonsterAttack(long monsterId, long playerId) {
         // find the select monster
         Monster target_monster = monsterRepo.findMonsterById(monsterId);
+        // now we nee to gather the information from the player
+        Player player = playerRepo.findPlayer(playerId);
 
-        return 0;
+        //this where we would calculate the monsters damage
+
+        //we now apply the damage to the player
+
+        long d_result = playerService.playerDamaged(5,player);
+
+        return d_result;
     }
 
     @Override
