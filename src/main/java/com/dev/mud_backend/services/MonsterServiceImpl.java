@@ -39,6 +39,9 @@ public class MonsterServiceImpl implements MonsterService  {
 
     @Override
     public long MonsterAttack(long monsterId, long playerId) {
+        // find the select monster
+        Monster target_monster = monsterRepo.findMonsterById(monsterId);
+
         return 0;
     }
 
