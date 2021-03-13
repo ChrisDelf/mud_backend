@@ -62,7 +62,7 @@ public class MonsterServiceImpl implements MonsterService  {
     }
 
     @Override
-    public long MonsterHeal(long monsterId) {
+    public long MonsterHeal(long monsterId, long healAmount) {
         return 0;
     }
 
