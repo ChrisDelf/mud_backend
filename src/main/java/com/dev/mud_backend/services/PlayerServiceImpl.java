@@ -1,5 +1,6 @@
 package com.dev.mud_backend.services;
 
+import com.dev.mud_backend.exceptions.ResourceNotFoundException;
 import com.dev.mud_backend.models.Monster;
 import com.dev.mud_backend.models.Player;
 import com.dev.mud_backend.repository.MonsterRepository;
@@ -7,17 +8,19 @@ import com.dev.mud_backend.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service(value = "playerService")
 public class PlayerServiceImpl implements PlayerService {
 
     @Autowired
-    MonsterRepository monsterRepo;
+    private PlayerRepository playerRepo;
 
     @Autowired
-    PlayerRepository playerRepo;
+    private MonsterService monsterService;
 
     @Autowired
-    MonsterService monsterService;
+    private PlayerService playerService;
 
     @Override
     public long playerDamaged(int damage, Player player) {
@@ -55,8 +58,8 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public long playerAttack(long player_id, String weapon, long monster_id) {
         // we need to get find our monster and player in the data base
-        Monster target_monster = monsterRepo.findMonsterById(monster_id);
-        Player player = playerRepo.findPlayer(player_id);
+        Monster target_monster = monsterService.findById(monster_id);
+        Player player = playerService.findById(player_id);
 
         // this is were we would calculate the players attack damage
         long player_damage = 5;
@@ -79,5 +82,17 @@ public class PlayerServiceImpl implements PlayerService {
         return monster_health;
     }
 
+    @Transactional
+    @Override
+    public Player findById(long id) throws ResourceNotFoundException {
+        Player player = playerRepo.findByPlayerid(id);
 
+        if (player == null) {
+            throw new ResourceNotFoundException("The player by the id" + id + " was not found");
+        }
+        else {
+            return player;
+        }
+
+    }
 }

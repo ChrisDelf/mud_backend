@@ -9,5 +9,7 @@ public interface PlayerService {
 
     long playerAttack(long player_id, String weapon, long monster_id);
 
+    Player findById(long id);
+
 
 }
