@@ -4,6 +4,7 @@ import com.dev.mud_backend.models.Map;
 import com.dev.mud_backend.models.Player;
 import com.dev.mud_backend.models.User;
 import com.dev.mud_backend.repository.PlayerRepository;
+import com.dev.mud_backend.services.PlayerService;
 import org.h2.util.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +24,7 @@ public class PlayerController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
-    PlayerRepository playerRepo;
+    private PlayerService playerService;
 
     @PutMapping(value = "/attack/{playerid}",
             consumes = {"application/json"},
@@ -35,9 +36,9 @@ public class PlayerController {
                                           @PathVariable long monsterid)
     {
         ArrayList<Long> monsterId_L = new ArrayList<Long>();
-        
+        System.out.println("Link workded");
         // let use grab out player and our monsterid
-        Player target_player = playerRepo.findPlayer(playerid);
+        //Player target_player = playerService.findById(playerid);
 
 
 

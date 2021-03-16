@@ -120,4 +120,8 @@ public class Player {
     public void setItemsList(List<Item> itemsList) {
         this.itemsList = itemsList;
     }
+
+    public long getPlayerid() {
+        return playerid;
+    }
 }

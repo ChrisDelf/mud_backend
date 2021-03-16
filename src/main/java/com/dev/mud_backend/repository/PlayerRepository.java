@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface PlayerRepository extends CrudRepository<Player, Long> {
 
-    Player findPlayer(long id);
+    Player findByPlayerid(long playerid);
 }

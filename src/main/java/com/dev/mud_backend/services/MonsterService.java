@@ -17,4 +17,6 @@ public interface MonsterService {
 
     ArrayList<Monster> GenerateMonsters(int monsterLimit);
 
+    Monster findById(long monster_id);
+
 }
