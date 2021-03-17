@@ -14,7 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,21 +26,20 @@ public class PlayerController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
-    private PlayerService playerService;
+    PlayerService playerService;
 
     @PutMapping(value = "/attack/{playerid}",
             consumes = {"application/json"},
             produces = {"application/json"})
     public ResponseEntity<?> playerAttack(HttpServletRequest request,
                                           @RequestBody
-                                          JSONObject json,
-                                          @PathVariable long playerid,
-                                          @PathVariable long monsterid)
+                                                  Hashtable<String, List> my_dict,
+                                          @PathVariable long playerid)throws URISyntaxException
+                                          //@PathVariable long monsterid)
     {
         ArrayList<Long> monsterId_L = new ArrayList<Long>();
-        System.out.println("Link workded");
         // let use grab out player and our monsterid
-        //Player target_player = playerService.findById(playerid);
+        Player target_player = playerService.findById(playerid);
 
 
 
