@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 
 @Entity
+@Table(name = "placedRooms")
 public class PlacedRooms {
 
     @Id
@@ -13,6 +14,11 @@ public class PlacedRooms {
     //    private int x;
 //
 //    private int y;
+
+    @OneToOne(mappedBy = "placedRooms")
+    private Map map;
+
+
     private ArrayList<ArrayList<Cell>> grid = new ArrayList<ArrayList<Cell>>();
 
     private ArrayList<Room> placedRooms = new ArrayList<Room>();

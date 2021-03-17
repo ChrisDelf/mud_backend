@@ -40,6 +40,17 @@ public class Map {
     @JsonIgnoreProperties("maps")
     private User user;
 
+//    @OneToMany(mappedBy="map",
+//            cascade = CascadeType.ALL,
+//            orphanRemoval = true)
+//    @JsonIgnoreProperties("map")
+//    private List<Monster> monsters = new ArrayList<>();
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "placedRoomId", referencedColumnName = "placedRoomId")
+    private PlacedRooms placedRooms;
+
+
     public Map() {
     }
 
