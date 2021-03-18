@@ -46,4 +46,26 @@ public class PlayerController {
 
         return new ResponseEntity<>( HttpStatus.OK);
     }
+
+    //// update player stats
+
+    @PutMapping(value = "/updateStats/{playerid}",
+            consumes = {"application/json"},
+            produces = {"application/json"})
+    public ResponseEntity<?> updateStats(HttpServletRequest request,
+                                          @RequestBody Player player,
+                                          @PathVariable long playerid)throws URISyntaxException
+    //@PathVariable long monsterid)
+    {
+        ArrayList<Long> monsterId_L = new ArrayList<Long>();
+        // let use grab out player and our monsterid
+        Player target_player = playerService.findById(playerid);
+
+
+
+
+        return new ResponseEntity<>( HttpStatus.OK);
+    }
+
+
 }

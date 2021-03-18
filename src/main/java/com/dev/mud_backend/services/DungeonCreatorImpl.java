@@ -276,7 +276,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
                 newDoor.setWidth(1);
 
                 // Creating a monster
-                Monster newMonster = new Monster("Gobo",5,2,2,1,1);
+                Monster newMonster = new Monster("Gobo",5,2,2,1,1,10,"standing");
                 newMonster.setMonsterX(rand.ints(roomValues.get(i).getX() + roomValues.get(i).getWidth()).findFirst().getAsInt());
                 newMonster.setMonsterY(rand.ints(roomValues.get(i).getY() + roomValues.get(i).getHeight()).findFirst().getAsInt());
                 // have to add the monster to the room

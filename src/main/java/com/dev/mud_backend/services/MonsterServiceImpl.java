@@ -69,12 +69,21 @@ public class MonsterServiceImpl implements MonsterService  {
 
     @Override
     public long MonsterHeal(long monsterId, long healAmount) {
-        return 0;
+        //Find the monster
+        Monster monster = monsterService.findById(monsterId);
+        // now we will adjust the monsters health
+        monster.setMonsterHealth(monster.getMonsterHealth() + healAmount);
+
+        return monster.getMonsterHealth();
     }
 
     @Override
     public String MonsterDeath(long monsterId) {
-        return null;
+        //Find the monster
+        Monster monster = monsterService.findById(monsterId);
+        // mow we change the monster status to dead
+        monster.setStatus("dead");
+        return monster.getStatus();
     }
 
     @Override

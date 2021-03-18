@@ -22,6 +22,9 @@ public class PlayerServiceImpl implements PlayerService {
     @Autowired
     private PlayerService playerService;
 
+    @Autowired
+    private MonsterRepository monsterRepo;
+
     @Override
     public long playerDamaged(int damage, Player player) {
         long playerHp = player.getPlayerHealth();
@@ -38,6 +41,7 @@ public class PlayerServiceImpl implements PlayerService {
             // set player status to dead
         }
 
+        playerRepo.save(player);
 
         return playerHp;
     }
@@ -51,6 +55,8 @@ public class PlayerServiceImpl implements PlayerService {
         // we need max hp attribute eventually
 
         player.setPlayerHealth(playerHp);
+
+        playerRepo.save(player);
 
         return playerHp;
     }
@@ -76,7 +82,7 @@ public class PlayerServiceImpl implements PlayerService {
             target_monster.setMonsterHealth(monster_health);
         }
 
-
+        monsterRepo.save(target_monster);
 
 
         return monster_health;
