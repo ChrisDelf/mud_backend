@@ -41,12 +41,15 @@ public class Map {
     private User user;
 
 
+//    @OneToMany(mappedBy="map",
+//            cascade = CascadeType.ALL,
+//            orphanRemoval = true)
+//    @JsonIgnoreProperties("map")
+//    private List<Monster> monsters = new ArrayList<>();
 
-    @OneToMany(mappedBy="map",
-            cascade = CascadeType.ALL,
-    orphanRemoval = true)
-    @JsonIgnoreProperties("map")
-    private List<Monster> mapMonsters = new ArrayList<>();
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "placedRoomId", referencedColumnName = "placedRoomId")
+    private PlacedRooms placedRooms;
 
     public Map() {
     }

@@ -10,7 +10,7 @@ public class Cell {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long roomid;
+    private long cellid;
 
     private int x;
 
@@ -20,11 +20,11 @@ public class Cell {
             unique = false)
     private String roomType;
 
-//   @ManyToOne
-//   @JoinColumn(name = "roomid",
-//           nullable = false)
-//   @JsonIgnoreProperties("cells")
-//   private Room room;
+   @ManyToOne
+   @JoinColumn(name = "roomid",
+           nullable = false)
+   @JsonIgnoreProperties("cells")
+   private Room room;
 
     private long mapid;
 
@@ -50,11 +50,11 @@ public class Cell {
     }
 
     public long getRoomid() {
-        return roomid;
+        return cellid;
     }
 
     public void setRoomid(long roomid) {
-        this.roomid = roomid;
+        this.cellid = roomid;
     }
 
     public int getX() {

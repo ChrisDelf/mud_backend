@@ -34,12 +34,12 @@ public class Room {
     @JsonIgnoreProperties("room")
     private List<Monster> monsters = new ArrayList<Monster>();
 
-//    @OneToMany(mappedBy="room"
-//            //cascade = CascadeType.ALL,
-//           // orphanRemoval = true//
-//    )
-//    @JsonIgnoreProperties("room")
-//    private ArrayList<Cell> cells = new ArrayList<Cell>();
+    @OneToMany(mappedBy="room",
+            cascade = CascadeType.ALL,
+           orphanRemoval = true
+    )
+    @JsonIgnoreProperties("room")
+    private List<Cell> cells = new ArrayList<Cell>();
 
     public Room() {
     }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
 
@@ -282,10 +283,16 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
                 newDoor.setWidth(1);
 
                 // Creating a monster
-                Monster newMonster = new Monster("Gobo",5,2,2,1,1);
+                Monster newMonster = new Monster("Gobo",5,2,2,1,1,10,"standing");
                 newMonster.setMonsterX(rand.ints(roomValues.get(i).getX() + roomValues.get(i).getWidth()).findFirst().getAsInt());
                 newMonster.setMonsterY(rand.ints(roomValues.get(i).getY() + roomValues.get(i).getHeight()).findFirst().getAsInt());
+                // have to add the monster to the room
+                List <Monster> monsters = new ArrayList<>();
+                monsters.add(newMonster);
+
+                roomValues.get(i).setMonstersList(monsters);
                 // Placing the cells to create the room
+
                 // for the room it self
                 grid = placeCells(grid,roomValues.get(i), "Floor");
                 // for the door

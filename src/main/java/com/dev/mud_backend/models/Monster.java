@@ -34,6 +34,10 @@ public class Monster {
 
     private int monsterY;
 
+    private long maxhealth;
+
+    private String status;
+
 //    @OneToMany(mappedBy = "monster",
 //            cascade = CascadeType.ALL,
 //            orphanRemoval = true)
@@ -49,13 +53,15 @@ public class Monster {
 
     }
 
-    public Monster( String monsterName, long monsterHealth, long strength, long agility, long intellect, long stamina) {
+    public Monster( String monsterName, long monsterHealth, long strength, long agility, long intellect, long stamina, long maxhealth, String status) {
         this.monsterName = monsterName;
         this.monsterHealth = monsterHealth;
         this.strength = strength;
         this.agility = agility;
         this.intellect = intellect;
         this.stamina = stamina;
+        this.maxhealth = maxhealth;
+        this.status = status;
     }
 
 
@@ -126,5 +132,21 @@ public class Monster {
 
     public long getMonsterid() {
         return monsterid;
+    }
+
+    public long getMaxhealth() {
+        return maxhealth;
+    }
+
+    public void setMaxhealth(long maxhealth) {
+        this.maxhealth = maxhealth;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
