@@ -40,6 +40,7 @@ public class Map {
     @JsonIgnoreProperties("maps")
     private User user;
 
+
 //    @OneToMany(mappedBy="map",
 //            cascade = CascadeType.ALL,
 //            orphanRemoval = true)
@@ -49,7 +50,6 @@ public class Map {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "placedRoomId", referencedColumnName = "placedRoomId")
     private PlacedRooms placedRooms;
-
 
     public Map() {
     }

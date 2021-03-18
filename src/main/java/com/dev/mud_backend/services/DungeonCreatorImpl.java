@@ -168,6 +168,12 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
                     cellRepo.save(grid.get(i).get(j));
 
                 }
+                else if (type == "Monster"){
+                    grid.get(i).get(j).setRoomType("Monster");
+                    cellRepo.save(grid.get(i).get(j));
+                    // hello what is going on?
+                    
+                }
 
 
             }
@@ -268,6 +274,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
         for (int i = 0; i < roomValues.size(); i++){
 
             if( isValidRoomPlacement(grid, roomValues.get(i))){
+
                 // Creating a door
                 Room newDoor = new Room();
                 newDoor.setX(roomValues.get(i).getDoorX());
