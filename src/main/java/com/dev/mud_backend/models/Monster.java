@@ -149,4 +149,12 @@ public class Monster {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
 }
