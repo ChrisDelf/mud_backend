@@ -5,6 +5,7 @@ import com.dev.mud_backend.models.Monster;
 import com.dev.mud_backend.models.PlacedRooms;
 import com.dev.mud_backend.models.Room;
 import com.dev.mud_backend.repository.CellRepository;
+import com.dev.mud_backend.repository.MonsterRepository;
 import com.dev.mud_backend.repository.PlacedRoomsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,9 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
 
     @Autowired
     private MonsterService monsterService;
+
+    @Autowired
+    private MonsterRepository monsterRepo;
 
     @Override
     public ArrayList<Cell> getMap() {
@@ -279,6 +283,8 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
                 Monster newMonster = new Monster("Gobo",5,2,2,1,1,10,"standing");
                 newMonster.setMonsterX(rand.ints(roomValues.get(i).getX() + roomValues.get(i).getWidth()).findFirst().getAsInt());
                 newMonster.setMonsterY(rand.ints(roomValues.get(i).getY() + roomValues.get(i).getHeight()).findFirst().getAsInt());
+                newMonster.setRoom(roomValues.get(i));
+                monsterRepo.save(newMonster);
                 // have to add the monster to the room
                 List <Monster> monsters = new ArrayList<>();
                 monsters.add(newMonster);

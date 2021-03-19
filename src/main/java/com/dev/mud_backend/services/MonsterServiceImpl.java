@@ -46,6 +46,8 @@ public class MonsterServiceImpl implements MonsterService  {
         }
         target_monster = roomService.getMonster(target_room, m_id);
 
+
+
         return target_monster;
     }
 
@@ -62,6 +64,8 @@ public class MonsterServiceImpl implements MonsterService  {
 
         long d_result = playerService.playerDamaged(5,player);
 
+        playerRepo.save(player);
+
         return d_result;
     }
 
@@ -74,6 +78,8 @@ public class MonsterServiceImpl implements MonsterService  {
         // now we will adjust the monsters health
         monster.setMonsterHealth(monster.getMonsterHealth() + healAmount);
 
+        monsterRepo.save(monster);
+
         return monster.getMonsterHealth();
     }
 
@@ -83,6 +89,8 @@ public class MonsterServiceImpl implements MonsterService  {
         Monster monster = monsterService.findById(monsterId);
         // mow we change the monster status to dead
         monster.setStatus("dead");
+        monsterRepo.save(monster);
+        
         return monster.getStatus();
     }
 
