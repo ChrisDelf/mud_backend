@@ -18,4 +18,9 @@ public class ItemsServiceImpl implements ItemsService {
     public Item DropItem(long id) {
         return null;
     }
+
+    @Override
+    public Item addItemToInventory(long item_id) {
+        return null;
+    }
 }

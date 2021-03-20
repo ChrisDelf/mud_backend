@@ -1,5 +1,6 @@
 package com.dev.mud_backend.controllers;
 
+import com.dev.mud_backend.models.Item;
 import com.dev.mud_backend.models.Map;
 import com.dev.mud_backend.models.Player;
 import com.dev.mud_backend.models.User;
@@ -55,6 +56,24 @@ public class PlayerController {
     public ResponseEntity<?> updateStats(HttpServletRequest request,
                                           @RequestBody Player player,
                                           @PathVariable long playerid)throws URISyntaxException
+    //@PathVariable long monsterid)
+    {
+        ArrayList<Long> monsterId_L = new ArrayList<Long>();
+        // let use grab out player and our monsterid
+        Player target_player = playerService.findById(playerid);
+
+
+
+
+        return new ResponseEntity<>( HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/lootItem/{playerid}",
+            consumes = {"application/json"},
+            produces = {"application/json"})
+    public ResponseEntity<?> lootItem(HttpServletRequest request,
+                                         @RequestBody Item item,
+                                         @PathVariable long playerid)throws URISyntaxException
     //@PathVariable long monsterid)
     {
         ArrayList<Long> monsterId_L = new ArrayList<Long>();
