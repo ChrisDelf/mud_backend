@@ -34,6 +34,8 @@ public class Player {
 
     private String status;
 
+    private String mapStatus;
+
 
     @OneToMany(mappedBy = "player",
             cascade = CascadeType.ALL,
@@ -41,7 +43,7 @@ public class Player {
     @JsonIgnoreProperties("player")
     private List<Item> itemsList = new ArrayList<>();
 
-    public Player(long playerHealth, String playerName, long playery, long playerx, long playerStrength, long playerIntellect, long playerAgility, long playerStamina, List<Item> itemsList, String status, long maxHealth) {
+    public Player(long playerHealth, String playerName, long playery, long playerx, long playerStrength, long playerIntellect, long playerAgility, long playerStamina, List<Item> itemsList, String status, long maxHealth, String mapStatus) {
         this.playerHealth = playerHealth;
         this.playerName = playerName;
         this.playery = playery;
@@ -145,5 +147,13 @@ public class Player {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getMapStatus() {
+        return mapStatus;
+    }
+
+    public void setMapStatus(String mapStatus) {
+        this.mapStatus = mapStatus;
     }
 }
