@@ -14,14 +14,14 @@ public interface DungeonCreatorService {
 
     PlacedRooms generateGrid(int gridwidth, int gridheight, int maxrooms, long mapid);
 
-    PlacedRooms createFromSeed(ArrayList<ArrayList<Cell>> grid, Room room, int[] roomRange);
+    PlacedRooms createFromSeed(ArrayList<ArrayList<Cell>> grid, Room room, int[] roomRange, long mapid);
 
     ArrayList<ArrayList<Cell>> placeCells(ArrayList<ArrayList<Cell>> grid, Room room, String Type);
 
 
     boolean isValidRoomPlacement(ArrayList<ArrayList<Cell>> grid,Room room);
 
-    PlacedRooms growMap(PlacedRooms roomsPlaced, ArrayList<Room> seedRoom, int counter, int maxRooms, int [] roomRange);
+    PlacedRooms growMap(PlacedRooms roomsPlaced, ArrayList<Room> seedRoom, int counter, int maxRooms, int [] roomRange, long mapid);
 
     ArrayList<Cell> getMap();
 

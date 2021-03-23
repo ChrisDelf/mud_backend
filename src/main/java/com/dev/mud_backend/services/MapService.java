@@ -13,4 +13,6 @@ public interface MapService {
 
     Map updatePlayer(Map playerMap, long mapid);
 
+    Map findById(long mapid);
+
 }

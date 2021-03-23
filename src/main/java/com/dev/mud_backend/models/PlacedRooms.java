@@ -11,13 +11,6 @@ public class PlacedRooms {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long placedRoomId;
 
-    //    private int x;
-//
-//    private int y;
-
-    @OneToOne(mappedBy = "placedRooms")
-    private Map map;
-
 
     private ArrayList<ArrayList<Cell>> grid = new ArrayList<ArrayList<Cell>>();
 
