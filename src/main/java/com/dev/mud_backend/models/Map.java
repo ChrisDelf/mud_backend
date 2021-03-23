@@ -46,10 +46,10 @@ public class Map {
     @JsonIgnoreProperties("map")
     private List<Room> rooms = new ArrayList<>();
 
+
 //    @OneToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "placedRoomId", referencedColumnName = "placedRoomId")
 //    private PlacedRooms placedRooms;
-
 
     public Map() {
     }
