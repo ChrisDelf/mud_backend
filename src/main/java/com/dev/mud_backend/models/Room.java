@@ -41,6 +41,12 @@ public class Room {
     @JsonIgnoreProperties("room")
     private List<Cell> cells = new ArrayList<Cell>();
 
+    @ManyToOne
+    @JoinColumn(name = "mapid",
+            nullable = false)
+    @JsonIgnoreProperties("rooms")
+    private Map map;
+
     public Room() {
     }
 
@@ -122,7 +128,12 @@ public class Room {
         this.monsters = monsters;
     }
 
+    public Map getMap() {
+        return map;
+    }
 
-
+    public void setMap(Map map) {
+        this.map = map;
+    }
 
 }

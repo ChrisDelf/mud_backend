@@ -208,7 +208,6 @@ public class UserController
         newMap.setPlayery(32);
         newMap.setUser(userService.findUserById(userid));
         mapRepo.save(newMap);
-
         PlacedRooms dungeonArray = dungeonCreatorService.generateGrid(50,50,2, newMap.getMapid());
 
 
