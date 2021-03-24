@@ -4,9 +4,7 @@ import com.dev.mud_backend.models.Cell;
 import com.dev.mud_backend.models.Monster;
 import com.dev.mud_backend.models.PlacedRooms;
 import com.dev.mud_backend.models.Room;
-import com.dev.mud_backend.repository.CellRepository;
-import com.dev.mud_backend.repository.MonsterRepository;
-import com.dev.mud_backend.repository.PlacedRoomsRepository;
+import com.dev.mud_backend.repository.*;
 
 import org.jvnet.staxex.util.XMLStreamReaderToXMLStreamWriter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +25,12 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
     PlacedRoomsRepository placedRoomsRepository;
 
     @Autowired
+    RoomRepository roomRepo;
+
+    @Autowired
+    MapRepository mapRepo;
+
+    @Autowired
     private CellService cellService;
 
     @Autowired
@@ -37,6 +41,9 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
 
     @Autowired
     private MapService mapService;
+
+    @Autowired
+    private RoomService roomService;
 
     @Override
     public ArrayList<Cell> getMap() {
@@ -51,6 +58,16 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
     public PlacedRooms generateGrid(int gridwidth, int gridheight, int maxrooms, long mapid) {
         ArrayList<ArrayList<Cell>> gridArray = new ArrayList<ArrayList<Cell>>();
         int i = 0;
+
+        Room room = new Room();
+        room.setHeight(4);
+        room.setWidth(5);
+        room.setY(30);
+        room.setX(30);
+        // setting the room to a map id
+        room.setMap(mapService.findById(mapid));
+        roomRepo.save(room);
+
 
         while (i < gridheight)
         {
@@ -73,13 +90,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
             i++;
 
         }
-        Room room = new Room();
-        room.setHeight(4);
-        room.setWidth(5);
-        room.setY(30);
-        room.setX(30);
-        // setting the room to a map id
-        room.setMap(mapService.findById(mapid));
+
 
         int[] myRangeArray = new int[2];
         myRangeArray[0] = 3;
@@ -152,11 +163,12 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
             type = "Floor";
         }
 
-
-
         for (int i = roomY; i < (room.getHeight() + room.getY()); i++) {
 
             for (int j = roomX; j < (room.getWidth() + room.getX()); j++) {
+                // the cell that is going to be placed
+
+                grid.get(i).get(j).setRoom(roomService.findById(room.getRoomId()));
 
                 if (type == "Floor") {
 
@@ -270,6 +282,8 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
         for (int i = 0; i < roomValues.size(); i++){
 
             if( isValidRoomPlacement(grid, roomValues.get(i))){
+                roomValues.get(i).setMap(mapRepo.findByMapid(mapid));
+                roomRepo.save(roomValues.get(i));
                 // setting up ids
                 roomValues.get(i).setMap(mapService.findById(mapid));
                 // Creating a door
@@ -280,18 +294,19 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
                 newDoor.setWidth(1);
                 //map getting associated with the door
                 newDoor.setMap(mapService.findById(mapid));
-
+                roomRepo.save(newDoor);
                 // Creating a monster
                 Monster newMonster = new Monster("Gobo",5,2,2,1,1,10,"standing");
                 newMonster.setMonsterX(rand.ints(roomValues.get(i).getX() + roomValues.get(i).getWidth()).findFirst().getAsInt());
                 newMonster.setMonsterY(rand.ints(roomValues.get(i).getY() + roomValues.get(i).getHeight()).findFirst().getAsInt());
-                newMonster.setRoom(roomValues.get(i));
+                newMonster.setRoom(roomService.findById(room.getRoomId()));
                 monsterRepo.save(newMonster);
                 // have to add the monster to the room
                 List <Monster> monsters = new ArrayList<>();
                 monsters.add(newMonster);
 
-                roomValues.get(i).setMonstersList(monsters);
+                roomService.findById(roomValues.get(i).getRoomId()).setMonstersList(monsters);
+                roomRepo.save(roomService.findById(roomValues.get(i).getRoomId()));
                 // Placing the cells to create the room
 
                 // for the room it self
