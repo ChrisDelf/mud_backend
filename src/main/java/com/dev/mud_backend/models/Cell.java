@@ -22,21 +22,18 @@ public class Cell {
 
    @ManyToOne
    @JoinColumn(name = "roomid",
-           nullable = false)
+           nullable = true)
    @JsonIgnoreProperties("cells")
    private Room room;
 
     private long mapid;
 
-
-
-
     public Cell() {
     }
 
     public Cell(int x, int y, String roomType, int roomheight, int roomwidth) {
-//        this.x = x;
-//        this.y = y;
+     this.x = x;
+     this.y = y;
         this.roomType = roomType;
 
     }
