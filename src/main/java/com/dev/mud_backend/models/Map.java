@@ -47,6 +47,8 @@ public class Map implements Serializable {
     @JsonIgnoreProperties("map")
     private List<Room> rooms = new ArrayList<>();
 
+
+
     public Map() {
     }
 
