@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "maps")
-public class Map {
+public class Map implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -45,11 +46,6 @@ public class Map {
             orphanRemoval = true)
     @JsonIgnoreProperties("map")
     private List<Room> rooms = new ArrayList<>();
-
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "placedRoomId", referencedColumnName = "placedRoomId")
-//    private PlacedRooms placedRooms;
-
 
     public Map() {
     }

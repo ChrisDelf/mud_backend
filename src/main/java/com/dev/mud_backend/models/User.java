@@ -7,12 +7,13 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User extends Auditable
+public class User extends Auditable implements Serializable
  {
      @Id
      @GeneratedValue(strategy = GenerationType.AUTO)
