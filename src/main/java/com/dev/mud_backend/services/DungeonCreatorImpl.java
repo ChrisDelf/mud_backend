@@ -309,10 +309,11 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
                 newMonster.setRoom(roomService.findById(room.getRoomId()));
                 monsterRepo.save(newMonster);
                 // have to add the monster to the room
-                List <Monster> monsters = new ArrayList<>();
-                monsters.add(newMonster);
+                //List <Monster> monsters = new ArrayList<>();
+                //monsters.add(newMonster);
 
-                roomService.findById(roomValues.get(i).getRoomId()).setMonstersList(monsters);
+
+                //roomService.findById(roomValues.get(i).getRoomId()).setMonstersList(monsters);
                 roomRepo.save(roomService.findById(roomValues.get(i).getRoomId()));
                 // Placing the cells to create the room
 
@@ -339,9 +340,9 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
 
     @Override
     public PlacedRooms growMap(PlacedRooms roomsPlaced, ArrayList<Room> seedRooms, int counter, int maxRooms, int [] roomRange, long mapid) {
-
+        System.out.println("Help");
         if ((counter + roomsPlaced.getPlacedRooms().size() > maxRooms) || seedRooms.size() == 0) {
-//            placedRoomsRepository.save(roomsPlaced);
+          //  placedRoomsRepository.save(roomsPlaced);
             return roomsPlaced;
         }
 
