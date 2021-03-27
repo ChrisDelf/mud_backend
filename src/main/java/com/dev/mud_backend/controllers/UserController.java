@@ -194,6 +194,7 @@ public class UserController
     @GetMapping(value ="/test/{userid}", produces = {"application/json"})
     public ResponseEntity<?> getTest(@Valid @PathVariable long userid) {
 
+        ArrayList<ArrayList<Cell>> grid = new ArrayList<ArrayList<Cell>>();
         Map newMap = new Map();
         newMap.setWidth(50);
         newMap.setHeight(50);
@@ -201,8 +202,7 @@ public class UserController
         newMap.setPlayery(32);
         newMap.setUser(userService.findUserById(userid));
         mapRepo.save(newMap);
-        PlacedRoom dungeonArray = dungeonCreatorService.generateGrid(50,50,2, newMap.getMapid());
-
+        grid = dungeonCreatorService.generateGrid(50,50,2, newMap.getMapid());
 
         ArrayList<ArrayList<String>> visualGrid = new ArrayList<>();
 //        int y = 0;
@@ -235,7 +235,7 @@ public class UserController
 
         Gson gson = new Gson();
 
-        String json = gson.toJson(dungeonArray.getGrid());
+        String json = gson.toJson(grid);
 
 
         newMap.setGrid(json);
@@ -248,7 +248,7 @@ public class UserController
 //        System.out.println(seedRoom.getPlacedRooms().size());
 //        seedRoom = dungeonCreatorService.growMap(seedRoom, seedRoom.getPlacedRooms(),0, 10,myRangeArray);
 
-        return  new ResponseEntity<>(dungeonArray.getGrid(),HttpStatus.OK);
+        return  new ResponseEntity<>(grid,HttpStatus.OK);
     }
     @GetMapping (value = "/display/{username}", produces = {"application/json"})
     public ResponseEntity<?> getUserInfo(@Valid @PathVariable String username){
