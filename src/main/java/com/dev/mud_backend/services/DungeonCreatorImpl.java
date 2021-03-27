@@ -2,18 +2,15 @@ package com.dev.mud_backend.services;
 
 import com.dev.mud_backend.models.Cell;
 import com.dev.mud_backend.models.Monster;
-import com.dev.mud_backend.models.PlacedRooms;
+import com.dev.mud_backend.models.PlacedRoom;
 import com.dev.mud_backend.models.Room;
 import com.dev.mud_backend.repository.*;
 
-import org.jvnet.staxex.util.XMLStreamReaderToXMLStreamWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
-import java.util.stream.IntStream;
 
 @Service(value = "dungeonCreatorService")
 public class DungeonCreatorImpl implements DungeonCreatorService{
@@ -22,7 +19,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
     CellRepository cellRepo;
 
     @Autowired
-    PlacedRoomsRepository placedRoomsRepository;
+    PlacedRoomRepository placedRoomRepo;
 
     @Autowired
     RoomRepository roomRepo;
@@ -55,7 +52,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
     }
 
     @Override
-    public PlacedRooms generateGrid(int gridwidth, int gridheight, int maxrooms, long mapid) {
+    public PlacedRoom generateGrid(int gridwidth, int gridheight, int maxrooms, long mapid) {
         ArrayList<ArrayList<Cell>> gridArray = new ArrayList<ArrayList<Cell>>();
         int i = 0;
 
@@ -100,10 +97,12 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
 
 
 
-        PlacedRooms seedRoom = new PlacedRooms();
+        PlacedRoom seedRoom = new PlacedRoom();
         seedRoom.setGrid(placeCells(gridArray,room, "Floor"));
         seedRoom.getPlacedRooms().add(room);
-        seedRoom.setGrid(gridArray);
+        // seedRoom.setGrid(gridArray);
+        //System.out.println(seedRoom.getGrid());
+        //placedRoomRepo.save(seedRoom);
         seedRoom = growMap(seedRoom, seedRoom.getPlacedRooms(),0, 10,myRangeArray,mapid);
 
 //        return gridArray;
@@ -194,7 +193,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
     }
 
     @Override
-    public PlacedRooms createFromSeed(ArrayList<ArrayList<Cell>> grid, Room room, int[] roomRange, long mapid)
+    public PlacedRoom createFromSeed(ArrayList<ArrayList<Cell>> grid, Room room, int[] roomRange, long mapid)
     {
         int mini = roomRange[0];
         int maxi = roomRange[1];
@@ -322,20 +321,23 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
 
             }
         }
-        PlacedRooms placedRooms = new PlacedRooms();
-        placedRooms.setGrid(grid);
-        placedRooms.setPlacedRooms(roomsPlaced);
+        PlacedRoom placedRoom = new PlacedRoom();
+        placedRoom.setGrid(grid);
+        placedRoom.setPlacedRooms(roomsPlaced);
 
 
 
-        return placedRooms;
+        return placedRoom;
     }
 
     @Override
-    public PlacedRooms growMap(PlacedRooms roomsPlaced, ArrayList<Room> seedRooms, int counter, int maxRooms, int [] roomRange, long mapid) {
-        System.out.println("Help");
+    public PlacedRoom growMap(PlacedRoom roomsPlaced, ArrayList<Room> seedRooms, int counter, int maxRooms, int [] roomRange, long mapid) {
+        System.out.println("counter :" + counter + " Roomsize :" + roomsPlaced.getPlacedRooms().size() + " maxRooms.size  ;" + maxRooms + " or " + seedRooms.size());
         if ((counter + roomsPlaced.getPlacedRooms().size() > maxRooms) || seedRooms.size() == 0) {
-          //  placedRoomsRepository.save(roomsPlaced);
+            ArrayList<ArrayList<Cell>> empty_List= new ArrayList<>();
+            roomsPlaced.setGrid(empty_List);
+            //placedRoomRepo.save(roomsPlaced);
+            System.out.println("This should break the loop");
             return roomsPlaced;
         }
 
@@ -345,7 +347,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
             roomsPlaced = createFromSeed(roomsPlaced.getGrid(), seedRooms.remove(0), roomRange,mapid);
 
         }
-        PlacedRooms rooms = new PlacedRooms();
+        PlacedRoom rooms = new PlacedRoom();
         rooms = roomsPlaced;
 
         for (int i = 0; i < rooms.getPlacedRooms().size(); i++)

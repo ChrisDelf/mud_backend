@@ -1,6 +1,5 @@
 package com.dev.mud_backend.controllers;
 
-import com.dev.mud_backend.DungeonCreator;
 import com.dev.mud_backend.models.*;
 import com.dev.mud_backend.repository.CellRepository;
 import com.dev.mud_backend.repository.MapRepository;
@@ -8,20 +7,15 @@ import com.dev.mud_backend.services.DungeonCreatorService;
 import com.dev.mud_backend.services.MapService;
 import com.dev.mud_backend.services.UserService;
 import com.google.gson.Gson;
-import com.google.gson.internal.$Gson$Preconditions;
 import io.swagger.annotations.ApiOperation;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.h2.util.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -30,7 +24,6 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -208,7 +201,7 @@ public class UserController
         newMap.setPlayery(32);
         newMap.setUser(userService.findUserById(userid));
         mapRepo.save(newMap);
-        PlacedRooms dungeonArray = dungeonCreatorService.generateGrid(50,50,2, newMap.getMapid());
+        PlacedRoom dungeonArray = dungeonCreatorService.generateGrid(50,50,2, newMap.getMapid());
 
 
         ArrayList<ArrayList<String>> visualGrid = new ArrayList<>();

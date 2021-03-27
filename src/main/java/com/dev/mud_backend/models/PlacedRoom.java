@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 
 @Entity
-//@Table(name = "placedRooms")
-public class PlacedRooms {
+@Table(name = "placedRooms")
+public class PlacedRoom {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
