@@ -21,11 +21,13 @@ public class Cell implements Serializable {
             unique = false)
     private String roomType;
 
-   @ManyToOne
-   @JoinColumn(name = "roomid",
-           nullable = true)
-   @JsonIgnoreProperties("cells")
-   private Room room;
+//   @ManyToOne
+//   @JoinColumn(name = "roomid",
+//           nullable = true)
+//   @JsonIgnoreProperties("cells")
+//   private Room room;
+
+    private long roomid;
 
     private long mapid;
 
@@ -45,14 +47,6 @@ public class Cell implements Serializable {
 
     public void setMapid(long mapid) {
         this.mapid = mapid;
-    }
-
-    public long getRoomid() {
-        return cellid;
-    }
-
-    public void setRoomid(long roomid) {
-        this.cellid = roomid;
     }
 
     public int getX() {
@@ -79,13 +73,30 @@ public class Cell implements Serializable {
         this.roomType = roomType;
     }
 
-    public Room getRoom() {
-        return room;
+    public long getCellid() {
+        return cellid;
     }
 
-    public void setRoom(Room room) {
-        this.room = room;
+    public void setCellid(long cellid) {
+        this.cellid = cellid;
     }
+
+    public long getRoomid() {
+        return roomid;
+    }
+
+    public void setRoomid(long roomid) {
+        this.roomid = roomid;
+    }
+
+    //
+//    public Room getRoom() {
+//        return room;
+//    }
+//
+//    public void setRoom(Room room) {
+//        this.room = room;
+//    }
 }
 
 

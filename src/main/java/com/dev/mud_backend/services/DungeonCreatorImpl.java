@@ -2,18 +2,15 @@ package com.dev.mud_backend.services;
 
 import com.dev.mud_backend.models.Cell;
 import com.dev.mud_backend.models.Monster;
-import com.dev.mud_backend.models.PlacedRooms;
+import com.dev.mud_backend.models.PlacedRoom;
 import com.dev.mud_backend.models.Room;
 import com.dev.mud_backend.repository.*;
 
-import org.jvnet.staxex.util.XMLStreamReaderToXMLStreamWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
-import java.util.stream.IntStream;
 
 @Service(value = "dungeonCreatorService")
 public class DungeonCreatorImpl implements DungeonCreatorService{
@@ -22,13 +19,14 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
     CellRepository cellRepo;
 
     @Autowired
-    PlacedRoomsRepository placedRoomsRepository;
+    PlacedRoomRepository placedRoomRepo;
 
     @Autowired
     RoomRepository roomRepo;
 
     @Autowired
     MapRepository mapRepo;
+
 
     @Autowired
     private CellService cellService;
@@ -55,7 +53,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
     }
 
     @Override
-    public PlacedRooms generateGrid(int gridwidth, int gridheight, int maxrooms, long mapid) {
+    public ArrayList<ArrayList<Cell>> generateGrid(int gridwidth, int gridheight, int maxrooms, long mapid) {
         ArrayList<ArrayList<Cell>> gridArray = new ArrayList<ArrayList<Cell>>();
         int i = 0;
 
@@ -98,16 +96,15 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
 
 
 
-
-
-        PlacedRooms seedRoom = new PlacedRooms();
-        seedRoom.setGrid(placeCells(gridArray,room, "Floor"));
+        PlacedRoom seedRoom = new PlacedRoom();
+        gridArray = placeCells(gridArray,room, "Floor");
         seedRoom.getPlacedRooms().add(room);
         seedRoom.setGrid(gridArray);
-        seedRoom = growMap(seedRoom, seedRoom.getPlacedRooms(),0, 10,myRangeArray,mapid);
+        //placedRoomRepo.save(seedRoom);
+        gridArray = growMap(seedRoom,0, 10,myRangeArray,mapid).getGrid();
 
 //        return gridArray;
-        return seedRoom;
+        return gridArray;
     }
 
 
@@ -168,7 +165,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
             for (int j = roomX; j < (room.getWidth() + room.getX()); j++) {
                 // the cell that is going to be placed
 
-                grid.get(i).get(j).setRoom(roomService.findById(room.getRoomId()));
+                grid.get(i).get(j).setRoomid(roomService.findById(room.getRoomId()).getRoomId());
 
                 if (type == "Floor") {
 
@@ -200,11 +197,13 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
     }
 
     @Override
-    public PlacedRooms createFromSeed(ArrayList<ArrayList<Cell>> grid, Room room, int[] roomRange, long mapid)
+    public PlacedRoom createFromSeed(PlacedRoom placedRoom, Room room, int[] roomRange, long mapid)
     {
         int mini = roomRange[0];
         int maxi = roomRange[1];
 
+        ArrayList<ArrayList<Cell>> grid = new ArrayList<ArrayList<Cell>>();
+        grid = placedRoom.getGrid();
         ArrayList<Room> roomValues = new ArrayList<Room>();
 
         Random rand = new Random();
@@ -329,38 +328,44 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
 
             }
         }
-        PlacedRooms placedRooms = new PlacedRooms();
-        placedRooms.setGrid(grid);
-        placedRooms.setPlacedRooms(roomsPlaced);
+        PlacedRoom placedRooms = new PlacedRoom();
 
+        placedRooms.setPlacedRooms(roomsPlaced);
+        placedRooms.setGrid(grid);
+        //placedRoomRepo.save(placedRooms);
 
 
         return placedRooms;
     }
 
     @Override
-    public PlacedRooms growMap(PlacedRooms roomsPlaced, ArrayList<Room> seedRooms, int counter, int maxRooms, int [] roomRange, long mapid) {
-        System.out.println("Help");
-        if ((counter + roomsPlaced.getPlacedRooms().size() > maxRooms) || seedRooms.size() == 0) {
-          //  placedRoomsRepository.save(roomsPlaced);
+    public PlacedRoom growMap(PlacedRoom roomsPlaced, int counter, int maxRooms, int [] roomRange, long mapid) {
+        System.out.println("counter :" + counter + " Roomsize :" + roomsPlaced.getPlacedRooms().size() + " maxRooms.size  ;" + maxRooms + " or " + roomsPlaced.getPlacedRooms().size());
+
+        if ((counter + roomsPlaced.getPlacedRooms().size() > maxRooms) || roomsPlaced.getPlacedRooms().size() == 0) {
+            System.out.println("exit");
             return roomsPlaced;
         }
 
-        if (seedRooms.size() > 0)
+        if (roomsPlaced.getPlacedRooms().size() > 0)
         {
-
-            roomsPlaced = createFromSeed(roomsPlaced.getGrid(), seedRooms.remove(0), roomRange,mapid);
+            System.out.println("before roomsPlaced :" + roomsPlaced.getPlacedRooms().size());
+            roomsPlaced = createFromSeed(roomsPlaced, roomsPlaced.getPlacedRooms().remove(0), roomRange, mapid);
+            System.out.println("after roomsPlaced :" + roomsPlaced.getPlacedRooms().size());
 
         }
-        PlacedRooms rooms = new PlacedRooms();
-        rooms = roomsPlaced;
 
-        for (int i = 0; i < rooms.getPlacedRooms().size(); i++)
-        {
-            seedRooms.add(rooms.getPlacedRooms().get(i));
-        }
+        PlacedRoom rooms = roomsPlaced;
+
+
+
+//        for (int i = 0; i < rooms.getPlacedRooms().size(); i++)
+//        {
+//           rooms.setPlacedRooms();
+//        }
+
         counter += roomsPlaced.getPlacedRooms().size();
-
-        return growMap(roomsPlaced, roomsPlaced.getPlacedRooms(), counter, maxRooms, roomRange,mapid);
+        System.out.println("roomsPlaced :" + roomsPlaced.getPlacedRooms().size());
+        return growMap(roomsPlaced, counter, maxRooms, roomRange,mapid);
     }
 }
