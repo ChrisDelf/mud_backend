@@ -99,10 +99,9 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
         PlacedRoom seedRoom = new PlacedRoom();
         gridArray = placeCells(gridArray,room, "Floor");
         seedRoom.getPlacedRooms().add(room);
-        // seedRoom.setGrid(gridArray);
-        //System.out.println(seedRoom.getGrid());
+        seedRoom.setGrid(gridArray);
         //placedRoomRepo.save(seedRoom);
-        gridArray = growMap(seedRoom, seedRoom.getPlacedRooms(),0, 10,myRangeArray,mapid, gridArray);
+        gridArray = growMap(seedRoom,0, 10,myRangeArray,mapid).getGrid();
 
 //        return gridArray;
         return gridArray;
@@ -166,7 +165,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
             for (int j = roomX; j < (room.getWidth() + room.getX()); j++) {
                 // the cell that is going to be placed
 
-                grid.get(i).get(j).setRoom(roomService.findById(room.getRoomId()));
+                grid.get(i).get(j).setRoomid(roomService.findById(room.getRoomId()).getRoomId());
 
                 if (type == "Floor") {
 
@@ -192,11 +191,13 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
     }
 
     @Override
-    public ArrayList<ArrayList<Cell>> createFromSeed(ArrayList<ArrayList<Cell>> grid, Room room, int[] roomRange, long mapid)
+    public PlacedRoom createFromSeed(PlacedRoom placedRoom, Room room, int[] roomRange, long mapid)
     {
         int mini = roomRange[0];
         int maxi = roomRange[1];
 
+        ArrayList<ArrayList<Cell>> grid = new ArrayList<ArrayList<Cell>>();
+        grid = placedRoom.getGrid();
         ArrayList<Room> roomValues = new ArrayList<Room>();
 
         Random rand = new Random();
@@ -321,37 +322,43 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
             }
         }
         PlacedRoom placedRooms = new PlacedRoom();
-        System.out.println(roomsPlaced);
+
         placedRooms.setPlacedRooms(roomsPlaced);
-        placedRoomRepo.save(placedRooms);
+        placedRooms.setGrid(grid);
+        //placedRoomRepo.save(placedRooms);
 
 
-        return grid;
+        return placedRooms;
     }
 
     @Override
-    public ArrayList<ArrayList<Cell>> growMap(PlacedRoom roomsPlaced, ArrayList<Room> seedRooms, int counter, int maxRooms, int [] roomRange, long mapid, ArrayList<ArrayList<Cell>> grid) {
-        System.out.println("counter :" + counter + " Roomsize :" + roomsPlaced.getPlacedRooms().size() + " maxRooms.size  ;" + maxRooms + " or " + seedRooms.size());
-        if ((counter + roomsPlaced.getPlacedRooms().size() > maxRooms) || seedRooms.size() == 0) {
-            placedRoomRepo.save(roomsPlaced);
-            return grid;
+    public PlacedRoom growMap(PlacedRoom roomsPlaced, int counter, int maxRooms, int [] roomRange, long mapid) {
+        System.out.println("counter :" + counter + " Roomsize :" + roomsPlaced.getPlacedRooms().size() + " maxRooms.size  ;" + maxRooms + " or " + roomsPlaced.getPlacedRooms().size());
+
+        if ((counter + roomsPlaced.getPlacedRooms().size() > maxRooms) || roomsPlaced.getPlacedRooms().size() == 0) {
+            System.out.println("exit");
+            return roomsPlaced;
         }
 
-        if (seedRooms.size() > 0)
+        if (roomsPlaced.getPlacedRooms().size() > 0)
         {
-
-            grid = createFromSeed(grid, seedRooms.remove(0), roomRange,mapid);
+            System.out.println("before roomsPlaced :" + roomsPlaced.getPlacedRooms().size());
+            roomsPlaced = createFromSeed(roomsPlaced, roomsPlaced.getPlacedRooms().remove(0), roomRange, mapid);
+            System.out.println("after roomsPlaced :" + roomsPlaced.getPlacedRooms().size());
 
         }
-        PlacedRoom rooms = new PlacedRoom();
-        rooms = roomsPlaced;
 
-        for (int i = 0; i < rooms.getPlacedRooms().size(); i++)
-        {
-            seedRooms.add(rooms.getPlacedRooms().get(i));
-        }
+        PlacedRoom rooms = roomsPlaced;
+
+
+
+//        for (int i = 0; i < rooms.getPlacedRooms().size(); i++)
+//        {
+//           rooms.setPlacedRooms();
+//        }
+
         counter += roomsPlaced.getPlacedRooms().size();
-
-        return growMap(roomsPlaced, roomsPlaced.getPlacedRooms(), counter, maxRooms, roomRange,mapid, grid);
+        System.out.println("roomsPlaced :" + roomsPlaced.getPlacedRooms().size());
+        return growMap(roomsPlaced, counter, maxRooms, roomRange,mapid);
     }
 }
