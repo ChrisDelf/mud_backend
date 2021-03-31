@@ -38,14 +38,15 @@ public class Monster {
 
     private String status;
 
-//    @OneToMany(mappedBy = "monster",
-//            cascade = CascadeType.ALL,
-//            orphanRemoval = true)
-//    @JsonIgnoreProperties("monster")
-//    private List<Item> itemsList = new ArrayList<>();
+    @OneToMany(mappedBy = "monster",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    @JsonIgnoreProperties("monster")
+    private List<Item> itemsList = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "roomId", nullable = false)
+    @JoinColumn(name = "roomId",
+            nullable = false)
     @JsonIgnoreProperties("monsters")
     private Room room;
 

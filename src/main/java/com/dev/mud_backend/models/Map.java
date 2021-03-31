@@ -38,7 +38,7 @@ public class Map implements Serializable {
     @ManyToOne
     @JoinColumn(name = "userid",
             nullable = false)
-    @JsonIgnoreProperties("maps")
+    @JsonIgnoreProperties("map")
     private User user;
 
     @OneToMany(mappedBy="map",
@@ -119,5 +119,11 @@ public class Map implements Serializable {
         this.user = user;
     }
 
+    public List<Room> getRooms() {
+        return rooms;
+    }
 
+    public void setRooms(List<Room> rooms) {
+        this.rooms = rooms;
+    }
 }

@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -252,14 +253,14 @@ public class UserController
     }
     @GetMapping (value = "/display/{username}", produces = {"application/json"})
     public ResponseEntity<?> getUserInfo(@Valid @PathVariable String username){
-//        UserDetails tempUser = userService.loadUserByUsername(username);
+        UserDetails tempUser = userService.loadUserByUsername(username);
         Long userid = userService.findUserID(username);
 
     return new ResponseEntity<>(userid, HttpStatus.OK);
     }
     @GetMapping(value ="/getmap/{userid}", produces = {"application/json"})
     public ResponseEntity<?> grabMap(@Valid @PathVariable Long userid){
-//        ArrayList<Cell> mapArray = new ArrayList<Cell>();
+
         List<Map> mapList = new ArrayList<>();
         List<Map> gridList = new ArrayList<>();
 
@@ -267,8 +268,7 @@ public class UserController
     for( int i = 0; i < mapList.size(); i++)
     {
        Map tempMap = new Map();
-//        Gson gson = new Gson();
-//       int [][] dataGrid = gson.fromJson(mapList.get(i).getGrid(), int[][].class);
+
 
        tempMap.setGrid(mapList.get(i).getGrid());
        tempMap.setHeight(mapList.get(i).getHeight());
@@ -309,5 +309,35 @@ public class UserController
 
         mapService.updatePlayer(updateMap, mapid);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping(value ="/mapdetails/{mapid}")
+    public ResponseEntity<?> getMapDetails(@Valid @PathVariable Long mapid){
+        Map reponseMap = new Map();
+//        reponseMap.setRooms(mapService.findById(mapid).getRooms());
+        List<Room> temp_list = new ArrayList<Room>();
+        temp_list = mapService.findById(mapid).getRooms();
+        for (int i = 0; i < temp_list.size(); i++) {
+            System.out.println(temp_list.get(i).getRoomId());
+            System.out.println(temp_list.get(i).getMonstersList());
+            if (temp_list.get(i).getMonstersList().size() > 0){
+                List<Monster> monsterList = temp_list.get(i).getMonstersList();
+                for(int j = 0; j<  monsterList .size(); j ++){
+                    System.out.println(monsterList.get(j).getMonsterid());
+                    System.out.println(monsterList.get(j).getMonsterName());
+                    System.out.println(monsterList.get(j).getRoom());
+
+                }
+            }
+
+        }
+        reponseMap = temp_list.get(0).getMap();
+        Gson gson = new Gson();
+
+        String json = gson.toJson(reponseMap);
+
+
+
+        return new ResponseEntity<>(json, HttpStatus.OK);
     }
 }

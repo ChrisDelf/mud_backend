@@ -333,7 +333,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
 
     @Override
     public PlacedRoom growMap(PlacedRoom roomsPlaced, int counter, int maxRooms, int [] roomRange, long mapid) {
-        System.out.println("counter :" + counter + " Roomsize :" + roomsPlaced.getPlacedRooms().size() + " maxRooms.size  ;" + maxRooms + " or " + roomsPlaced.getPlacedRooms().size());
+       // System.out.println("counter :" + counter + " Roomsize :" + roomsPlaced.getPlacedRooms().size() + " maxRooms.size  ;" + maxRooms + " or " + roomsPlaced.getPlacedRooms().size());
 
         if ((counter + roomsPlaced.getPlacedRooms().size() > maxRooms) || roomsPlaced.getPlacedRooms().size() == 0) {
             System.out.println("exit");
@@ -342,9 +342,8 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
 
         if (roomsPlaced.getPlacedRooms().size() > 0)
         {
-            System.out.println("before roomsPlaced :" + roomsPlaced.getPlacedRooms().size());
+
             roomsPlaced = createFromSeed(roomsPlaced, roomsPlaced.getPlacedRooms().remove(0), roomRange, mapid);
-            System.out.println("after roomsPlaced :" + roomsPlaced.getPlacedRooms().size());
 
         }
 
