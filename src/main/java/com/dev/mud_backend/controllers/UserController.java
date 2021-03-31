@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -24,6 +25,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -205,33 +207,7 @@ public class UserController
         grid = dungeonCreatorService.generateGrid(50,50,2, newMap.getMapid());
 
         ArrayList<ArrayList<String>> visualGrid = new ArrayList<>();
-//        int y = 0;
-//        for (int i = 0; i < dungeonArray.getGrid().size(); i++)
-//        {
-//            ArrayList<String> row_string = new ArrayList<>();
-//            for(int j = 0; j < dungeonArray.getGrid().get(y).size() - 1; j++) {
-//
-//                if (dungeonArray.getGrid().get(i).get(j).getRoomType() == "Floor") {
-//
-//                    row_string.add("f");
-//                }
-//                if (dungeonArray.getGrid().get(i).get(j).getRoomType() == "Wall") {
-//
-//                    row_string.add("W");
-//                }
-//                if (dungeonArray.getGrid().get(i).get(j).getRoomType() == "Door") {
-//
-//                    row_string.add("D");
-//                }
-//
-//
-//            }
-//            row_string.add("\n");
-//            y++;
-//            visualGrid.add(row_string);
-//
-//        }
-//        System.out.println(visualGrid);
+
 
         Gson gson = new Gson();
 
@@ -244,22 +220,18 @@ public class UserController
 
 
 
-//        dungeonCreatorService.createFromSeed(dungeonArray,room,myRangeArray);
-//        System.out.println(seedRoom.getPlacedRooms().size());
-//        seedRoom = dungeonCreatorService.growMap(seedRoom, seedRoom.getPlacedRooms(),0, 10,myRangeArray);
-
         return  new ResponseEntity<>(grid,HttpStatus.OK);
     }
     @GetMapping (value = "/display/{username}", produces = {"application/json"})
     public ResponseEntity<?> getUserInfo(@Valid @PathVariable String username){
-//        UserDetails tempUser = userService.loadUserByUsername(username);
+        UserDetails tempUser = userService.loadUserByUsername(username);
         Long userid = userService.findUserID(username);
 
     return new ResponseEntity<>(userid, HttpStatus.OK);
     }
     @GetMapping(value ="/getmap/{userid}", produces = {"application/json"})
     public ResponseEntity<?> grabMap(@Valid @PathVariable Long userid){
-//        ArrayList<Cell> mapArray = new ArrayList<Cell>();
+
         List<Map> mapList = new ArrayList<>();
         List<Map> gridList = new ArrayList<>();
 
@@ -267,8 +239,7 @@ public class UserController
     for( int i = 0; i < mapList.size(); i++)
     {
        Map tempMap = new Map();
-//        Gson gson = new Gson();
-//       int [][] dataGrid = gson.fromJson(mapList.get(i).getGrid(), int[][].class);
+
 
        tempMap.setGrid(mapList.get(i).getGrid());
        tempMap.setHeight(mapList.get(i).getHeight());
@@ -309,5 +280,15 @@ public class UserController
 
         mapService.updatePlayer(updateMap, mapid);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping(value ="/mapdetails/{mapid}",
+            produces = {"application/json"})
+    public ResponseEntity<?> getMapDetails(@Valid @PathVariable Long mapid){
+
+        HashMap<Long, ArrayList<Long>> roomsAndMonsterLists = mapService.getMapDetails(mapid);
+
+
+        return new ResponseEntity<>(roomsAndMonsterLists, HttpStatus.OK);
     }
 }
