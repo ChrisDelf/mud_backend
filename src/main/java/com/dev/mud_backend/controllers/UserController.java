@@ -25,6 +25,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -206,33 +207,7 @@ public class UserController
         grid = dungeonCreatorService.generateGrid(50,50,2, newMap.getMapid());
 
         ArrayList<ArrayList<String>> visualGrid = new ArrayList<>();
-//        int y = 0;
-//        for (int i = 0; i < dungeonArray.getGrid().size(); i++)
-//        {
-//            ArrayList<String> row_string = new ArrayList<>();
-//            for(int j = 0; j < dungeonArray.getGrid().get(y).size() - 1; j++) {
-//
-//                if (dungeonArray.getGrid().get(i).get(j).getRoomType() == "Floor") {
-//
-//                    row_string.add("f");
-//                }
-//                if (dungeonArray.getGrid().get(i).get(j).getRoomType() == "Wall") {
-//
-//                    row_string.add("W");
-//                }
-//                if (dungeonArray.getGrid().get(i).get(j).getRoomType() == "Door") {
-//
-//                    row_string.add("D");
-//                }
-//
-//
-//            }
-//            row_string.add("\n");
-//            y++;
-//            visualGrid.add(row_string);
-//
-//        }
-//        System.out.println(visualGrid);
+
 
         Gson gson = new Gson();
 
@@ -244,10 +219,6 @@ public class UserController
         mapRepo.save(newMap);
 
 
-
-//        dungeonCreatorService.createFromSeed(dungeonArray,room,myRangeArray);
-//        System.out.println(seedRoom.getPlacedRooms().size());
-//        seedRoom = dungeonCreatorService.growMap(seedRoom, seedRoom.getPlacedRooms(),0, 10,myRangeArray);
 
         return  new ResponseEntity<>(grid,HttpStatus.OK);
     }
@@ -311,33 +282,13 @@ public class UserController
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping(value ="/mapdetails/{mapid}")
+    @GetMapping(value ="/mapdetails/{mapid}",
+            produces = {"application/json"})
     public ResponseEntity<?> getMapDetails(@Valid @PathVariable Long mapid){
-        Map reponseMap = new Map();
-//        reponseMap.setRooms(mapService.findById(mapid).getRooms());
-        List<Room> temp_list = new ArrayList<Room>();
-        temp_list = mapService.findById(mapid).getRooms();
-        for (int i = 0; i < temp_list.size(); i++) {
-            System.out.println(temp_list.get(i).getRoomId());
-            System.out.println(temp_list.get(i).getMonstersList());
-            if (temp_list.get(i).getMonstersList().size() > 0){
-                List<Monster> monsterList = temp_list.get(i).getMonstersList();
-                for(int j = 0; j<  monsterList .size(); j ++){
-                    System.out.println(monsterList.get(j).getMonsterid());
-                    System.out.println(monsterList.get(j).getMonsterName());
-                    System.out.println(monsterList.get(j).getRoom());
 
-                }
-            }
-
-        }
-        reponseMap = temp_list.get(0).getMap();
-        Gson gson = new Gson();
-
-        String json = gson.toJson(reponseMap);
+        HashMap<Long, ArrayList<Long>> roomsAndMonsterLists = mapService.getMapDetails(mapid);
 
 
-
-        return new ResponseEntity<>(json, HttpStatus.OK);
+        return new ResponseEntity<>(roomsAndMonsterLists, HttpStatus.OK);
     }
 }

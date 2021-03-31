@@ -349,15 +349,8 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
 
         PlacedRoom rooms = roomsPlaced;
 
-
-
-//        for (int i = 0; i < rooms.getPlacedRooms().size(); i++)
-//        {
-//           rooms.setPlacedRooms();
-//        }
-
         counter += roomsPlaced.getPlacedRooms().size();
-        System.out.println("roomsPlaced :" + roomsPlaced.getPlacedRooms().size());
+
         return growMap(roomsPlaced, counter, maxRooms, roomRange,mapid);
     }
 }
