@@ -220,7 +220,7 @@ public class UserController
 
 
 
-        return  new ResponseEntity<>(grid,HttpStatus.OK);
+        return  new ResponseEntity<>(newMap,HttpStatus.OK);
     }
     @GetMapping (value = "/display/{username}", produces = {"application/json"})
     public ResponseEntity<?> getUserInfo(@Valid @PathVariable String username){
