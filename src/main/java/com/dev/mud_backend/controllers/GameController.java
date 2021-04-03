@@ -10,10 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
+import org.springframework.security.core.parameters.P;
+import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequestMapping("/game")
@@ -59,6 +61,7 @@ public class GameController {
 
     // update
     // /player/combatAction
+
     @PutMapping(value ="player/combatAction/{playerid}/{monsterid}", produces = {"application/json"})
     public  ResponseEntity<?> playerCombat(@Valid @RequestBody
                                            PlayerAction playerAction, @PathVariable long playerid, long monsterid){
@@ -87,18 +90,40 @@ public class GameController {
     // ---------------------- Monster Actions
     // update
     /// /monster/pickupItem/
+    @PutMapping(value = "/monster/itemAction", produces = {"application/json"})
+    public ResponseEntity<?> monsterItem(long monsterId){
 
-    // update
-    // /monster/dropItem/
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
 
     //Get
     // /monster/checkInventory/
+    @GetMapping(value = "/monster/checkInventory", produces = {"application/json"})
+    public ResponseEntity<?> monsterInvetory(long monsterId){
+
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 
     // ----------------------- Game Actions
     // delete
     // /monsterDefeat/
 
+    @DeleteMapping(value = "/game/monsterdeath", produces = {"application/json"})
+    public ResponseEntity<?> monsterDeath(long monsterId){
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     // update
     // /playerDefeat/
+
+    @PutMapping(value = "/game/playerdefeat", produces = {"application/json"})
+    public ResponseEntity<?> playerDefeat(long playerId){
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
