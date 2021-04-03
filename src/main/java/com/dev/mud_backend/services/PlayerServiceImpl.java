@@ -26,7 +26,9 @@ public class PlayerServiceImpl implements PlayerService {
     private MonsterRepository monsterRepo;
 
     @Override
-    public long playerDamaged(int damage, Player player) {
+    public long playerDamaged(long damage, long playerid) {
+        Player player = playerRepo.findByPlayerid(playerid);
+
         long playerHp = player.getPlayerHealth();
 
         playerHp = playerHp - damage;
@@ -47,7 +49,9 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public long playerHealed(int heal_amount, Player player) {
+    public long playerHealed(long heal_amount, long playerid) {
+        Player player = playerRepo.findByPlayerid(playerid);
+
         long playerHp = player.getPlayerHealth();
 
         playerHp = playerHp + heal_amount;
@@ -62,7 +66,7 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public long playerAttack(long player_id, String weapon, long monster_id) {
+    public long playerAttack( long damage_num, long player_id, long monster_id) {
         // we need to get find our monster and player in the data base
         Monster target_monster = monsterService.findById(monster_id);
         Player player = playerService.findById(player_id);
