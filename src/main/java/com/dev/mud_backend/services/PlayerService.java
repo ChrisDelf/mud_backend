@@ -4,11 +4,11 @@ import com.dev.mud_backend.models.Item;
 import com.dev.mud_backend.models.Player;
 
 public interface PlayerService {
-    long playerDamaged(int damage, Player player);
+    long playerDamaged(long damage, long playerid);
 
-    long playerHealed(int heal_amount, Player player);
+    long playerHealed(long heal_amount, long playerid);
 
-    long playerAttack(long player_id, String weapon, long monster_id);
+    long playerAttack( long damage_num, long player_id,long monster_id);
 
     Player findById(long id);
 

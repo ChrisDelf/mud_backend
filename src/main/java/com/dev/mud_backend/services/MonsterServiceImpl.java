@@ -62,7 +62,7 @@ public class MonsterServiceImpl implements MonsterService  {
 
         //we now apply the damage to the player
 
-        long d_result = playerService.playerDamaged(5,player);
+        long d_result = playerService.playerDamaged(5,player.getPlayerid());
 
         playerRepo.save(player);
 
