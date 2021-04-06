@@ -72,11 +72,11 @@ public class MonsterServiceImpl implements MonsterService  {
 
 
     @Override
-    public long MonsterHeal(long monsterId, long healAmount) {
+    public long MonsterHeal(long monsterId) {
         //Find the monster
         Monster monster = monsterService.findById(monsterId);
         // now we will adjust the monsters health
-        monster.setMonsterHealth(monster.getMonsterHealth() + healAmount);
+        monster.setMonsterHealth(monster.getMonsterHealth() + 5);
 
         monsterRepo.save(monster);
 

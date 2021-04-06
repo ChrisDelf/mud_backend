@@ -11,7 +11,7 @@ public interface MonsterService {
 
     long MonsterAttack(long monsterId, long playerId);
 
-    long MonsterHeal(long monsterId, long healAmount);
+    long MonsterHeal(long monsterId);
 
 
     String MonsterDeath(long monsterId);

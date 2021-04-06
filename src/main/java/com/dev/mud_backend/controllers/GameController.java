@@ -2,7 +2,9 @@ package com.dev.mud_backend.controllers;
 
 
 import com.dev.mud_backend.models.Map;
+import com.dev.mud_backend.models.Monster;
 import com.dev.mud_backend.responseObjects.PlayerAction;
+import com.dev.mud_backend.services.MonsterService;
 import com.dev.mud_backend.services.PlayerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +25,10 @@ public class GameController {
 
     @Autowired
     private PlayerService playerService;
+
+    @Autowired
+    private MonsterService monsterService;
+
     //--------------------------- Player Actions
     // update
     /// /player/pickupItem/
@@ -72,6 +78,10 @@ public class GameController {
             updated_number = playerService.playerAttack(playerAction.getActionNum(), playerid, monsterid);
         }
 
+        if (playerAction.getActionType() == "Status"){
+            // if the player status changes
+        }
+
         return_array.add(playerid);
         return_array.add(monsterid);
         return_array.add(updated_number);
@@ -91,8 +101,44 @@ public class GameController {
     // update
     // /monster/dropItem/
 
+    // update
+    // /monster/actio/
+    @PutMapping(value ="/monster/action/{playerid}/{monsterid}", produces = {"application/json"})
+    public ResponseEntity<?> monsterActions(@Valid @RequestBody
+                                                       PlayerAction monsterAction, @PathVariable long playerid, long monsterid){
+        String action = monsterAction.getActionType();
+        long updated_number;
+        if (action == "Heal"){
+            updated_number = monsterService.MonsterHeal(monsterid);
+
+        }
+        if (action == "Attack"){
+            updated_number = monsterService.MonsterAttack(monsterid, playerid);
+
+        }
+
+        if (action == "Status"){
+            // need to create a status change service for monsters
+        }
+
+
+
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
     //Get
+    // getting the monsters stats
+    @GetMapping(value ="/monster/monster/{monsterid}", produces = {"application/json"})
+    public ResponseEntity<?> monsterStatus(long monsterid) {
+
+        Monster repsonseMonster = monsterService.findById(monsterid);
+
+
+        return new ResponseEntity<>(repsonseMonster, HttpStatus.OK);
+    }
     // /monster/checkInventory/
+
+
 
 
     // ----------------------- Game Actions
