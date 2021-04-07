@@ -58,36 +58,36 @@ public class MapServiceImpl implements MapService {
         return mapRepo.save(tempMap);
     }
 
-    @Override
-    public HashMap<Long, ArrayList<Long>> getMapDetails(long mapid) {
-        // going to need to get the array object for Mapdetials
-        List<Room> temp_list = new ArrayList<Room>();
-        temp_list = mapService.findById(mapid).getRooms();
-
-        MapDetails responseM = new MapDetails();
-        ArrayList<Long> rooms = responseM.getRooms();
-        ArrayList<HashMap> r_array = new ArrayList<>();
-        HashMap<Long, ArrayList<Long>> roomsAndMonsters = new  HashMap<Long, ArrayList<Long>>();
-
-        for (int i =0; i < temp_list.size(); i++){
-            List<Monster> monsterList = temp_list.get(i).getMonstersList();
-            ArrayList<Long> monsterIds = new ArrayList<>();
-            if (monsterList.size() > 0){
-                for (int j = 0; j < monsterList.size(); j++){
-                    monsterIds.add(monsterList.get(j).getMonsterid());
-
-
-                }
-
-            }
-
-            roomsAndMonsters.put(temp_list.get(i).getRoomId(), monsterIds);
-
-
-        }
-
-        return roomsAndMonsters;
-    }
+//    @Override
+//    public HashMap<Long, ArrayList<Long>> getMapDetails(long mapid) {
+//        // going to need to get the array object for Mapdetials
+//        List<Room> temp_list = new ArrayList<Room>();
+//        temp_list = mapService.findById(mapid).getRooms();
+//
+//        MapDetails responseM = new MapDetails();
+//        ArrayList<Long> rooms = responseM.getRooms();
+//        ArrayList<HashMap> r_array = new ArrayList<>();
+//        HashMap<Long, ArrayList<Long>> roomsAndMonsters = new  HashMap<Long, ArrayList<Long>>();
+//
+//        for (int i =0; i < temp_list.size(); i++){
+//            List<Monster> monsterList = temp_list.get(i).getMonstersList();
+//            ArrayList<Long> monsterIds = new ArrayList<>();
+//            if (monsterList.size() > 0){
+//                for (int j = 0; j < monsterList.size(); j++){
+//                    monsterIds.add(monsterList.get(j).getMonsterid());
+//
+//
+//                }
+//
+//            }
+//
+//            roomsAndMonsters.put(temp_list.get(i).getRoomId(), monsterIds);
+//
+//
+//        }
+//
+//        return roomsAndMonsters;
+//    }
 
 
     @Transactional

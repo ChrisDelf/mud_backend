@@ -282,13 +282,13 @@ public class UserController
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping(value ="/mapdetails/{mapid}",
-            produces = {"application/json"})
-    public ResponseEntity<?> getMapDetails(@Valid @PathVariable Long mapid){
-
-        HashMap<Long, ArrayList<Long>> roomsAndMonsterLists = mapService.getMapDetails(mapid);
-
-
-        return new ResponseEntity<>(roomsAndMonsterLists, HttpStatus.OK);
-    }
+//    @GetMapping(value ="/mapdetails/{mapid}",
+//            produces = {"application/json"})
+//    public ResponseEntity<?> getMapDetails(@Valid @PathVariable Long mapid){
+//
+//        HashMap<Long, ArrayList<Long>> roomsAndMonsterLists = mapService.getMapDetails(mapid);
+//
+//
+//        return new ResponseEntity<>(roomsAndMonsterLists, HttpStatus.OK);
+//    }
 }

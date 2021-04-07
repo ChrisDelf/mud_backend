@@ -9,7 +9,7 @@ public interface RoomService {
 
     int removeFromMLimit(Room room, int value);
 
-  Monster getMonster(Room room, long m_id);
+//  Monster getMonster(Room room, long m_id);
 
   Room findById(long id);
 }

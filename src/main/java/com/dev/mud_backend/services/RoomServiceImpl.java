@@ -32,29 +32,29 @@ public class RoomServiceImpl implements RoomService{
         return room.getMonsterLimit();
     }
 
-    @Override
-    public Monster getMonster(Room room, long m_id) throws ResourceNotFoundException {
-        List<Monster> monsterList = room.getMonstersList();
-
-
-
-
-        // now that we got our list of monster for that room we need to fide it
-        for (int i = 0; i < monsterList.size(); i++)
-        {
-
-            Monster t_monster = monsterList.get(i);
-            if (t_monster.getMonsterid() == m_id) {
-                Monster found_m = t_monster;
-                return found_m;
-            }
-        }
-
-        // if we don't find the monster id in the list theny we need to throw an Exception
-        throw new ResourceNotFoundException("Monster id " + m_id + " not found!");
-
-
-    }
+//    @Override
+//    public Monster getMonster(Room room, long m_id) throws ResourceNotFoundException {
+//        List<Monster> monsterList = room.getMonstersList();
+//
+//
+//
+//
+//        // now that we got our list of monster for that room we need to fide it
+//        for (int i = 0; i < monsterList.size(); i++)
+//        {
+//
+//            Monster t_monster = monsterList.get(i);
+//            if (t_monster.getMonsterid() == m_id) {
+//                Monster found_m = t_monster;
+//                return found_m;
+//            }
+//        }
+//
+//        // if we don't find the monster id in the list theny we need to throw an Exception
+//        throw new ResourceNotFoundException("Monster id " + m_id + " not found!");
+//
+//
+//    }
 
     @Transactional
     @Override
