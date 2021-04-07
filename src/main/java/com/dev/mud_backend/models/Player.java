@@ -43,6 +43,9 @@ public class Player {
     @JsonIgnoreProperties("player")
     private List<Item> itemsList = new ArrayList<>();
 
+    public Player() {
+    }
+
     public Player(long playerHealth, String playerName, long playery, long playerx, long playerStrength, long playerIntellect, long playerAgility, long playerStamina, List<Item> itemsList, String status, long maxHealth, String mapStatus) {
         this.playerHealth = playerHealth;
         this.playerName = playerName;

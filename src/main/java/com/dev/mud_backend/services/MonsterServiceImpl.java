@@ -34,22 +34,22 @@ public class MonsterServiceImpl implements MonsterService  {
     @Autowired
     MonsterService monsterService;
 
-    @Override
-    public Monster MonsterStats(long m_id, long room_id) {
-        // instantiate the monster that we are going pull the stats int
-        Monster target_monster = new Monster();
-        // first we need to find if the room exist
-        Room target_room = roomService.findById(room_id);
-        // if we don't find a room
-        if (target_room == null){
-            return target_monster;
-        }
-        target_monster = roomService.getMonster(target_room, m_id);
-
-
-
-        return target_monster;
-    }
+//    @Override
+//    public Monster MonsterStats(long m_id, long room_id) {
+//        // instantiate the monster that we are going pull the stats int
+//        Monster target_monster = new Monster();
+//        // first we need to find if the room exist
+//        Room target_room = roomService.findById(room_id);
+//        // if we don't find a room
+//        if (target_room == null){
+//            return target_monster;
+//        }
+//        target_monster = roomService.getMonster(target_room, m_id);
+//
+//
+//
+//        return target_monster;
+//    }
 
     @Override
     public long MonsterAttack(long monsterId, long playerId) {
@@ -72,11 +72,11 @@ public class MonsterServiceImpl implements MonsterService  {
 
 
     @Override
-    public long MonsterHeal(long monsterId, long healAmount) {
+    public long MonsterHeal(long monsterId) {
         //Find the monster
         Monster monster = monsterService.findById(monsterId);
         // now we will adjust the monsters health
-        monster.setMonsterHealth(monster.getMonsterHealth() + healAmount);
+        monster.setMonsterHealth(monster.getMonsterHealth() + 5);
 
         monsterRepo.save(monster);
 

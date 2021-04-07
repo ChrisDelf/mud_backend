@@ -1,9 +1,6 @@
 package com.dev.mud_backend.services;
 
-import com.dev.mud_backend.models.Cell;
-import com.dev.mud_backend.models.Monster;
-import com.dev.mud_backend.models.PlacedRoom;
-import com.dev.mud_backend.models.Room;
+import com.dev.mud_backend.models.*;
 import com.dev.mud_backend.repository.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -305,8 +302,21 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
                 Monster newMonster = new Monster("Gobo",5,2,2,1,1,10,"standing");
                 newMonster.setMonsterX(rand.ints(roomValues.get(i).getX() + roomValues.get(i).getWidth()).findFirst().getAsInt());
                 newMonster.setMonsterY(rand.ints(roomValues.get(i).getY() + roomValues.get(i).getHeight()).findFirst().getAsInt());
-                newMonster.setRoom(roomService.findById(room.getRoomId()));
+               // newMonster.setRoom(roomService.findById(room.getRoomId()));
+                newMonster.setMapid(mapid);
                 monsterRepo.save(newMonster);
+                // want to add the new created monster to our map object
+                Map temp_map = mapService.findById(mapid);
+                ArrayList<Long> monsterList_temp = new ArrayList<>();
+
+                monsterList_temp = temp_map.getMonsterIdList();
+                monsterList_temp.add(newMonster.getMonsterid());
+
+                temp_map.setMonsterIdList(monsterList_temp);
+
+                mapRepo.save(temp_map);
+
+
                 // have to add the monster to the room
                 //List <Monster> monsters = new ArrayList<>();
                 //monsters.add(newMonster);

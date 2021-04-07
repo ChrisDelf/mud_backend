@@ -31,6 +31,8 @@ public class Map implements Serializable {
 
     private int playery;
 
+    ArrayList<Long> monsterIdList = new ArrayList<>();
+
     @Column(length = 1000000)
     String grid;
 
@@ -41,11 +43,11 @@ public class Map implements Serializable {
     @JsonIgnoreProperties("map")
     private User user;
 
-    @OneToMany(mappedBy="map",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    @JsonIgnoreProperties("map")
-    private List<Room> rooms = new ArrayList<>();
+//    @OneToMany(mappedBy="map",
+//            cascade = CascadeType.ALL,
+//            orphanRemoval = true)
+//    @JsonIgnoreProperties("map")
+//    private List<Room> rooms = new ArrayList<>();
 
 
 
@@ -121,11 +123,20 @@ public class Map implements Serializable {
         this.user = user;
     }
 
-    public List<Room> getRooms() {
-        return rooms;
+//    public List<Room> getRooms() {
+//        return rooms;
+//    }
+//
+//    public void setRooms(List<Room> rooms) {
+//        this.rooms = rooms;
+//    }
+
+
+    public ArrayList<Long> getMonsterIdList() {
+        return monsterIdList;
     }
 
-    public void setRooms(List<Room> rooms) {
-        this.rooms = rooms;
+    public void setMonsterIdList(ArrayList<Long> monsterIdList) {
+        this.monsterIdList = monsterIdList;
     }
 }

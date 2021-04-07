@@ -17,6 +17,8 @@ public class Monster {
 
     String monsterName;
 
+    private long mapid;
+
 
     // Stats
 
@@ -44,11 +46,11 @@ public class Monster {
     @JsonIgnoreProperties("monster")
     private List<Item> itemsList = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "roomId",
-            nullable = false)
-    @JsonIgnoreProperties("monsters")
-    private Room room;
+//    @ManyToOne
+//    @JoinColumn(name = "roomId",
+//            nullable = false)
+//    @JsonIgnoreProperties("monsters")
+//    private Room room;
 
     public Monster() {
 
@@ -151,11 +153,20 @@ public class Monster {
         this.status = status;
     }
 
-    public Room getRoom() {
-        return room;
+//    public Room getRoom() {
+//        return room;
+//    }
+//
+//    public void setRoom(Room room) {
+//        this.room = room;
+//    }
+//
+
+    public long getMapid() {
+        return mapid;
     }
 
-    public void setRoom(Room room) {
-        this.room = room;
+    public void setMapid(long mapid) {
+        this.mapid = mapid;
     }
 }

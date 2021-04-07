@@ -30,18 +30,13 @@ public class Room implements Serializable
 
     private int monsterLimit;
 
-    @OneToMany(mappedBy="room",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    @JsonIgnoreProperties("room")
-    private List<Monster> monsters = new ArrayList<Monster>();
-
 //    @OneToMany(mappedBy="room",
 //            cascade = CascadeType.ALL,
-//           orphanRemoval = true
-//    )
+//            orphanRemoval = true)
 //    @JsonIgnoreProperties("room")
-//    private List<Cell> cells = new ArrayList<Cell>();
+//    private List<Monster> monsters = new ArrayList<Monster>();
+
+
 
     @ManyToOne
     @JoinColumn(name = "mapid",
@@ -121,14 +116,14 @@ public class Room implements Serializable
     public void setDoorX(int doorX) {
         this.doorX = doorX;
     }
-
-    public List<Monster> getMonstersList() {
-        return monsters;
-    }
-
-    public void setMonstersList(List<Monster> monsters) {
-        this.monsters = monsters;
-    }
+//
+//    public List<Monster> getMonstersList() {
+//        return monsters;
+//    }
+//
+//    public void setMonstersList(List<Monster> monsters) {
+//        this.monsters = monsters;
+//    }
 
     public Map getMap() {
         return map;

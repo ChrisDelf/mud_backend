@@ -18,7 +18,7 @@ public interface MapService {
 
     Map findById(long mapid);
 
-    HashMap<Long, ArrayList<Long>> getMapDetails(long mapid);
+//    HashMap<Long, ArrayList<Long>> getMapDetails(long mapid);
 
 
 

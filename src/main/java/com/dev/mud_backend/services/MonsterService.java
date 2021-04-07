@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface MonsterService {
 
-    Monster MonsterStats(long m_id, long room_id);
+//    Monster MonsterStats(long m_id, long room_id);
 
     long MonsterAttack(long monsterId, long playerId);
 
-    long MonsterHeal(long monsterId, long healAmount);
+    long MonsterHeal(long monsterId);
 
 
     String MonsterDeath(long monsterId);
