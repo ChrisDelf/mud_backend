@@ -46,11 +46,11 @@ public class Monster {
     @JsonIgnoreProperties("monster")
     private List<Item> itemsList = new ArrayList<>();
 
-//    @ManyToOne
-//    @JoinColumn(name = "roomId",
-//            nullable = false)
-//    @JsonIgnoreProperties("monsters")
-//    private Room room;
+    @ManyToOne
+    @JoinColumn(name = "map",
+            nullable = true)
+    @JsonIgnoreProperties("monsters")
+    private Map map;
 
     public Monster() {
 

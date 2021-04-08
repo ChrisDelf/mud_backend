@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 @Service(value = "dungeonCreatorService")
@@ -300,29 +301,28 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
                 roomRepo.save(newDoor);
                 // Creating a monster
                 Monster newMonster = new Monster("Gobo",5,2,2,1,1,10,"standing");
-                newMonster.setMonsterX(rand.ints(roomValues.get(i).getX() + roomValues.get(i).getWidth()).findFirst().getAsInt());
-                newMonster.setMonsterY(rand.ints(roomValues.get(i).getY() + roomValues.get(i).getHeight()).findFirst().getAsInt());
-               // newMonster.setRoom(roomService.findById(room.getRoomId()));
+
+                newMonster.setMonsterX(rand.ints(roomValues.get(i).getX(), (roomValues.get(i).getX() + roomValues.get(i).getWidth())).findFirst().getAsInt());
+                newMonster.setMonsterY(rand.ints(roomValues.get(i).getY(), (roomValues.get(i).getY() + roomValues.get(i).getHeight())).findFirst().getAsInt());
+
                 newMonster.setMapid(mapid);
                 monsterRepo.save(newMonster);
-                // want to add the new created monster to our map object
+
+
+                //connecting the newly create monster with the map
                 Map temp_map = mapService.findById(mapid);
-                ArrayList<Long> monsterList_temp = new ArrayList<>();
+                List<Monster> monster_list_t = new ArrayList<>();
+                monster_list_t = temp_map.getMonsters();
+                monster_list_t.add(newMonster);
 
-                monsterList_temp = temp_map.getMonsterIdList();
-                monsterList_temp.add(newMonster.getMonsterid());
-
-                temp_map.setMonsterIdList(monsterList_temp);
 
                 mapRepo.save(temp_map);
 
 
-                // have to add the monster to the room
-                //List <Monster> monsters = new ArrayList<>();
-                //monsters.add(newMonster);
 
 
-                //roomService.findById(roomValues.get(i).getRoomId()).setMonstersList(monsters);
+
+
                 roomRepo.save(roomService.findById(roomValues.get(i).getRoomId()));
                 // Placing the cells to create the room
 

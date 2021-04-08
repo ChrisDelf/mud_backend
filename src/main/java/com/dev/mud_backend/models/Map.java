@@ -49,6 +49,12 @@ public class Map implements Serializable {
 //    @JsonIgnoreProperties("map")
 //    private List<Room> rooms = new ArrayList<>();
 
+    @OneToMany(mappedBy="map",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    @JsonIgnoreProperties("map")
+    private List<Monster> monsters = new ArrayList<>();
+
 
 
     public Map() {
@@ -138,5 +144,13 @@ public class Map implements Serializable {
 
     public void setMonsterIdList(ArrayList<Long> monsterIdList) {
         this.monsterIdList = monsterIdList;
+    }
+
+    public List<Monster> getMonsters() {
+        return monsters;
+    }
+
+    public void setMonsters(List<Monster> monsters) {
+        this.monsters = monsters;
     }
 }
