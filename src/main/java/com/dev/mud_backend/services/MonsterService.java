@@ -13,7 +13,6 @@ public interface MonsterService {
 
     long MonsterHeal(long monsterId);
 
-
     String MonsterDeath(long monsterId);
 
     ArrayList<Monster> GenerateMonsters(int monsterLimit);
