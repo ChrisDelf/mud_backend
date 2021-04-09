@@ -6,4 +6,6 @@ public interface CellService {
 
 
     Cell getCellById(long id);
+
+    String addorRemoveM(long monsterid, String command);
 }

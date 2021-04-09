@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,7 +51,7 @@ public class GameController {
 
         temp_map = mapService.findById(mapid);
 
-        ArrayList<Long> return_array = temp_map.getMonsterIdList();
+        List<Monster> return_array = temp_map.getMonsters();
 
 
 

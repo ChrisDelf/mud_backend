@@ -116,14 +116,7 @@ public class Room implements Serializable
     public void setDoorX(int doorX) {
         this.doorX = doorX;
     }
-//
-//    public List<Monster> getMonstersList() {
-//        return monsters;
-//    }
-//
-//    public void setMonstersList(List<Monster> monsters) {
-//        this.monsters = monsters;
-//    }
+
 
     public Map getMap() {
         return map;
