@@ -1,23 +1,37 @@
-DELETE
-FROM users;
-
-DELETE
-FROM userroles;
-
-DELETE
-FROM useremails;
-
-DELETE
-FROM rooms;
-
-DELETE
-FROM monsters;
-
-DELETE
-FROM cells;
-
-DELETE
-FROM maps;
+--DELETE
+--FROM users;
+--
+--DELETE
+--FROM userroles;
+--
+--DELETE
+--FROM useremails;
+--
+--DELETE
+--FROM rooms;
+--
+--DELETE
+--FROM monsters;
+--
+--DELETE
+--FROM cells;
+--
+--DELETE
+--FROM maps;
+--
+--DROP ALL OBJECTS [DELETE FILES]
+--DROP TABLE IF EXISTS users;
+--
+--CREATE TABLE users (
+--id INT AUTO_INCREMENT PRIMARY KEY,
+--username VARCHAR(250) NOT NULL,
+--password VARCHAR(250) NOT NULL,
+--role VARCHAR(250) NOT NULL,
+--email VARCHAR(250) DEFAULT NULL
+--);
+--
+--INSERT INTO users (username, password, role, email) VALUES
+--('poopmaster','poop123','admin', 'poopmaster@gpoop.com');
 
 --CREATE TABLE rooms(
 --roomid INTEGER AUTO_INCREMENT PRIMARY KEY ,

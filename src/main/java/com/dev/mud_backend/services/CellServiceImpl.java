@@ -18,4 +18,18 @@ public class CellServiceImpl implements CellService{
         return cellRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Room id " + id + " not found!"));
     }
+
+    @Override
+    public String addorRemoveM(long monsterid, String command) {
+        if (command == "remove"){
+
+
+        }
+
+        if (command == "monsterid"){
+
+        }
+
+        return null;
+    }
 }

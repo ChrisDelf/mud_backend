@@ -281,6 +281,10 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
         // now we go iterate through the roomvalues to see if we can place them
         ArrayList<Room> roomsPlaced = new ArrayList<>();
 
+        PlacedRoom placedRooms = new PlacedRoom();
+
+        placedRooms.setPlacedRooms(roomsPlaced);
+        placedRooms.setGrid(grid);
 
         for (int i = 0; i < roomValues.size(); i++){
 
@@ -335,14 +339,14 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
 
                 roomsPlaced.add(roomValues.get(i));
 
-
+                placedRooms.setGrid(grid);
             }
         }
-        PlacedRoom placedRooms = new PlacedRoom();
+        System.out.println(roomsPlaced);
 
-        placedRooms.setPlacedRooms(roomsPlaced);
-        placedRooms.setGrid(grid);
-        //placedRoomRepo.save(placedRooms);
+
+        // we have the save the grid to save the lastest update to the grid
+
 
 
         return placedRooms;
@@ -350,8 +354,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
 
     @Override
     public PlacedRoom growMap(PlacedRoom roomsPlaced, int counter, int maxRooms, int [] roomRange, long mapid) {
-       // System.out.println("counter :" + counter + " Roomsize :" + roomsPlaced.getPlacedRooms().size() + " maxRooms.size  ;" + maxRooms + " or " + roomsPlaced.getPlacedRooms().size());
-
+        System.out.println("Counter : " + counter + " Rooms Placed" +  roomsPlaced.getPlacedRooms().size());
         if ((counter + roomsPlaced.getPlacedRooms().size() > maxRooms) || roomsPlaced.getPlacedRooms().size() == 0) {
             System.out.println("exit");
             return roomsPlaced;

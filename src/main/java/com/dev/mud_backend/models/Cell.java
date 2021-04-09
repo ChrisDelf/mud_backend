@@ -17,15 +17,15 @@ public class Cell implements Serializable {
 
     private int y;
 
+    @Column(length = 1000000)
+    String entities;
+
+    @Column(length = 1000000)
+    String items;
+
     @Column(nullable = false,
             unique = false)
     private String roomType;
-
-//   @ManyToOne
-//   @JoinColumn(name = "roomid",
-//           nullable = true)
-//   @JsonIgnoreProperties("cells")
-//   private Room room;
 
     private long roomid;
 
@@ -89,14 +89,21 @@ public class Cell implements Serializable {
         this.roomid = roomid;
     }
 
-    //
-//    public Room getRoom() {
-//        return room;
-//    }
-//
-//    public void setRoom(Room room) {
-//        this.room = room;
-//    }
+    public String getEntities() {
+        return entities;
+    }
+
+    public void setEntities(String entities) {
+        this.entities = entities;
+    }
+
+    public String getItems() {
+        return items;
+    }
+
+    public void setItems(String items) {
+        this.items = items;
+    }
 }
 
 
