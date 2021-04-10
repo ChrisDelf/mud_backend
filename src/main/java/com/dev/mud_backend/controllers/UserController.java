@@ -7,6 +7,7 @@ import com.dev.mud_backend.services.DungeonCreatorService;
 import com.dev.mud_backend.services.MapService;
 import com.dev.mud_backend.services.UserService;
 import com.google.gson.Gson;
+import com.sun.tools.javac.jvm.Items;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -197,11 +198,14 @@ public class UserController
     public ResponseEntity<?> getTest(@Valid @PathVariable long userid) {
 
         ArrayList<ArrayList<Cell>> grid = new ArrayList<ArrayList<Cell>>();
+
         Map newMap = new Map();
         newMap.setWidth(50);
         newMap.setHeight(50);
-        newMap.setPlayerx(32);
-        newMap.setPlayery(32);
+        // we have the create the player
+        List<Item> items = new ArrayList<>();
+        Player newPlayer = new Player(50,"Doofus",32,32,5,5,5,5,items,"standing",50,"safe");
+        newMap.setPlayer(newPlayer);
         newMap.setUser(userService.findUserById(userid));
         mapRepo.save(newMap);
         grid = dungeonCreatorService.generateGrid(50,50,2, newMap.getMapid());
@@ -252,35 +256,14 @@ public class UserController
     }
 
     // need to give the user his player location.
-    @GetMapping(value ="/playerlocation/{mapid}", produces = {"application/json"})
-    public ResponseEntity<?> getUserPosition(@Valid @PathVariable Long mapid){
-        Map tempMap = new Map();
+    @GetMapping(value ="/player/{playerid}", produces = {"application/json"})
+    public ResponseEntity<?> getUserPosition(@Valid @PathVariable Long playerid){
+        Player newPlayer = new Player();
 
-        tempMap = mapService.getPlayerLocation(mapid);
-
-        Map resMap = new Map();
-
-        resMap.setPlayerx(tempMap.getPlayerx());
-        resMap.setPlayery(tempMap.getPlayery());
-        resMap.setGrid(tempMap.getGrid());
-        resMap.setWidth(tempMap.getWidth());
-        resMap.setHeight(tempMap.getHeight());
-
-
-        return new ResponseEntity<>(resMap, HttpStatus.OK);
+        return new ResponseEntity<>(newPlayer, HttpStatus.OK);
     }
 
-    @PutMapping(value ="/moveplayer/{mapid}")
-    public ResponseEntity<?> movePlayer(
-            @RequestBody
-                    Map updateMap,
-            @PathVariable long mapid
-    )
-    {
 
-        mapService.updatePlayer(updateMap, mapid);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 
 //    @GetMapping(value ="/mapdetails/{mapid}",
 //            produces = {"application/json"})

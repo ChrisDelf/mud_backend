@@ -15,8 +15,14 @@ public class CellServiceImpl implements CellService{
 
     @Override
     public Cell getCellById(long id) {
-        return cellRepo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Room id " + id + " not found!"));
+        Cell s_cell = new Cell();
+        s_cell = cellRepo.findByCellid(id);
+        if ( s_cell == null) {
+            throw new ResourceNotFoundException("The player by the id" + id + " was not found");
+        }
+        else {
+            return  s_cell;
+        }
     }
 
     @Override
@@ -29,6 +35,13 @@ public class CellServiceImpl implements CellService{
         if (command == "monsterid"){
 
         }
+
+        return null;
+    }
+
+    @Override
+    public Cell updateCell(Cell cell) {
+//        Cell update_cell = cell(cell.getCellid());
 
         return null;
     }

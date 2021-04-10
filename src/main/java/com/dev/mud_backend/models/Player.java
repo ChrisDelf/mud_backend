@@ -43,6 +43,11 @@ public class Player {
     @JsonIgnoreProperties("player")
     private List<Item> itemsList = new ArrayList<>();
 
+
+    @OneToOne(mappedBy = "player")
+    private Map map;
+
+
     public Player() {
     }
 
@@ -158,5 +163,17 @@ public class Player {
 
     public void setMapStatus(String mapStatus) {
         this.mapStatus = mapStatus;
+    }
+
+    public void setPlayerid(long playerid) {
+        this.playerid = playerid;
+    }
+
+    public Map getMap() {
+        return map;
+    }
+
+    public void setMap(Map map) {
+        this.map = map;
     }
 }

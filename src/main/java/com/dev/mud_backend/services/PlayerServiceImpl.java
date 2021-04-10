@@ -92,6 +92,22 @@ public class PlayerServiceImpl implements PlayerService {
         return monster_health;
     }
 
+    @Override
+    public Player updatePlayer(Player player) {
+        Player update_p = new Player();
+        update_p = player;
+        if (playerRepo.findByPlayerid(player.getPlayerid()) != null){
+            // if the player actually exists
+            // we updated it
+            playerRepo.save(update_p);
+
+            return update_p;
+        }
+        else{
+            throw new ResourceNotFoundException(player.getPlayerid() + " Not current user");
+        }
+    }
+
     @Transactional
     @Override
     public Player findById(long id) throws ResourceNotFoundException {
