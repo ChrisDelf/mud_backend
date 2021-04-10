@@ -68,6 +68,7 @@ public class RoleServiceImpl implements RoleService{
     @Override
     public Role save(Role role)
     {
+
         Role newRole = new Role();
         newRole.setName(role.getName());
 
@@ -76,9 +77,15 @@ public class RoleServiceImpl implements RoleService{
         {
             long id = ur.getUser()
                     .getUserid();
-//            User user = userrepos.findById(id)
-//                    .orElseThrow(() -> new ResourceNotFoundException("User id " + id + " not found!"));
-            newUsers.add(new UserRoles(ur.getUser(), newRole));
+            User user = userrepos.findById(id);
+                    if (user == null) {
+
+                    throw new ResourceNotFoundException("User id " + id + " not found!");
+                            }
+                    else {
+                        System.out.println("Do we get here");
+                        newUsers.add(new UserRoles(ur.getUser(), newRole));
+                    }
         }
         newRole.setUserroles(newUsers);
 

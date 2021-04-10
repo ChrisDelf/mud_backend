@@ -10,6 +10,8 @@ public interface PlayerService {
 
     long playerAttack( long damage_num, long player_id,long monster_id);
 
+    Player updatePlayer(Player player);
+
     Player findById(long id);
 
 

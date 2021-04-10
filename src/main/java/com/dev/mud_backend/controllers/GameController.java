@@ -40,6 +40,7 @@ public class GameController {
     @Autowired
     private MapService mapService;
 
+
     //--------------------------- Game info
 
     //get
@@ -75,19 +76,37 @@ public class GameController {
     // update
     /// /player/pickupItem/
 
-    @PutMapping(value ="/player/itemInteraction", produces = {"application/json"})
-    public ResponseEntity<?> playerItemInteraction(long itemId){
+    @PutMapping(value ="/player/itemInteraction",  consumes = {"application/json"} , produces = {"application/json"})
+    public ResponseEntity<?> playerItemInteraction(Player player){
 
 
 
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    // update
+    // player - status change
+    @PutMapping(value ="/player/status",  consumes = {"application/json"} , produces = {"application/json"})
+    public ResponseEntity<?> playerStatusC(Player player){
+        Player temp_player = player;
+        temp_player = playerService.updatePlayer(player);
+
+        if (temp_player != null) {
+
+            return new ResponseEntity<>( temp_player, HttpStatus.OK);
+
+        }
+
+
+
+
+        return new ResponseEntity<>("Unable to find player",HttpStatus.OK);
+    }
 
 
     //Get
     // /player/checkInventory/
-    @GetMapping(value ="/player/checkInventory", produces = {"application/json"})
+    @GetMapping(value ="/player/checkInventory",produces = {"application/json"})
     public ResponseEntity<?> playerCheckInventory(long playerId) {
 
         return new ResponseEntity<>(HttpStatus.OK);
