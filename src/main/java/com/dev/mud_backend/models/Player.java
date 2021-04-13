@@ -12,7 +12,9 @@ public class Player {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "playerid")
     private long playerid;
+
 
     private long playerHealth;
 
@@ -44,7 +46,10 @@ public class Player {
     private List<Item> itemsList = new ArrayList<>();
 
 
-    @OneToOne(mappedBy = "player")
+    @ManyToOne
+    @JoinColumn(name = "mapid",
+            nullable = true)
+    @JsonIgnoreProperties({"players", "grid"})
     private Map map;
 
 

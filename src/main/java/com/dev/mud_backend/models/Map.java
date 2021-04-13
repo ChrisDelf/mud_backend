@@ -21,6 +21,7 @@ public class Map implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "mapid")
     private long mapid;
 
     private int width;
@@ -44,9 +45,12 @@ public class Map implements Serializable {
     private List<Monster> monsters = new ArrayList<>();
 
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "playerid", referencedColumnName = "mapid")
-    private Player player;
+    @OneToMany(mappedBy="map",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    @JsonIgnoreProperties("map")
+    private List<Player> players = new ArrayList<>();
+
 
 
 
@@ -84,9 +88,7 @@ public class Map implements Serializable {
         this.height = height;
     }
 
-    public long getRoomid() {
-        return mapid;
-    }
+
 
     public long getMapid() {
         return mapid;
@@ -104,19 +106,20 @@ public class Map implements Serializable {
         this.user = user;
     }
 
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
+
     public List<Monster> getMonsters() {
         return monsters;
     }
 
     public void setMonsters(List<Monster> monsters) {
         this.monsters = monsters;
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
     }
 }

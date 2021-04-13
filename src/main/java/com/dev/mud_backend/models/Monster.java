@@ -43,13 +43,14 @@ public class Monster {
     @OneToMany(mappedBy = "monster",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    @JsonIgnoreProperties("monster")
+    @JsonIgnoreProperties("monsters")
     private List<Item> itemsList = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "map",
-            nullable = true)
-    @JsonIgnoreProperties("monsters")
+            nullable = true
+    )
+    @JsonIgnoreProperties({"monsters", "grid"})
     private Map map;
 
     public Monster() {
@@ -159,5 +160,14 @@ public class Monster {
 
     public void setMapid(long mapid) {
         this.mapid = mapid;
+    }
+
+
+    public Map getMap() {
+        return map;
+    }
+
+    public void setMap(Map map) {
+        this.map = map;
     }
 }
