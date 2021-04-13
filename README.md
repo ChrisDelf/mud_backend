@@ -12,7 +12,7 @@ Swagger,
 and Oauth2.
 
 
-##Endpoints
+#Endpoints
 
 <------------------------------------- Game related endpoints
 
@@ -21,14 +21,16 @@ game information request
 type:get
 #
 /game/monsterlist/{mapid}
+Description:
+Returns a list of monsters related to the map that is generated
 #
-returns a list of monsters related to the map that is generated
 
 type:get
 #
 /game/generatemap/{userid}
-#
-generates a dungeon map and returns the map and user object
+Description:
+Generates a dungeon map and returns the map and user object
+
 
 example output
 ```{
