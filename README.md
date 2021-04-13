@@ -19,11 +19,15 @@ and Oauth2.
 game information request
 
 type:get
+#
 /game/monsterlist/{mapid}
+#
 returns a list of monsters related to the map that is generated
 
 type:get
+#
 /game/generatemap/{userid}
+#
 generates a dungeon map and returns the map and user object
 
 example output
