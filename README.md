@@ -26,6 +26,12 @@ Description:
 
 Returns a list of monsters related to the map that is generated
 
+example output:
+```
+
+
+```
+
 #
 
 type:get
@@ -87,7 +93,7 @@ example output:
             "status": "standing"
         }
     ],
-    "player": {
+    "players": {[
         "playerid": 14,
         "playerHealth": 50,
         "playerName": "Doofus",
@@ -102,8 +108,10 @@ example output:
         "mapStatus": null,
         "itemsList": [],
         "map": null
+        ]
     }
-} ```
+}
+```
 
 #
     
