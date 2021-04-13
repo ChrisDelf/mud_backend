@@ -1,13 +1,12 @@
 package com.dev.mud_backend.controllers;
 
 
-import com.dev.mud_backend.models.Map;
-import com.dev.mud_backend.models.Monster;
-import com.dev.mud_backend.models.Player;
+import com.dev.mud_backend.models.*;
+import com.dev.mud_backend.repository.MapRepository;
+import com.dev.mud_backend.repository.PlayerRepository;
 import com.dev.mud_backend.responseObjects.PlayerAction;
-import com.dev.mud_backend.services.MapService;
-import com.dev.mud_backend.services.MonsterService;
-import com.dev.mud_backend.services.PlayerService;
+import com.dev.mud_backend.services.*;
+import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +29,23 @@ import org.springframework.web.bind.annotation.*;
 public class GameController {
     private static final Logger logger = LoggerFactory.getLogger(GameController.class);
 
+    @Autowired
+    private DungeonCreatorService dungeonCreatorService;
 
     @Autowired
     private PlayerService playerService;
 
     @Autowired
     private MonsterService monsterService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    PlayerRepository playerRepo;
+
+    @Autowired
+    MapRepository mapRepo;
 
     @Autowired
     private MapService mapService;
@@ -46,13 +56,16 @@ public class GameController {
     //get
     // get list of monsters
     @GetMapping(value ="/monsterslist/{mapid}" , produces = {"application/json"})
-    public ResponseEntity<?> getMonsterList(@PathVariable long mapid) {
+    public ResponseEntity<?> getMonsterList(@Valid @PathVariable long mapid) {
 
-        Map temp_map = new Map();
+        Map tempmap = new Map();
 
-        temp_map = mapService.findById(mapid);
+        tempmap = mapService.findById(mapid);
 
-        List<Monster> return_array = temp_map.getMonsters();
+
+
+        List<Monster> return_array = new ArrayList<>();
+        return_array = tempmap.getMonsters();
 
 
 
@@ -71,7 +84,55 @@ public class GameController {
         return new ResponseEntity<>(target_monster, HttpStatus.OK);
     }
 
+    @GetMapping(value ="/generatemap/{userid}", produces = {"application/json"})
+    public ResponseEntity<?> getTest(@Valid @PathVariable long userid) {
 
+        ArrayList<ArrayList<Cell>> grid = new ArrayList<ArrayList<Cell>>();
+
+        Map newMap = new Map();
+        newMap.setWidth(50);
+        newMap.setHeight(50);
+        // we have the create the player
+        List<Item> items = new ArrayList<>();
+        Player newPlayer = new Player(50,"Doofus",32,32,5,5,5,5,items,"standing",50,"safe");
+        List<Player> playerList = new ArrayList<>();
+        playerList = newMap.getPlayers();
+        playerList.add(newPlayer);
+
+        newMap.setPlayers(playerList);
+        newMap.setUser(userService.findUserById(userid));
+        mapRepo.save(newMap);
+        newPlayer.setMap(newMap);
+        playerRepo.save(newPlayer);
+
+        grid = dungeonCreatorService.generateGrid(50,50,2, newMap.getMapid());
+
+        ArrayList<ArrayList<String>> visualGrid = new ArrayList<>();
+
+
+        Gson gson = new Gson();
+
+        String json = gson.toJson(grid);
+
+
+        newMap.setGrid(json);
+
+        mapRepo.save(newMap);
+        /// creating a new map object
+        Map return_map = new Map();
+        return_map.setMapid(newMap.getMapid());
+        return_map.setHeight(newMap.getHeight());
+        return_map.setWidth(newMap.getWidth());
+        return_map.setGrid(newMap.getGrid());
+        return_map.setMonsters(newMap.getMonsters());
+        return_map.setPlayers(newMap.getPlayers());
+
+
+        System.out.println(mapService.findById(newMap.getMapid()).getPlayers());
+
+
+        return  new ResponseEntity<>(return_map,HttpStatus.OK);
+    }
     //--------------------------- Player Actions
     // update
     /// /player/pickupItem/
@@ -106,20 +167,16 @@ public class GameController {
 
     //Get
     // /player/checkInventory/
-    @GetMapping(value ="/player/checkInventory",produces = {"application/json"})
-    public ResponseEntity<?> playerCheckInventory(long playerId) {
+    @GetMapping(value ="/player/{playerid}",produces = {"application/json"})
+    public ResponseEntity<?> playerCheckInventory(@Valid @PathVariable long playerid) {
+        Player player = new Player();
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        player = playerService.findById(playerid);
+
+        return new ResponseEntity<>(player,HttpStatus.OK);
 
     }
 
-    //Get
-    // /player/insight
-    @GetMapping(value ="/player/insight", produces = {"applications/json"})
-    public ResponseEntity<?>  playerInspect(long id){
-
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 
 
 

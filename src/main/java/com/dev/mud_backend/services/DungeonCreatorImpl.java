@@ -308,9 +308,9 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
 
                 newMonster.setMonsterX(rand.ints(roomValues.get(i).getX(), (roomValues.get(i).getX() + roomValues.get(i).getWidth())).findFirst().getAsInt());
                 newMonster.setMonsterY(rand.ints(roomValues.get(i).getY(), (roomValues.get(i).getY() + roomValues.get(i).getHeight())).findFirst().getAsInt());
-
-                newMonster.setMapid(mapid);
+                newMonster.setMap(mapRepo.findByMapid(mapid));
                 monsterRepo.save(newMonster);
+
 
                 //
 
@@ -356,7 +356,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
 
     @Override
     public PlacedRoom growMap(PlacedRoom roomsPlaced, int counter, int maxRooms, int [] roomRange, long mapid) {
-        System.out.println("Counter : " + counter + " Rooms Placed" +  roomsPlaced.getPlacedRooms().size());
+      //  System.out.println("Counter : " + counter + " Rooms Placed" +  roomsPlaced.getPlacedRooms().size());
         if ((counter + roomsPlaced.getPlacedRooms().size() > maxRooms) || roomsPlaced.getPlacedRooms().size() == 0) {
             System.out.println("exit");
             return roomsPlaced;

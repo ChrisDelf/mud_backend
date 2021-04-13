@@ -12,13 +12,16 @@ public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "itemid")
     private long itemid;
 
-    String itemname;
+    private long mapid;
 
-    String itemtype;
+    private String itemname;
 
-    String itemposition;
+    private String itemtype;
+
+    private String itemposition;
     // Weapon Stats
 
     private long cost;

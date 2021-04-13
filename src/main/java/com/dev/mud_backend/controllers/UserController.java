@@ -6,8 +6,6 @@ import com.dev.mud_backend.repository.MapRepository;
 import com.dev.mud_backend.services.DungeonCreatorService;
 import com.dev.mud_backend.services.MapService;
 import com.dev.mud_backend.services.UserService;
-import com.google.gson.Gson;
-import com.sun.tools.javac.jvm.Items;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -194,38 +192,7 @@ public class UserController
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 //    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @GetMapping(value ="/test/{userid}", produces = {"application/json"})
-    public ResponseEntity<?> getTest(@Valid @PathVariable long userid) {
 
-        ArrayList<ArrayList<Cell>> grid = new ArrayList<ArrayList<Cell>>();
-
-        Map newMap = new Map();
-        newMap.setWidth(50);
-        newMap.setHeight(50);
-        // we have the create the player
-        List<Item> items = new ArrayList<>();
-        Player newPlayer = new Player(50,"Doofus",32,32,5,5,5,5,items,"standing",50,"safe");
-        newMap.setPlayer(newPlayer);
-        newMap.setUser(userService.findUserById(userid));
-        mapRepo.save(newMap);
-        grid = dungeonCreatorService.generateGrid(50,50,2, newMap.getMapid());
-
-        ArrayList<ArrayList<String>> visualGrid = new ArrayList<>();
-
-
-        Gson gson = new Gson();
-
-        String json = gson.toJson(grid);
-
-
-        newMap.setGrid(json);
-
-        mapRepo.save(newMap);
-
-
-
-        return  new ResponseEntity<>(newMap,HttpStatus.OK);
-    }
     @GetMapping (value = "/display/{username}", produces = {"application/json"})
     public ResponseEntity<?> getUserInfo(@Valid @PathVariable String username){
         UserDetails tempUser = userService.loadUserByUsername(username);
@@ -263,15 +230,4 @@ public class UserController
         return new ResponseEntity<>(newPlayer, HttpStatus.OK);
     }
 
-
-
-//    @GetMapping(value ="/mapdetails/{mapid}",
-//            produces = {"application/json"})
-//    public ResponseEntity<?> getMapDetails(@Valid @PathVariable Long mapid){
-//
-//        HashMap<Long, ArrayList<Long>> roomsAndMonsterLists = mapService.getMapDetails(mapid);
-//
-//
-//        return new ResponseEntity<>(roomsAndMonsterLists, HttpStatus.OK);
-//    }
 }
