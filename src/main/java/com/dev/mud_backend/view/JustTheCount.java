@@ -1,6 +1,9 @@
 package com.dev.mud_backend.view;
 
+import org.springframework.data.repository.PagingAndSortingRepository;
+
 public interface JustTheCount
 {
-//    int getCount();
+    //boolean getCount();
+        int getCount();
 }
