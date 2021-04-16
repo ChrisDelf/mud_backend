@@ -7,6 +7,7 @@ import com.dev.mud_backend.repository.PlayerRepository;
 import com.dev.mud_backend.responseObjects.PlayerAction;
 import com.dev.mud_backend.services.*;
 import com.google.gson.Gson;
+import org.h2.util.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,9 +68,14 @@ public class GameController {
         List<Monster> return_array = new ArrayList<>();
         return_array = tempmap.getMonsters();
 
+        Map return_map = new Map();
+
+        return_map.setMonsters(tempmap.getMonsters());
 
 
-        return new ResponseEntity<>(return_array, HttpStatus.OK);
+
+
+        return new ResponseEntity<>(return_map.getMonsters(), HttpStatus.OK);
     }
 
     //get
@@ -128,7 +134,7 @@ public class GameController {
         return_map.setPlayers(newMap.getPlayers());
 
 
-        System.out.println(mapService.findById(newMap.getMapid()).getPlayers());
+
 
 
         return  new ResponseEntity<>(return_map,HttpStatus.OK);
@@ -165,10 +171,10 @@ public class GameController {
     }
 
 
-    //Get
-    // /player/checkInventory/
+    // Get
+    // /player
     @GetMapping(value ="/player/{playerid}",produces = {"application/json"})
-    public ResponseEntity<?> playerCheckInventory(@Valid @PathVariable long playerid) {
+    public ResponseEntity<?> playerInfo(@Valid @PathVariable long playerid) {
         Player player = new Player();
 
         player = playerService.findById(playerid);
