@@ -28,7 +28,64 @@ Returns a list of monsters related to the map that is generated
 
 example output:
 ```
-
+[
+    {
+        "monsterid": 2518,
+        "monsterName": "Gobo",
+        "mapid": 0,
+        "monsterHealth": 5,
+        "strength": 2,
+        "agility": 2,
+        "intellect": 1,
+        "stamina": 1,
+        "monsterX": 32,
+        "monsterY": 27,
+        "maxhealth": 10,
+        "status": "standing"
+    },
+    {
+        "monsterid": 2521,
+        "monsterName": "Gobo",
+        "mapid": 0,
+        "monsterHealth": 5,
+        "strength": 2,
+        "agility": 2,
+        "intellect": 1,
+        "stamina": 1,
+        "monsterX": 39,
+        "monsterY": 34,
+        "maxhealth": 10,
+        "status": "standing"
+    },
+    {
+        "monsterid": 2524,
+        "monsterName": "Gobo",
+        "mapid": 0,
+        "monsterHealth": 5,
+        "strength": 2,
+        "agility": 2,
+        "intellect": 1,
+        "stamina": 1,
+        "monsterX": 25,
+        "monsterY": 33,
+        "maxhealth": 10,
+        "status": "standing"
+    },
+    {
+        "monsterid": 2527,
+        "monsterName": "Gobo",
+        "mapid": 0,
+        "monsterHealth": 5,
+        "strength": 2,
+        "agility": 2,
+        "intellect": 1,
+        "stamina": 1,
+        "monsterX": 32,
+        "monsterY": 36,
+        "maxhealth": 10,
+        "status": "standing"
+    }
+]
 
 ```
 
