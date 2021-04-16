@@ -138,7 +138,7 @@ public class GameController {
     /// /player/pickupItem/
 
     @PutMapping(value ="/player/itemInteraction",  consumes = {"application/json"} , produces = {"application/json"})
-    public ResponseEntity<?> playerItemInteraction(Player player){
+    public ResponseEntity<?> playerItemInteraction(@Valid Player player){
 
 
 
@@ -148,7 +148,7 @@ public class GameController {
     // update
     // player - status change
     @PutMapping(value ="/player/status",  consumes = {"application/json"} , produces = {"application/json"})
-    public ResponseEntity<?> playerStatusC(Player player){
+    public ResponseEntity<?> playerStatusC(@Valid Player player){
         Player temp_player = player;
         temp_player = playerService.updatePlayer(player);
 
@@ -183,7 +183,6 @@ public class GameController {
 
     // update
     // /player/combatAction
-
     @PutMapping(value ="player/combatAction/{playerid}/{monsterid}",  consumes = {"application/json"},produces = {"application/json"})
     public  ResponseEntity<?> playerCombat(HttpServletRequest request, @Valid @RequestBody
                                            PlayerAction playerAction, @PathVariable long playerid, long monsterid){
@@ -266,43 +265,15 @@ public class GameController {
 
         return new ResponseEntity<>(temp_monster, HttpStatus.OK);
     }
-    //Get
-    // getting the monsters stats
-    @GetMapping(value ="/monster/monster/{monsterid}", produces = {"application/json"})
-    public ResponseEntity<?> monsterStatus(long monsterid) {
-
-        Monster repsonseMonster = monsterService.findById(monsterid);
-
-
-        return new ResponseEntity<>(repsonseMonster, HttpStatus.OK);
-    }
-    // /monster/checkInventory/
-    @GetMapping(value = "/monster/checkInventory", produces = {"application/json"})
-    public ResponseEntity<?> monsterInvetory(long monsterId){
-
-
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-
-
 
     // ----------------------- Game Actions
     // delete
     // /monsterDefeat/
 
-    @DeleteMapping(value = "/game/monsterdeath", produces = {"application/json"})
-    public ResponseEntity<?> monsterDeath(long monsterId){
+    @DeleteMapping(value = "/game/monsterdeath/{monsterid}", produces = {"application/json"})
+    public ResponseEntity<?> monsterDeath(@PathVariable long monsterId){
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // update
-    // /playerDefeat/
-
-    @PutMapping(value = "/game/playerdefeat", produces = {"application/json"})
-    public ResponseEntity<?> playerDefeat(long playerId){
-
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 }

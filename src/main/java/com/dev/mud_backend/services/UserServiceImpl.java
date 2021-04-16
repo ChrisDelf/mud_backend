@@ -175,14 +175,13 @@ public class UserServiceImpl implements UserDetailsService, UserService
         rolerepos.findById(roleid)
                 .orElseThrow(() -> new ResourceNotFoundException("Role id " + roleid + " not found!"));
 
-  //     if (rolerepos.checkUserRolesCombo(userid, roleid)
-   //             .getCount() > 0)
-  //      {
-   //        rolerepos.deleteUserRoles(userid, roleid);
-   //    } else
-   //   {
-   //       throw new ResourceNotFoundException("Role and User Combination Does Not Exists");
-   //    }
+       if (rolerepos.checkUserRolesCombo(userid, roleid).getCount() > 0)
+        {
+           rolerepos.deleteUserRoles(userid, roleid);
+       } else
+      {
+          throw new ResourceNotFoundException("Role and User Combination Does Not Exists");
+       }
     }
 
     @Transactional
@@ -194,13 +193,13 @@ public class UserServiceImpl implements UserDetailsService, UserService
         rolerepos.findById(roleid)
                 .orElseThrow(() -> new ResourceNotFoundException("Role id " + roleid + " not found!"));
 
-//        if (rolerepos.checkUserRolesCombo(userid, roleid)
-//                .getCount() <= 0)
-//        {
-//            rolerepos.insertUserRoles(userid, roleid);
-//        } else
-//        {
-//            throw new ResourceFoundException("Role and User Combination Already Exists");
-//        }
+        if (rolerepos.checkUserRolesCombo(userid, roleid)
+                .getCount() <= 0)
+        {
+            rolerepos.insertUserRoles(userid, roleid);
+        } else
+        {
+            throw new ResourceFoundException("Role and User Combination Already Exists");
+        }
     }
 }
