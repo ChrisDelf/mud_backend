@@ -1,24 +1,23 @@
 package com.dev.mud_backend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 
 @Entity
 @Table(name = "monsters")
-public class Monster {
+public class Monster implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long monsterid;
 
     String monsterName;
-
-    private long mapid;
-
 
     // Stats
 
@@ -48,9 +47,10 @@ public class Monster {
 
     @ManyToOne
     @JoinColumn(name = "map",
-            nullable = true
+            nullable = false
     )
-    @JsonIgnoreProperties({"monsters", "grid"})
+    @JsonIgnore
+    //@JsonIgnoreProperties({"monster", "grid", "map" ,"user", "maps"})
     private Map map;
 
     public Monster() {
@@ -153,15 +153,6 @@ public class Monster {
     public void setStatus(String status) {
         this.status = status;
     }
-
-    public long getMapid() {
-        return mapid;
-    }
-
-    public void setMapid(long mapid) {
-        this.mapid = mapid;
-    }
-
 
     public Map getMap() {
         return map;

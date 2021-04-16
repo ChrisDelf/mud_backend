@@ -35,7 +35,7 @@ public class Map implements Serializable {
     @ManyToOne
     @JoinColumn(name = "userid",
             nullable = false)
-    @JsonIgnoreProperties("map")
+    @JsonIgnoreProperties({"map", "user"})
     private User user;
 
     @OneToMany(mappedBy="map",
