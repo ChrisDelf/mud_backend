@@ -63,19 +63,7 @@ public class GameController {
 
         tempmap = mapService.findById(mapid);
 
-
-
-        List<Monster> return_array = new ArrayList<>();
-        return_array = tempmap.getMonsters();
-
-        Map return_map = new Map();
-
-        return_map.setMonsters(tempmap.getMonsters());
-
-
-
-
-        return new ResponseEntity<>(return_map.getMonsters(), HttpStatus.OK);
+        return new ResponseEntity<>(tempmap.getMonsters(), HttpStatus.OK);
     }
 
     //get
@@ -151,25 +139,6 @@ public class GameController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    // update
-    // player - status change
-    @PutMapping(value ="/player/status",  consumes = {"application/json"} , produces = {"application/json"})
-    public ResponseEntity<?> playerStatusC(@Valid Player player){
-        Player temp_player = player;
-        temp_player = playerService.updatePlayer(player);
-
-        if (temp_player != null) {
-
-            return new ResponseEntity<>( temp_player, HttpStatus.OK);
-
-        }
-
-
-
-
-        return new ResponseEntity<>("Unable to find player",HttpStatus.OK);
-    }
-
 
     // Get
     // /player
@@ -188,35 +157,13 @@ public class GameController {
 
 
     // update
-    // /player/combatAction
-    @PutMapping(value ="player/combatAction/{playerid}/{monsterid}",  consumes = {"application/json"},produces = {"application/json"})
+    // /player/update
+    @PutMapping(value ="player/update/{playerid}",  consumes = {"application/json"},produces = {"application/json"})
     public  ResponseEntity<?> playerCombat(HttpServletRequest request, @Valid @RequestBody
-                                           PlayerAction playerAction, @PathVariable long playerid, long monsterid){
-        ArrayList<Long> return_array = new ArrayList<>();
-        long updated_number = 0;
+                                           Player player, @PathVariable long playerid){
+
         Player temp_player = new Player();
-
-        if (playerAction.getActionType() == "Heal"){
-            updated_number = playerService.playerHealed(playerAction.getActionNum(),playerid);
-            temp_player = playerService.findById(playerid);
-        }
-
-        if (playerAction.getActionType() == "Attack"){
-            updated_number = playerService.playerAttack(playerAction.getActionNum(), playerid, monsterid);
-            temp_player = playerService.findById(playerid);
-        }
-
-        if (playerAction.getActionType() == "Status"){
-            // if the player status changes
-            temp_player = playerService.findById(playerid);
-        }
-
-        return_array.add(playerid);
-        return_array.add(monsterid);
-        return_array.add(updated_number);
-
-
-
+        temp_player = playerService.updatePlayer(player, playerid);
 
         return new ResponseEntity<>(temp_player, HttpStatus.OK);
     }
@@ -225,52 +172,20 @@ public class GameController {
 
     // ---------------------- Monster Actions
     // update
-    /// /monster/pickupItem/
-    @PutMapping(value = "/monster/itemAction", produces = {"application/json"})
-    public ResponseEntity<?> monsterItem(long monsterId){
+    /// /monster
+    @PutMapping(value = "/monster/update/{monsterid}", produces = {"application/json"})
+    public ResponseEntity<?> monsterItem(@Valid @RequestBody Monster monster, @PathVariable long monsterid){
 
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+        Monster temp_monster = monster;
 
-
-
-    // update
-    // /monster/actio/
-    @PutMapping(value ="/monster/action/{playerid}/{monsterid}", produces = {"application/json"})
-    public ResponseEntity<?> monsterActions(@Valid @RequestBody
-                                                       PlayerAction monsterAction, @PathVariable long playerid, long monsterid){
-        String action = monsterAction.getActionType();
-        long updated_number;
-        String server_response;
-        Monster temp_monster = new Monster();
-        if (action == "Heal"){
-            updated_number = monsterService.MonsterHeal(monsterid);
-            temp_monster = monsterService.findById(monsterid);
-
-
-
-
-        }
-        if (action == "Attack"){
-            updated_number = monsterService.MonsterAttack(monsterid, playerid);
-            temp_monster = monsterService.findById(monsterid);
-
-        }
-
-        if (action == "Status"){
-            // need to create a status change service for monsters
-            temp_monster = monsterService.findById(monsterid);
-        }
-
-
-
-
-
-
-
+        temp_monster = monsterService.updateMonster(monster, monsterid);
 
         return new ResponseEntity<>(temp_monster, HttpStatus.OK);
     }
+
+
+
+
 
     // ----------------------- Game Actions
     // delete

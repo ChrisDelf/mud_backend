@@ -25,86 +25,67 @@ public class PlayerServiceImpl implements PlayerService {
     @Autowired
     private MonsterRepository monsterRepo;
 
+
     @Override
-    public long playerDamaged(long damage, long playerid) {
-        Player player = playerRepo.findByPlayerid(playerid);
+    public Player updatePlayer(Player player,long id) {
+        Player target_player = new Player();
 
-        long playerHp = player.getPlayerHealth();
+        if (playerRepo.findByPlayerid(id) != null){
+            target_player = playerRepo.findByPlayerid(id);
 
-        playerHp = playerHp - damage;
 
-        // now we update the players hp
+            if (player.getPlayerName() != null){
+                target_player.setPlayerName(player.getPlayerName());
+            }
+            // Stats are below
+            if (player.getPlayerHealth() != target_player.getPlayerHealth()) {
+                target_player.setPlayerHealth(player.getPlayerHealth());
+            }
 
-        if (playerHp > 0)
-        {
-            player.setPlayerHealth(playerHp);
+            if (player.getMaxHealth() != target_player.getMaxHealth()) {
+                target_player.setMaxHealth(player.getMaxHealth());
+            }
+
+            if (player.getPlayerAgility() != target_player.getPlayerAgility()){
+                target_player.setPlayerAgility(player.getPlayerAgility());
+            }
+
+            if (player.getPlayerIntellect() != target_player.getPlayerIntellect()){
+                target_player.setPlayerIntellect(player.getPlayerIntellect());
+            }
+
+            if (player.getPlayerStamina() != target_player.getPlayerStamina()) {
+                target_player.setPlayerStamina(player.getPlayerStamina());
+
+            }
+
+            if (player.getPlayerStrength() != target_player.getPlayerStrength()) {
+                target_player.setPlayerStrength(player.getPlayerStrength());
+            }
+
+            if (player.getItemsList() != null) {
+                target_player.setItemsList(player.getItemsList());
+            }
+            // Position
+            if (player.getPlayerx() != target_player.getPlayerx()){
+                target_player.setPlayerx(player.getPlayerx());
+            }
+
+            if (player.getPlayery() != target_player.getPlayery()){
+                target_player.setPlayery(player.getPlayerx());
+            }
+
+            if (player.getStatus() != null ) {
+                target_player.setStatus(player.getStatus());
+            }
+
+
+            playerRepo.save(target_player);
+
+            return target_player;
         }
         else{
-            // set player status to dead
-        }
-
-        playerRepo.save(player);
-
-        return playerHp;
-    }
-
-    @Override
-    public long playerHealed(long heal_amount, long playerid) {
-        Player player = playerRepo.findByPlayerid(playerid);
-
-        long playerHp = player.getPlayerHealth();
-
-        playerHp = playerHp + heal_amount;
-
-        // we need max hp attribute eventually
-
-        player.setPlayerHealth(playerHp);
-
-        playerRepo.save(player);
-
-        return playerHp;
-    }
-
-    @Override
-    public long playerAttack( long damage_num, long player_id, long monster_id) {
-        // we need to get find our monster and player in the data base
-        Monster target_monster = monsterService.findById(monster_id);
-        Player player = playerService.findById(player_id);
-
-        // this is were we would calculate the players attack damage
-        long player_damage = 5;
-
-        //now we set the monsters new health and check if it is dead
-        long monster_health = target_monster.getMonsterHealth();
-
-        monster_health = monster_health - player_damage;
-
-        if (monster_health < 0){
-            // we change the monster status to dead
-            monsterService.MonsterDeath(monster_id);
-        }else{
-            target_monster.setMonsterHealth(monster_health);
-        }
-
-        monsterRepo.save(target_monster);
-
-
-        return monster_health;
-    }
-
-    @Override
-    public Player updatePlayer(Player player) {
-        Player update_p = new Player();
-        update_p = player;
-        if (playerRepo.findByPlayerid(player.getPlayerid()) != null){
-            // if the player actually exists
-            // we updated it
-            playerRepo.save(update_p);
-
-            return update_p;
-        }
-        else{
-            throw new ResourceNotFoundException(player.getPlayerid() + " Not current user");
+            throw new ResourceNotFoundException(player.getPlayerid() + " player not found");
         }
     }
 
