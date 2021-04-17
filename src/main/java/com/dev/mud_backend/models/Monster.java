@@ -49,6 +49,8 @@ public class Monster implements Serializable {
     @JoinColumn(name = "map",
             nullable = false
     )
+
+    
     @JsonIgnore
     //@JsonIgnoreProperties({"monster", "grid", "map" ,"user", "maps"})
     private Map map;

@@ -344,8 +344,6 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
                 placedRooms.setGrid(grid);
             }
         }
-        System.out.println(roomsPlaced);
-
 
         // we have the save the grid to save the lastest update to the grid
 
@@ -358,7 +356,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
     public PlacedRoom growMap(PlacedRoom roomsPlaced, int counter, int maxRooms, int [] roomRange, long mapid) {
       //  System.out.println("Counter : " + counter + " Rooms Placed" +  roomsPlaced.getPlacedRooms().size());
         if ((counter + roomsPlaced.getPlacedRooms().size() > maxRooms) || roomsPlaced.getPlacedRooms().size() == 0) {
-            System.out.println("exit");
+
             return roomsPlaced;
         }
 

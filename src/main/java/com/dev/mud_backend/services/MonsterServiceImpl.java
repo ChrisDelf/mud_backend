@@ -1,5 +1,6 @@
 package com.dev.mud_backend.services;
 
+import com.dev.mud_backend.exceptions.ResourceNotFoundException;
 import com.dev.mud_backend.models.Monster;
 import com.dev.mud_backend.models.Player;
 import com.dev.mud_backend.models.Room;
@@ -34,53 +35,64 @@ public class MonsterServiceImpl implements MonsterService  {
     @Autowired
     MonsterService monsterService;
 
-//    @Override
-//    public Monster MonsterStats(long m_id, long room_id) {
-//        // instantiate the monster that we are going pull the stats int
-//        Monster target_monster = new Monster();
-//        // first we need to find if the room exist
-//        Room target_room = roomService.findById(room_id);
-//        // if we don't find a room
-//        if (target_room == null){
-//            return target_monster;
-//        }
-//        target_monster = roomService.getMonster(target_room, m_id);
-//
-//
-//
-//        return target_monster;
-//    }
-
     @Override
-    public long MonsterAttack(long monsterId, long playerId) {
-        // find the select monster
-        Monster target_monster = monsterService.findById(monsterId);
-        // now we nee to gather the information from the player
-        Player player = playerService.findById(playerId);
+    public Monster updateMonster(Monster monster, long id) {
 
-        //this where we would calculate the monsters damage
+        if (monsterService.findById(id) != null) {
+            Monster temp_monster = monsterService.findById(monster.getMonsterid());
+            temp_monster = monster;
 
-        //we now apply the damage to the player
+            if (monster.getMonsterName() != null){
+                temp_monster.setMonsterName(monster.getMonsterName());
 
-        long d_result = playerService.playerDamaged(5,player.getPlayerid());
+            }
 
-        playerRepo.save(player);
+            if (monster.getMonsterHealth() != temp_monster.getMonsterHealth()){
+                temp_monster.setMonsterHealth(monster.getMonsterHealth());
 
-        return d_result;
-    }
+            }
 
+            if(monster.getMaxhealth() != temp_monster.getMaxhealth()){
+                temp_monster.setMaxhealth(monster.getMaxhealth());
+            }
 
+            if (monster.getStrength() != temp_monster.getStrength()){
+                temp_monster.setStrength(monster.getStrength());
+            }
 
-    @Override
-    public long MonsterHeal(long monsterId) {
-        //Find the monster
-        Monster monster = monsterService.findById(monsterId);
-        // now we will adjust the monsters health
-        monster.setMonsterHealth(monster.getMonsterHealth() + 5);
+            if (monster.getAgility() != temp_monster.getAgility()){
+                temp_monster.setAgility(monster.getAgility());
+            }
 
-        monsterRepo.save(monster);
+            if (monster.getIntellect() != temp_monster.getIntellect()){
+                temp_monster.setIntellect(monster.getIntellect());
+            }
 
-        return monster.getMonsterHealth();
+            if (monster.getStamina() != temp_monster.getStamina()){
+                temp_monster.setStamina(monster.getStamina());
+            }
+
+            if (monster.getStatus() != temp_monster.getStatus()){
+                temp_monster.setStatus(monster.getStatus());
+            }
+
+            // Position
+
+            if (monster.getMonsterX() != temp_monster.getMonsterX()){
+                temp_monster.setMonsterX(monster.getMonsterX());
+            }
+
+            if (monster.getMonsterY() != temp_monster.getMonsterY()){
+                temp_monster.setMonsterY(monster.getMonsterY());
+            }
+
+            monsterRepo.save(temp_monster);
+
+            return temp_monster;
+
+        }else
+        {  throw new ResourceNotFoundException(monster.getMonsterid() + " monster not found");}
+
     }
 
     @Override
