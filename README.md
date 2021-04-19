@@ -172,6 +172,7 @@ example output:
 
 #
 type: PUT
+
 game/player/update/{playerid}
 
 #
@@ -194,6 +195,7 @@ request body:
  }
 ```
 #
+ ```
  return body:
   {
             "playerid": 14,
@@ -210,6 +212,6 @@ request body:
             "mapStatus": null,
             "itemsList": []
         }
-
+```
 #
 
