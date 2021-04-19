@@ -171,7 +171,45 @@ example output:
 ```
 
 #
-    
+type: PUT
+game/player/update/{playerid}
 
+#
+request body:
+```
+ {
+            "playerid": 14,
+            "playerHealth": 50,
+            "playerName": "Doofus",
+            "playery": 32,
+            "playerx": 32,
+            "playerStrength": 5,
+            "playerIntellect": 5,
+            "playerAgility": 5,
+            "playerStamina": 5,
+            "maxHealth": 50,
+            "status": "standing",
+            "mapStatus": null,
+            "itemsList": []
+ }
+```
+#
+ return body:
+  {
+            "playerid": 14,
+            "playerHealth": 50,
+            "playerName": "Doofus",
+            "playery": 32,
+            "playerx": 32,
+            "playerStrength": 5,
+            "playerIntellect": 5,
+            "playerAgility": 5,
+            "playerStamina": 5,
+            "maxHealth": 50,
+            "status": "standing",
+            "mapStatus": null,
+            "itemsList": []
+        }
 
+#
 
