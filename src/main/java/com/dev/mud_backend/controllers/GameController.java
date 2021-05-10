@@ -176,7 +176,7 @@ public class GameController {
     @PutMapping(value = "/monster/update/{monsterid}", produces = {"application/json"})
     public ResponseEntity<?> monsterItem(@Valid @RequestBody Monster monster, @PathVariable long monsterid){
 
-        Monster temp_monster = monster;
+        Monster temp_monster = new Monster();
 
         temp_monster = monsterService.updateMonster(monster, monsterid);
 

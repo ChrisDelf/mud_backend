@@ -52,7 +52,7 @@ public class Monster implements Serializable {
 
     
     @JsonIgnore
-    //@JsonIgnoreProperties({"monster", "grid", "map" ,"user", "maps"})
+    @JsonIgnoreProperties({"monster", "grid", "map" ,"user", "maps"})
     private Map map;
 
     public Monster() {
