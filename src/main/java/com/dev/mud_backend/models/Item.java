@@ -33,13 +33,13 @@ public class Item {
     @ManyToOne
     @JoinColumn(name = "playerid",
             nullable = false)
-    @JsonIgnoreProperties("itemslist")
+    @JsonIgnoreProperties({"itemsList","map","user"})
     private Player player;
 
     @ManyToOne
     @JoinColumn(name = "monsterid",
                 nullable = false)
-    @JsonIgnoreProperties("itemslist")
+    @JsonIgnoreProperties("itemsList")
     private  Monster monster;
 
     public Item(String itemname, String itemtype, String itemposition, long cost, long weight, long damage, Player player) {
