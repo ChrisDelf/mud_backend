@@ -63,9 +63,10 @@ public class PlayerServiceImpl implements PlayerService {
                 target_player.setPlayerStrength(player.getPlayerStrength());
             }
 
-            if (player.getItemsList() != null) {
-                target_player.setItemsList(player.getItemsList());
-            }
+//            if (target_player.getItemsList() != null ) {
+//                if target.player.getItemsList
+//                target_player.setItemsList(player.getItemsList());
+//            }
             // Position
             if (player.getPlayerx() != target_player.getPlayerx()){
                 target_player.setPlayerx(player.getPlayerx());
