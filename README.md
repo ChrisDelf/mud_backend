@@ -171,6 +171,7 @@ example output:
 ```
 
 #
+<------------------------------------- Player related endpoints
 type: PUT
 
 game/player/update/{playerid}
@@ -212,6 +213,107 @@ request body:
             "mapStatus": null,
             "itemsList": []
         }
+```
+#
+#
+type: Get
+
+game/player/{playerid}
+
+Description:
+
+Requesting player information using the player's id
+
+
+ ```
+ return body:
+  {
+            "playerid": 14,
+            "playerHealth": 50,
+            "playerName": "Doofus",
+            "playery": 32,
+            "playerx": 32,
+            "playerStrength": 5,
+            "playerIntellect": 5,
+            "playerAgility": 5,
+            "playerStamina": 5,
+            "maxHealth": 50,
+            "status": "standing",
+            "mapStatus": null,
+            "itemsList": []
+        }
+```
+#
+
+<------------------------------------- Monster related endpoints
+#
+type: Get
+
+game/monster/{monsterid}
+
+Description:
+
+Requesting monster information using the monster's id
+
+
+ ```
+ return body:
+{
+    "monsterid": 2545,
+    "monsterName": "Goblin",
+    "monsterHealth": 5,
+    "strength": 2,
+    "agility": 2,
+    "intellect": 1,
+    "stamina": 1,
+    "monsterX": 39,
+    "monsterY": 21,
+    "maxhealth": 10,
+    "status": "standing"
+}
+```
+#
+#
+type: Put
+
+game/monster/update/{monsterid}
+
+Description:
+
+Updating a monster's data using json
+
+
+ ```
+ Rquest body:
+{
+    "monsterid": 2545,
+    "monsterName": "HobGoblin",
+    "monsterHealth": 5,
+    "strength": 2,
+    "agility": 2,
+    "intellect": 1,
+    "stamina": 1,
+    "monsterX": 39,
+    "monsterY": 21,
+    "maxhealth": 10,
+    "status": "standing"
+}
+```
+ ```
+ Return body:
+{
+    "monsterid": 2545,
+    "monsterName": "HobGoblin",
+    "monsterHealth": 5,
+    "strength": 2,
+    "agility": 2,
+    "intellect": 1,
+    "stamina": 1,
+    "monsterX": 39,
+    "monsterY": 21,
+    "maxhealth": 10,
+    "status": "standing"
+}
 ```
 #
 
