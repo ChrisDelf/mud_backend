@@ -47,10 +47,10 @@ public class Monster implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "map",
-            nullable = false
+            nullable = true
     )
 
-    
+
     @JsonIgnore
     @JsonIgnoreProperties({"monster", "grid", "map" ,"user", "maps"})
     private Map map;

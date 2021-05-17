@@ -76,6 +76,10 @@ public class MonsterServiceImpl implements MonsterService  {
                 temp_monster.setStatus(monster.getStatus());
             }
 
+            if (monster.getMap() == null ) {
+                temp_monster.setMap(temp_monster.getMap());
+
+            }
             // Position
 
             if (monster.getMonsterX() != temp_monster.getMonsterX()){
