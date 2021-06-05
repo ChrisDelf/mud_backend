@@ -46,7 +46,7 @@ public class User extends Auditable implements Serializable
      @OneToMany(mappedBy = "user",
              cascade = CascadeType.ALL,
              orphanRemoval = true)
-     @JsonIgnoreProperties({"user", "grid"})
+     @JsonIgnoreProperties({"user", "grid", "monsters", "players"})
      private List<Map> userMap = new ArrayList<>();
 
 

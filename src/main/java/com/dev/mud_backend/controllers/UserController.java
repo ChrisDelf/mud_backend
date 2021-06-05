@@ -194,12 +194,13 @@ public class UserController
 //    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
 
     @GetMapping (value = "/display/{username}", produces = {"application/json"})
-    public ResponseEntity<?> getUserInfo(@Valid @PathVariable String username){
+    public ResponseEntity<?> getUserInfo(@Valid @PathVariable String username) {
         UserDetails tempUser = userService.loadUserByUsername(username);
         Long userid = userService.findUserID(username);
 
-    return new ResponseEntity<>(userid, HttpStatus.OK);
+        return new ResponseEntity<>(userid, HttpStatus.OK);
     }
+
     @GetMapping(value ="/getmap/{userid}", produces = {"application/json"})
     public ResponseEntity<?> grabMap(@Valid @PathVariable Long userid){
 
