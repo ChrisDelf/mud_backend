@@ -77,29 +77,31 @@ public class GameController {
 
         return new ResponseEntity<>(target_monster, HttpStatus.OK);
     }
+    // Map related end points -------------------------------------->
 
-    @GetMapping(value ="/generatemap/{userid}", produces = {"application/json"})
-    public ResponseEntity<?> getTest(@Valid @PathVariable long userid) {
+    //requestMap
+    @PostMapping(value ="/generatemap/{userid}",  consumes = {"application/json"} , produces = {"application/json"})
+    public ResponseEntity<?> generateMap(@Valid @RequestBody
+                                                 Map PlayerMap, @PathVariable long userid) {
 
+        String playerName;
+        playerName = PlayerMap.getPlayers().get(0).getPlayerName();
         ArrayList<ArrayList<Cell>> grid = new ArrayList<ArrayList<Cell>>();
 
         Map newMap = new Map();
-        newMap.setWidth(50);
-        newMap.setHeight(50);
+        newMap.setWidth(PlayerMap.getWidth());
+        newMap.setHeight(PlayerMap.getHeight());
         // we have the create the player
         List<Item> items = new ArrayList<>();
-        Player newPlayer = new Player(50,"Doofus",32,32,5,5,5,5,items,"standing",50,"safe");
-        List<Player> playerList = new ArrayList<>();
-        playerList = newMap.getPlayers();
-        playerList.add(newPlayer);
-
-        newMap.setPlayers(playerList);
+        Player newPlayer = new Player(50,playerName,32,32,5,5,5,5,items,"standing",50,"safe");
+        playerRepo.save(newPlayer);
+        newMap.getPlayers().add(newPlayer);
         newMap.setUser(userService.findUserById(userid));
         mapRepo.save(newMap);
         newPlayer.setMap(newMap);
         playerRepo.save(newPlayer);
 
-        grid = dungeonCreatorService.generateGrid(50,50,2, newMap.getMapid());
+        grid = dungeonCreatorService.generateGrid(newMap.getWidth(), newMap.getHeight(), 2, newMap.getMapid());
 
         ArrayList<ArrayList<String>> visualGrid = new ArrayList<>();
 
@@ -127,7 +129,29 @@ public class GameController {
 
         return  new ResponseEntity<>(return_map,HttpStatus.OK);
     }
-    //--------------------------- Player Actions
+
+
+
+    @GetMapping(value ="/getTest/{userid}", produces = {"application/json"})
+    public ResponseEntity<?> grabMap(@Valid @PathVariable Long userid){
+
+        List<Map> mapList = new ArrayList<>();
+
+        mapList = mapService.getMap(userid);
+
+
+        return new ResponseEntity<> (mapList, HttpStatus.OK);
+    }
+
+    @GetMapping(value ="/getTester/{mapid}", produces = {"application/json"})
+    public ResponseEntity<?> selectMap(@Valid @PathVariable Long mapid) {
+        Map selectedMap = new Map();
+                selectedMap = mapService.findById(mapid);
+
+        return new ResponseEntity<>(selectedMap, HttpStatus.OK);
+    }
+
+        //--------------------------- Player Actions
     // update
     /// /player/pickupItem/
 
@@ -173,7 +197,7 @@ public class GameController {
     // ---------------------- Monster Actions
     // update
     /// /monster
-    @PutMapping(value = "/monster/update/{monsterid}", produces = {"application/json"})
+    @PutMapping(value = "/monster/update/{monsterid}",  consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<?> monsterItem(@Valid @RequestBody Monster monster, @PathVariable long monsterid){
 
         Monster temp_monster = new Monster();
