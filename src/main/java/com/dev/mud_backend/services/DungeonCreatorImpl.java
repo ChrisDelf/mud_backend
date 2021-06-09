@@ -321,7 +321,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
                 monster_list_t = temp_map.getMonsters();
                 monster_list_t.add(newMonster);
 
-
+                roomRepo.save(roomService.findById(roomValues.get(i).getRoomId()));
                 mapRepo.save(temp_map);
 
 
@@ -329,7 +329,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
 
 
 
-                roomRepo.save(roomService.findById(roomValues.get(i).getRoomId()));
+
                 // Placing the cells to create the room
 
                 // for the room it self

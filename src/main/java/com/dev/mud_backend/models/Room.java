@@ -38,9 +38,10 @@ public class Room implements Serializable
 
 
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "mapid",
-            nullable = false)
+
+            nullable = true)
     @JsonIgnoreProperties("rooms")
     private Map map;
 
@@ -126,4 +127,7 @@ public class Room implements Serializable
         this.map = map;
     }
 
+    public void setRoomId(long roomId) {
+        this.roomId = roomId;
+    }
 }

@@ -42,12 +42,15 @@ public class MapServiceImpl implements MapService {
 
     @Transactional
     @Override
-    public Map findById(long mapid) {
+    public Map findById(long mapid) throws ResourceNotFoundException{
         Map target_map = new Map();
-
         target_map = mapRepo.findByMapid(mapid);
-
-        return target_map;
+        if (target_map == null) {
+            throw new ResourceNotFoundException("The player by the id" + mapid + " was not found");
+        }
+        else {
+            return target_map;
+        }
     }
 
 

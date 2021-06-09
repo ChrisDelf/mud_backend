@@ -28,12 +28,15 @@ public class Map implements Serializable {
 
     private int height;
 
+
+
     @Column(length = 1000000)
     String grid;
 
 
     @ManyToOne
     @JoinColumn(name = "userid",
+
             nullable = false)
     @JsonIgnoreProperties({"map", "user"})
     private User user;
@@ -51,17 +54,27 @@ public class Map implements Serializable {
     @JsonIgnoreProperties("map")
     private List<Player> players = new ArrayList<>();
 
+    @OneToMany(mappedBy="map",
+    cascade = CascadeType.ALL,
+    orphanRemoval = true)
+    @JsonIgnoreProperties({"map"})
+    private List<Room> rooms = new ArrayList<>();
+
 
 
 
     public Map() {
     }
 
-    public Map(long mapid, String grid, User user,int width, int height) {
+    public Map(long mapid, String grid, User user,int width, int height, List<Room> rooms, List<Player> players, List<Monster> monsters) {
         this.mapid = mapid;
         this.width = width;
         this.height = height;
         this.user = user;
+        this.grid = grid;
+        this.rooms = rooms;
+        this.players = players;
+        this.monsters= monsters;
     }
 
     public String getGrid() {
@@ -122,4 +135,14 @@ public class Map implements Serializable {
     public void setMonsters(List<Monster> monsters) {
         this.monsters = monsters;
     }
+
+    public List<Room> getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(List<Room> rooms) {
+        this.rooms = rooms;
+    }
+
+
 }

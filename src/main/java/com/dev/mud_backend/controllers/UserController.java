@@ -201,26 +201,22 @@ public class UserController
         return new ResponseEntity<>(userid, HttpStatus.OK);
     }
 
-    @GetMapping(value ="/getmap/{userid}", produces = {"application/json"})
+    @GetMapping(value ="/getmaps/{userid}", produces = {"application/json"})
     public ResponseEntity<?> grabMap(@Valid @PathVariable Long userid){
 
         List<Map> mapList = new ArrayList<>();
-        List<Map> gridList = new ArrayList<>();
 
         mapList = mapService.getMap(userid);
+        ArrayList<Long> mapIds = new ArrayList<Long>();
     for( int i = 0; i < mapList.size(); i++)
     {
-       Map tempMap = new Map();
 
 
-       tempMap.setGrid(mapList.get(i).getGrid());
-       tempMap.setHeight(mapList.get(i).getHeight());
-       tempMap.setWidth(mapList.get(i).getWidth());
-       tempMap.setMapid(mapList.get(i).getMapid());
-        gridList.add(tempMap);
+      mapIds.add(mapList.get(i).getMapid());
+
     }
 
-        return new ResponseEntity<> (gridList, HttpStatus.OK);
+        return new ResponseEntity<> (mapIds, HttpStatus.OK);
     }
 
     // need to give the user his player location.
