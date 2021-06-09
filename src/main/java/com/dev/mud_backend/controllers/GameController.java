@@ -130,20 +130,7 @@ public class GameController {
         return  new ResponseEntity<>(return_map,HttpStatus.OK);
     }
 
-
-
-    @GetMapping(value ="/getTest/{userid}", produces = {"application/json"})
-    public ResponseEntity<?> grabMap(@Valid @PathVariable Long userid){
-
-        List<Map> mapList = new ArrayList<>();
-
-        mapList = mapService.getMap(userid);
-
-
-        return new ResponseEntity<> (mapList, HttpStatus.OK);
-    }
-
-    @GetMapping(value ="/getTester/{mapid}", produces = {"application/json"})
+    @GetMapping(value ="/selectmap/{mapid}", produces = {"application/json"})
     public ResponseEntity<?> selectMap(@Valid @PathVariable Long mapid) {
         Map selectedMap = new Map();
                 selectedMap = mapService.findById(mapid);
