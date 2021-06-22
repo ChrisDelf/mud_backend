@@ -163,7 +163,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
             for (int j = roomX; j < (room.getWidth() + room.getX()); j++) {
                 // the cell that is going to be placed
 
-                grid.get(i).get(j).setRoomid(roomService.findById(room.getRoomId()).getRoomId());
+                //grid.get(i).get(j).setRoomid(room.getRoomId());
 
                 if (type == "Floor") {
 
