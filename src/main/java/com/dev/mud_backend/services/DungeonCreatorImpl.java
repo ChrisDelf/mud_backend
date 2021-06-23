@@ -73,11 +73,17 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
 
             for(int j = 0; j < gridwidth; j++){
 
+
                 Cell cell = new Cell();
                 cell.setRoomType("Wall");
                 cell.setX(j);
                 cell.setY(i);
                 cell.setMapid(mapid);
+                if (cell.getX() == mapService.findById(mapid).getPlayers().get(0).getPlayerx() && cell.getY() == mapService.findById(mapid).getPlayers().get(0).getPlayery()){
+                    ArrayList<Long> tempArray = new ArrayList<>();
+                    tempArray.add(mapService.findById(mapid).getPlayers().get(0).getPlayerid());
+                    cell.setContainsP(tempArray);
+                }
                 cellRepo.save(cell);
                 row.add(cell);
 
@@ -161,9 +167,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
         for (int i = roomY; i < (room.getHeight() + room.getY()); i++) {
 
             for (int j = roomX; j < (room.getWidth() + room.getX()); j++) {
-                // the cell that is going to be placed
 
-                //grid.get(i).get(j).setRoomid(room.getRoomId());
 
                 if (type == "Floor") {
 
@@ -310,6 +314,14 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
                 newMonster.setMonsterY(rand.ints(roomValues.get(i).getY(), (roomValues.get(i).getY() + roomValues.get(i).getHeight())).findFirst().getAsInt());
                 newMonster.setMap(mapRepo.findByMapid(mapid));
                 monsterRepo.save(newMonster);
+                // next we are going to place the string monsters monster into the cell
+                // for the next project I should have created and entity model
+                Cell tempCell = grid.get(newMonster.getMonsterX()).get(newMonster.getMonsterY());
+                ArrayList<Long> tempArray = new ArrayList<Long>();
+                tempArray.add(newMonster.getMonsterid());
+                tempCell.setContainsM(tempArray);
+                cellRepo.save(tempCell);
+
 
 
                 //

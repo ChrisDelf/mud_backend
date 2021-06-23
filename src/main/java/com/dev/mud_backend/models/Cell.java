@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "cells")
@@ -31,10 +32,15 @@ public class Cell implements Serializable {
 
     private long mapid;
 
+
+    private ArrayList<Long> containsM;
+
+    private ArrayList<Long> containsP;
+
     public Cell() {
     }
 
-    public Cell(int x, int y, String roomType, int roomheight, int roomwidth) {
+    public Cell(int x, int y, String roomType, int roomheight, int roomwidth,ArrayList<Long> containsM, ArrayList<Long> containsP) {
      this.x = x;
      this.y = y;
         this.roomType = roomType;
@@ -103,6 +109,22 @@ public class Cell implements Serializable {
 
     public void setItems(String items) {
         this.items = items;
+    }
+
+    public ArrayList<Long> getContainsM() {
+        return containsM;
+    }
+
+    public void setContainsM(ArrayList<Long> containsM) {
+        this.containsM = containsM;
+    }
+
+    public ArrayList<Long> getContainsP() {
+        return containsP;
+    }
+
+    public void setContainsP(ArrayList<Long> containsP) {
+        this.containsP = containsP;
     }
 }
 
