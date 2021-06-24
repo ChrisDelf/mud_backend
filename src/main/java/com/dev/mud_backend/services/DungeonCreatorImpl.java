@@ -312,6 +312,12 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
 
                 newMonster.setMonsterX(rand.ints(roomValues.get(i).getX(), (roomValues.get(i).getX() + roomValues.get(i).getWidth())).findFirst().getAsInt());
                 newMonster.setMonsterY(rand.ints(roomValues.get(i).getY(), (roomValues.get(i).getY() + roomValues.get(i).getHeight())).findFirst().getAsInt());
+
+                //newMonster.setMonsterX(rand.ints(roomValues.get(i).getX(), roomValues.get(i).getWidth()).findFirst().getAsInt());
+                //newMonster.setMonsterY(rand.ints(roomValues.get(i).getY(), roomValues.get(i).getHeight()).findFirst().getAsInt());
+
+              //  System.out.println("Room" + (roomValues.get(i).getX() + roomValues.get(i).getWidth()) + " " + (roomValues.get(i).getY() + roomValues.get(i).getHeight()) );
+              //  System.out.println("Monster" + newMonster.getMonsterX() + " " + newMonster.getMonsterY());
                 newMonster.setMap(mapRepo.findByMapid(mapid));
                 monsterRepo.save(newMonster);
                 // next we are going to place the string monsters monster into the cell
