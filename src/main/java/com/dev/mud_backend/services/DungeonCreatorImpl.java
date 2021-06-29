@@ -82,9 +82,12 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
                 if (cell.getX() == mapService.findById(mapid).getPlayers().get(0).getPlayerx() && cell.getY() == mapService.findById(mapid).getPlayers().get(0).getPlayery()){
                     ArrayList<Long> tempArray = new ArrayList<>();
                     tempArray.add(mapService.findById(mapid).getPlayers().get(0).getPlayerid());
+
                     cell.setContainsP(tempArray);
                 }
+
                 cellRepo.save(cell);
+
                 row.add(cell);
 
             }
@@ -310,11 +313,10 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
                 // Creating a monster
                 Monster newMonster = new Monster("Gobo",5,2,2,1,1,10,"standing");
 
-                newMonster.setMonsterX(rand.ints(roomValues.get(i).getX(), (roomValues.get(i).getX() + roomValues.get(i).getWidth())).findFirst().getAsInt());
-                newMonster.setMonsterY(rand.ints(roomValues.get(i).getY(), (roomValues.get(i).getY() + roomValues.get(i).getHeight())).findFirst().getAsInt());
+                newMonster.setMonsterX(rand.ints(roomValues.get(i).getX(), (roomValues.get(i).getX() + roomValues.get(i).getWidth() - 1)).findFirst().getAsInt());
+                newMonster.setMonsterY(rand.ints(roomValues.get(i).getY(), (roomValues.get(i).getY() + roomValues.get(i).getHeight() - 1)).findFirst().getAsInt());
 
-                //newMonster.setMonsterX(rand.ints(roomValues.get(i).getX(), roomValues.get(i).getWidth()).findFirst().getAsInt());
-                //newMonster.setMonsterY(rand.ints(roomValues.get(i).getY(), roomValues.get(i).getHeight()).findFirst().getAsInt());
+
 
               //  System.out.println("Room" + (roomValues.get(i).getX() + roomValues.get(i).getWidth()) + " " + (roomValues.get(i).getY() + roomValues.get(i).getHeight()) );
               //  System.out.println("Monster" + newMonster.getMonsterX() + " " + newMonster.getMonsterY());
@@ -322,7 +324,8 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
                 monsterRepo.save(newMonster);
                 // next we are going to place the string monsters monster into the cell
                 // for the next project I should have created and entity model
-                Cell tempCell = grid.get(newMonster.getMonsterX()).get(newMonster.getMonsterY());
+                Cell tempCell = grid.get(newMonster.getMonsterY()).get(newMonster.getMonsterX());
+
                 ArrayList<Long> tempArray = new ArrayList<Long>();
                 tempArray.add(newMonster.getMonsterid());
                 tempCell.setContainsM(tempArray);
