@@ -9,5 +9,7 @@ public interface CellService {
 
     String addorRemoveM(long monsterid, String command);
 
-    Cell updateCell(Cell cell);
+    Cell updateCell(Cell cell, long cellId);
+
+    Cell removeEntityFromCell(Cell cell, String Entity, long id);
 }

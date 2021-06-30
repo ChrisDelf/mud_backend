@@ -1,6 +1,7 @@
 package com.dev.mud_backend.services;
 
 import com.dev.mud_backend.exceptions.ResourceNotFoundException;
+import com.dev.mud_backend.models.Cell;
 import com.dev.mud_backend.models.Monster;
 import com.dev.mud_backend.models.Player;
 import com.dev.mud_backend.repository.MonsterRepository;
@@ -21,6 +22,9 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Autowired
     private PlayerService playerService;
+
+    @Autowired
+    private CellService cellService;
 
     @Autowired
     private MonsterRepository monsterRepo;
@@ -74,6 +78,19 @@ public class PlayerServiceImpl implements PlayerService {
 
             if (player.getPlayery() != target_player.getPlayery()){
                 target_player.setPlayery(player.getPlayerx());
+            }
+
+            if (player.getCellId() != target_player.getCellId()) {
+                target_player.setCellId(player.getCellId());
+                // we are going to need to update the cell that it moved from and move into
+                // first cell that we moved out of
+                Cell prevCell = cellService.getCellById(target_player.getCellId());
+
+                cellService.updateCell(prevCell, target_player.getCellId());
+                // Second the cell that we moved into
+                Cell nextCell = cellService.getCellById(player.getCellId());
+                cellService.updateCell(prevCell, player.getCellId());
+
             }
 
             if (player.getStatus() != null ) {
