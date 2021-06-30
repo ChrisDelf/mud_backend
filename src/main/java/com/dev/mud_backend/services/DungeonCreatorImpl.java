@@ -41,6 +41,9 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
     @Autowired
     private RoomService roomService;
 
+    @Autowired
+    private PlayerService playerService;
+
     @Override
     public ArrayList<Cell> getMap() {
 
@@ -80,10 +83,14 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
                 cell.setY(i);
                 cell.setMapid(mapid);
                 if (cell.getX() == mapService.findById(mapid).getPlayers().get(0).getPlayerx() && cell.getY() == mapService.findById(mapid).getPlayers().get(0).getPlayery()){
+                    Long playerId = mapService.findById(mapid).getPlayers().get(0).getPlayerx();
+                    Player temp_player = playerService.findById(playerId);
                     ArrayList<Long> tempArray = new ArrayList<>();
                     tempArray.add(mapService.findById(mapid).getPlayers().get(0).getPlayerid());
-
                     cell.setContainsP(tempArray);
+                    cellRepo.save(cell);
+                    temp_player.setCellId(cell.getCellid());
+
                 }
 
                 cellRepo.save(cell);

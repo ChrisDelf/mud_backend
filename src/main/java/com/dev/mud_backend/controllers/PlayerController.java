@@ -1,10 +1,8 @@
 package com.dev.mud_backend.controllers;
 
-import com.dev.mud_backend.models.Item;
-import com.dev.mud_backend.models.Map;
-import com.dev.mud_backend.models.Player;
-import com.dev.mud_backend.models.User;
+import com.dev.mud_backend.models.*;
 import com.dev.mud_backend.repository.PlayerRepository;
+import com.dev.mud_backend.services.CellService;
 import com.dev.mud_backend.services.PlayerService;
 import org.h2.util.json.JSONObject;
 import org.slf4j.Logger;
@@ -15,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.annotation.Repeatable;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -28,6 +27,9 @@ public class PlayerController {
 
     @Autowired
     PlayerService playerService;
+
+    @Autowired
+    CellService cellService;
 
     @PutMapping(value = "/attack/{playerid}",
             consumes = {"application/json"},
@@ -84,6 +86,17 @@ public class PlayerController {
 
 
         return new ResponseEntity<>( HttpStatus.OK);
+    }
+
+    // Cell related Request
+
+    @PutMapping(value = "/updatecell/{cellId}",
+    consumes = {"application/json"})
+    public ResponseEntity<?> updateCell (HttpServletRequest request, @RequestBody Cell cell, @PathVariable long cellId) throws URISyntaxException {
+        cellService.updateCell(cell,cellId);
+
+    return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
 

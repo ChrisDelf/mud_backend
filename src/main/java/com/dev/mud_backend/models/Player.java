@@ -24,6 +24,8 @@ public class Player {
 
     private long playerx;
 
+    private long cellId;
+
     private long playerStrength;
 
     private long playerIntellect;
@@ -68,6 +70,14 @@ public class Player {
         this.itemsList = itemsList;
         this.status = status;
         this.maxHealth = maxHealth;
+    }
+
+    public long getCellId() {
+        return cellId;
+    }
+
+    public void setCellId(long cellId) {
+        this.cellId = cellId;
     }
 
     public long getPlayerHealth() {
