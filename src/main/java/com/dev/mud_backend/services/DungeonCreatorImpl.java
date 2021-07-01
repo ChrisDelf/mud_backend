@@ -78,7 +78,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
 
 
                 Cell cell = new Cell();
-                cell.setRoomType("Wall");
+                cell.setCellType("Wall");
                 cell.setX(j);
                 cell.setY(i);
                 cell.setMapid(mapid);
@@ -146,7 +146,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
 
             for (int j = roomX; j-1 < (room.getWidth() + room.getX()); j++) {
 
-                if (grid.get(i).get(j).getRoomType() == "Floor") {
+                if (grid.get(i).get(j).getCellType() == "Floor") {
 
                     return false;
 
@@ -181,18 +181,18 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
 
                 if (type == "Floor") {
 
-                    grid.get(i).get(j).setRoomType("Floor");
+                    grid.get(i).get(j).setCellType("Floor");
                     cellRepo.save(grid.get(i).get(j));
 
                 }
 
                 else if (type == "Door"){
-                    grid.get(i).get(j).setRoomType("Door");
+                    grid.get(i).get(j).setCellType("Door");
                     cellRepo.save(grid.get(i).get(j));
 
                 }
                 else if (type == "Monster"){
-                    grid.get(i).get(j).setRoomType("Monster");
+                    grid.get(i).get(j).setCellType("Monster");
                     cellRepo.save(grid.get(i).get(j));
                     // hello what is going on?
                     

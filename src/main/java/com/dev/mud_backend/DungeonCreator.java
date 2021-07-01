@@ -2,12 +2,9 @@ package com.dev.mud_backend;
 
 import com.dev.mud_backend.models.Cell;
 import com.dev.mud_backend.repository.CellRepository;
-import com.dev.mud_backend.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.IntStream;
 
 public class DungeonCreator {
@@ -53,7 +50,7 @@ public class DungeonCreator {
 
             IntStream.range(0, gridwidth).forEach(n -> {
                 Cell cell = new Cell();
-                cell.setRoomType("Wall");
+                cell.setCellType("Wall");
                 cellRepo.save(cell);
                 row.add(cell);
 

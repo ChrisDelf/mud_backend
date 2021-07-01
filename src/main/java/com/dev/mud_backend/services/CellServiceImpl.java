@@ -81,19 +81,50 @@ public class CellServiceImpl implements CellService{
 
     @Override
     public Cell updateCell(Cell cell, long cellId) {
-        Cell target_Cell = new Cell();
+        Cell target_cell = new Cell();
 
         if(cellService.getCellById(cellId) != null){
 
             return null;
         }
         else{
-            target_Cell = cellService.getCellById(cellId);
+            target_cell = cellService.getCellById(cellId);
 
         }
 
+        if (cell.getX() != target_cell.getX()){
+            target_cell.setX(cell.getX());
 
+        }
+        if (cell.getY() != target_cell.getY()){
+            target_cell.setY(cell.getY());
 
-        return null;
+        }
+
+        if (cell.getCellType() != target_cell.getCellType()){
+            target_cell.setCellType(cell.getCellType());
+
+        }
+
+        if(cell.getRoomid() != target_cell.getRoomid()){
+            target_cell.setRoomid(cell.getRoomid());
+        }
+
+        if(cell.getMapid() != target_cell.getMapid()){
+            target_cell.setMapid(target_cell.getMapid());
+        }
+
+        if(cell.getContainsM().size() != target_cell.getContainsM().size())
+        {
+            cell.setContainsM(target_cell.getContainsM());
+
+        }
+        if(cell.getContainsP().size() != target_cell.getContainsP().size())
+        {
+            cell.setContainsP(target_cell.getContainsP());
+
+        }
+
+        return cellRepo.save(cell);
     }
 }
