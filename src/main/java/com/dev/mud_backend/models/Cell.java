@@ -1,7 +1,5 @@
 package com.dev.mud_backend.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,7 +24,7 @@ public class Cell implements Serializable {
 
     @Column(nullable = false,
             unique = false)
-    private String roomType;
+    private String cellType;
 
     private long roomid;
 
@@ -40,10 +38,10 @@ public class Cell implements Serializable {
     public Cell() {
     }
 
-    public Cell(int x, int y, String roomType, int roomheight, int roomwidth,ArrayList<Long> containsM, ArrayList<Long> containsP) {
+    public Cell(int x, int y, String cellType, int roomheight, int roomwidth, ArrayList<Long> containsM, ArrayList<Long> containsP) {
      this.x = x;
      this.y = y;
-        this.roomType = roomType;
+        this.cellType = cellType;
 
     }
 
@@ -71,12 +69,12 @@ public class Cell implements Serializable {
         this.y = y;
     }
 
-    public String getRoomType() {
-        return roomType;
+    public String getCellType() {
+        return cellType;
     }
 
-    public void setRoomType(String roomType) {
-        this.roomType = roomType;
+    public void setCellType(String cellType) {
+        this.cellType = cellType;
     }
 
     public long getCellid() {

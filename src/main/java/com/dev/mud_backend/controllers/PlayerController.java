@@ -93,11 +93,13 @@ public class PlayerController {
     @PutMapping(value = "/updatecell/{cellId}",
     consumes = {"application/json"})
     public ResponseEntity<?> updateCell (HttpServletRequest request, @RequestBody Cell cell, @PathVariable long cellId) throws URISyntaxException {
-        cellService.updateCell(cell,cellId);
+        Cell temp_cell = cellService.updateCell(cell,cellId);
 
-    return new ResponseEntity<>(HttpStatus.OK);
+    return new ResponseEntity<Cell>(temp_cell, HttpStatus.OK);
 
     }
+
+
 
 
 }
