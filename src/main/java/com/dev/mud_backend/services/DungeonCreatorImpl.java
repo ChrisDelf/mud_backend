@@ -83,7 +83,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
                 cell.setY(i);
                 cell.setMapid(mapid);
                 if (cell.getX() == mapService.findById(mapid).getPlayers().get(0).getPlayerx() && cell.getY() == mapService.findById(mapid).getPlayers().get(0).getPlayery()){
-                    Long playerId = mapService.findById(mapid).getPlayers().get(0).getPlayerx();
+                    Long playerId = mapService.findById(mapid).getPlayers().get(0).getPlayerid();
                     Player temp_player = playerService.findById(playerId);
                     ArrayList<Long> tempArray = new ArrayList<>();
                     tempArray.add(mapService.findById(mapid).getPlayers().get(0).getPlayerid());
@@ -114,10 +114,9 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
         gridArray = placeCells(gridArray,room, "Floor");
         seedRoom.getPlacedRooms().add(room);
         seedRoom.setGrid(gridArray);
-        //placedRoomRepo.save(seedRoom);
+
         gridArray = growMap(seedRoom,0, 10,myRangeArray,mapid).getGrid();
 
-//        return gridArray;
         return gridArray;
     }
 
