@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +48,9 @@ public class GameController {
 
     @Autowired
     MapRepository mapRepo;
+
+    @Autowired
+    CellService cellService;
 
     @Autowired
     private MapService mapService;
@@ -207,5 +211,17 @@ public class GameController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    // Cell related Request
+
+    @PutMapping(value = "/updatecell/{cellId}",
+            consumes = {"application/json"})
+    public ResponseEntity<?> updateCell (HttpServletRequest request, @RequestBody Cell cell, @PathVariable long cellId) throws URISyntaxException {
+        Cell temp_cell = cellService.updateCell(cell,cellId);
+
+        return new ResponseEntity<Cell>(temp_cell, HttpStatus.OK);
+
+    }
+
 
 }
