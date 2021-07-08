@@ -54,7 +54,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
     }
 
     @Override
-    public ArrayList<ArrayList<Cell>> generateGrid(int gridwidth, int gridheight, int maxrooms, long mapid) {
+    public ArrayList<ArrayList<Cell>> generateGrid(int gridwidth, int gridheight, int maxrooms, long mapid, Map map) {
         ArrayList<ArrayList<Cell>> gridArray = new ArrayList<ArrayList<Cell>>();
         int i = 0;
 
@@ -82,6 +82,9 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
                 cell.setX(j);
                 cell.setY(i);
                 cell.setMapid(mapid);
+                ArrayList<Long> fillerArray = new ArrayList<>();
+                cell.setContainsP(fillerArray);
+                cell.setContainsM(fillerArray);
                 if (cell.getX() == mapService.findById(mapid).getPlayers().get(0).getPlayerx() && cell.getY() == mapService.findById(mapid).getPlayers().get(0).getPlayery()){
                     Long playerId = mapService.findById(mapid).getPlayers().get(0).getPlayerid();
                     Player temp_player = playerService.findById(playerId);
@@ -165,6 +168,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
     @Override
     public ArrayList<ArrayList<Cell>> placeCells(ArrayList<ArrayList <Cell>> grid, Room room, String type) {
 
+
         int roomX = room.getX();
         int roomY = room.getY();
 
@@ -181,21 +185,18 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
                 if (type == "Floor") {
 
                     grid.get(i).get(j).setCellType("Floor");
+                    grid.get(i).get(j).setRoomid(room.getRoomId());
                     cellRepo.save(grid.get(i).get(j));
 
                 }
 
                 else if (type == "Door"){
                     grid.get(i).get(j).setCellType("Door");
+                    grid.get(i).get(j).setRoomid(room.getRoomId());
                     cellRepo.save(grid.get(i).get(j));
 
                 }
-                else if (type == "Monster"){
-                    grid.get(i).get(j).setCellType("Monster");
-                    cellRepo.save(grid.get(i).get(j));
-                    // hello what is going on?
-                    
-                }
+
 
 
             }
@@ -352,7 +353,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
                 mapRepo.save(temp_map);
 
 
-
+                Room constructRoom = roomService.findById(roomValues.get(i).getRoomId());
 
 
 
@@ -360,7 +361,7 @@ public class DungeonCreatorImpl implements DungeonCreatorService{
                 // Placing the cells to create the room
 
                 // for the room it self
-                grid = placeCells(grid,roomValues.get(i), "Floor");
+                grid = placeCells(grid,constructRoom, "Floor");
                 // for the door
                 grid = placeCells(grid,newDoor, "Door");
 

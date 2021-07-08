@@ -105,7 +105,7 @@ public class GameController {
         newPlayer.setMap(newMap);
         playerRepo.save(newPlayer);
 
-        grid = dungeonCreatorService.generateGrid(newMap.getWidth(), newMap.getHeight(), 2, newMap.getMapid());
+        grid = dungeonCreatorService.generateGrid(newMap.getWidth(), newMap.getHeight(), 2, newMap.getMapid(), newMap);
 
         ArrayList<ArrayList<String>> visualGrid = new ArrayList<>();
 

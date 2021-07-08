@@ -63,6 +63,8 @@ public class Map implements Serializable {
 
 
 
+
+
     public Map() {
     }
 
@@ -76,6 +78,7 @@ public class Map implements Serializable {
         this.players = players;
         this.monsters= monsters;
     }
+
 
     public String getGrid() {
         return grid;

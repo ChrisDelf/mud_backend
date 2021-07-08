@@ -50,7 +50,6 @@ public class Monster implements Serializable {
             nullable = true
     )
 
-
     @JsonIgnore
     @JsonIgnoreProperties({"monster", "grid", "map" ,"user", "maps"})
     private Map map;

@@ -1,6 +1,7 @@
 package com.dev.mud_backend.services;
 
 import com.dev.mud_backend.models.Cell;
+import com.dev.mud_backend.models.Map;
 import com.dev.mud_backend.models.PlacedRoom;
 import com.dev.mud_backend.models.Room;
 
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 
 public interface DungeonCreatorService {
 
-    ArrayList<ArrayList<Cell>> generateGrid(int gridwidth, int gridheight, int maxrooms, long mapid);
+    ArrayList<ArrayList<Cell>> generateGrid(int gridwidth, int gridheight, int maxrooms, long mapid, Map map);
 
     PlacedRoom createFromSeed(PlacedRoom placedRooms, Room room, int[] roomRange, long mapid);
 
