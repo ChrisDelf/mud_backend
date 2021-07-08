@@ -1,5 +1,7 @@
 package com.dev.mud_backend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,24 +18,16 @@ public class Cell implements Serializable {
 
     private int y;
 
-    @Column(length = 1000000)
-    String entities;
-
-    @Column(length = 1000000)
-    String items;
-
-    @Column(nullable = false,
-            unique = false)
     private String cellType;
 
     private long roomid;
 
-    private long mapid;
-
-
     private ArrayList<Long> containsM;
 
     private ArrayList<Long> containsP;
+
+    private long mapid;
+
 
     public Cell() {
     }
@@ -41,7 +35,9 @@ public class Cell implements Serializable {
     public Cell(int x, int y, String cellType, int roomheight, int roomwidth, ArrayList<Long> containsM, ArrayList<Long> containsP) {
      this.x = x;
      this.y = y;
-        this.cellType = cellType;
+     this.cellType = cellType;
+     this.containsM = containsM;
+     this.containsP = containsP;
 
     }
 
@@ -93,21 +89,7 @@ public class Cell implements Serializable {
         this.roomid = roomid;
     }
 
-    public String getEntities() {
-        return entities;
-    }
 
-    public void setEntities(String entities) {
-        this.entities = entities;
-    }
-
-    public String getItems() {
-        return items;
-    }
-
-    public void setItems(String items) {
-        this.items = items;
-    }
 
     public ArrayList<Long> getContainsM() {
         return containsM;
