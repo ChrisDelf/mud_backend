@@ -173,7 +173,7 @@ public class GameController {
 
     // update
     // /player/update
-    @PutMapping(value ="player/update/{playerid}",  consumes = {"application/json"},produces = {"application/json"})
+    @PutMapping(value ="/update/player/{playerid}",  consumes = {"application/json"},produces = {"application/json"})
     public  ResponseEntity<?> playerCombat(HttpServletRequest request, @Valid @RequestBody
                                            Player player, @PathVariable long playerid){
 
@@ -188,7 +188,7 @@ public class GameController {
     // ---------------------- Monster Actions
     // update
     /// /monster
-    @PutMapping(value = "/monster/update/{monsterid}",  consumes = {"application/json"}, produces = {"application/json"})
+    @PutMapping(value = "/update/monster/{monsterid}",  consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<?> monsterItem(@Valid @RequestBody Monster monster, @PathVariable long monsterid){
 
         Monster temp_monster = new Monster();
@@ -214,13 +214,21 @@ public class GameController {
 
     // Cell related Request
 
-    @PutMapping(value = "/updatecell/{cellId}",
+    @PutMapping(value = "/update/cell/{cellId}",
             consumes = {"application/json"})
     public ResponseEntity<?> updateCell (HttpServletRequest request, @RequestBody Cell cell, @PathVariable long cellId) throws URISyntaxException {
         Cell temp_cell = cellService.updateCell(cell,cellId);
 
         return new ResponseEntity<Cell>(temp_cell, HttpStatus.OK);
 
+    }
+
+    @PutMapping(value ="/update/grid/{mapid}",
+            consumes = {"application/json"})
+    public ResponseEntity<?> updateGrid (HttpServletRequest request, @RequestBody String grid, @PathVariable long mapid) throws URISyntaxException {
+        String returnGrid = mapService.updateGrid(grid, mapid);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 

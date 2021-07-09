@@ -15,6 +15,8 @@ public interface MapService {
 
     Map findById(long mapid);
 
+    String updateGrid(String grid, long mapid);
+
 //    HashMap<Long, ArrayList<Long>> getMapDetails(long mapid);
 
 

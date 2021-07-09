@@ -39,6 +39,16 @@ public class MapServiceImpl implements MapService {
         return maplist;
     }
 
+    @Override
+    public String updateGrid(String grid, long mapid) {
+        Map map = mapService.findById(mapid);
+
+        map.setGrid(grid);
+
+        mapRepo.save(map);
+
+        return map.getGrid();
+    }
 
     @Transactional
     @Override
