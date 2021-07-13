@@ -51,7 +51,7 @@ public class Player {
     @ManyToOne
     @JoinColumn(name = "mapid",
             nullable = true)
-    @JsonIgnoreProperties({"players","map","user", "grid", "monsters", "monster"})
+    @JsonIgnoreProperties({"players","map","user", "grid", "monsters", "monster", "rooms"})
     private Map map;
 
 

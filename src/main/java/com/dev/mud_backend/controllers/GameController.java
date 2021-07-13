@@ -216,19 +216,31 @@ public class GameController {
 
     @PutMapping(value = "/update/cell/{cellId}",
             consumes = {"application/json"})
-    public ResponseEntity<?> updateCell (HttpServletRequest request, @RequestBody Cell cell, @PathVariable long cellId) throws URISyntaxException {
-        Cell temp_cell = cellService.updateCell(cell,cellId);
-
-        return new ResponseEntity<Cell>(temp_cell, HttpStatus.OK);
+    public ResponseEntity<?> updateCell (@RequestBody Cell cell, @PathVariable long cellId) throws URISyntaxException {
+        Cell tempCell = new Cell();
+        tempCell= cellService.updateCell(cell,cellId);
+        //System.out.println(tempCell);
+        return new ResponseEntity<>(tempCell, HttpStatus.OK);
 
     }
+
+    @GetMapping(value ="/cell/{cellid}",produces = {"application/json"})
+    public ResponseEntity<?> cellInfo(@Valid @PathVariable long cellid) {
+        Cell cell = new Cell();
+
+        cell = cellService.getCellById(cellid);
+
+        return new ResponseEntity<>(cell ,HttpStatus.OK);
+
+    }
+
 
     @PutMapping(value ="/update/grid/{mapid}",
             consumes = {"application/json"})
     public ResponseEntity<?> updateGrid (HttpServletRequest request, @RequestBody String grid, @PathVariable long mapid) throws URISyntaxException {
         String returnGrid = mapService.updateGrid(grid, mapid);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(returnGrid, HttpStatus.OK);
     }
 
 
