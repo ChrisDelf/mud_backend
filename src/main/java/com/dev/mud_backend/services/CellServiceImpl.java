@@ -84,12 +84,13 @@ public class CellServiceImpl implements CellService{
         Cell target_cell = new Cell();
 
         if(cellService.getCellById(cellId) != null){
-
-            return null;
-        }
-        else{
             target_cell = cellService.getCellById(cellId);
 
+
+        }
+
+        else{
+          return null;
         }
 
         if (cell.getX() != target_cell.getX()){
@@ -111,20 +112,20 @@ public class CellServiceImpl implements CellService{
         }
 
         if(cell.getMapid() != target_cell.getMapid()){
-            target_cell.setMapid(target_cell.getMapid());
+            target_cell.setMapid(cell.getMapid());
         }
 
         if(cell.getContainsM().size() != target_cell.getContainsM().size())
         {
-            cell.setContainsM(target_cell.getContainsM());
+            target_cell.setContainsM(cell.getContainsM());
 
         }
         if(cell.getContainsP().size() != target_cell.getContainsP().size())
         {
-            cell.setContainsP(target_cell.getContainsP());
+            target_cell.setContainsP(cell.getContainsP());
 
         }
-
-        return cellRepo.save(cell);
+        cellRepo.save(target_cell);
+        return  target_cell;
     }
 }

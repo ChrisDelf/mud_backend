@@ -4,6 +4,10 @@ import com.dev.mud_backend.exceptions.ResourceNotFoundException;
 import com.dev.mud_backend.models.*;
 import com.dev.mud_backend.repository.MapRepository;
 import com.dev.mud_backend.responseObjects.MapDetails;
+import com.google.gson.Gson;
+
+import com.google.gson.JsonArray;
+import org.h2.util.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +46,9 @@ public class MapServiceImpl implements MapService {
     @Override
     public String updateGrid(String grid, long mapid) {
         Map map = mapService.findById(mapid);
+        // going to make an algorithm to check to compare the grids
+
+
 
         map.setGrid(grid);
 
