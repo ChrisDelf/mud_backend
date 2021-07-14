@@ -239,8 +239,9 @@ public class GameController {
             consumes = {"application/json"})
     public ResponseEntity<?> updateGrid (HttpServletRequest request, @RequestBody String grid, @PathVariable long mapid) throws URISyntaxException {
         String returnGrid = mapService.updateGrid(grid, mapid);
-
-        return new ResponseEntity<>(returnGrid, HttpStatus.OK);
+        Map map = new Map();
+        map.setGrid(returnGrid);
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
 
