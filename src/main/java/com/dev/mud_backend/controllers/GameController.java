@@ -174,13 +174,13 @@ public class GameController {
     // update
     // /player/update
     @PutMapping(value ="/update/player/{playerid}",  consumes = {"application/json"},produces = {"application/json"})
-    public  ResponseEntity<?> playerCombat(HttpServletRequest request, @Valid @RequestBody
+    public  ResponseEntity<Player> playerCombat(HttpServletRequest request, @Valid @RequestBody
                                            Player player, @PathVariable long playerid){
 
         Player temp_player = new Player();
         temp_player = playerService.updatePlayer(player, playerid);
 
-        return new ResponseEntity<>(temp_player, HttpStatus.OK);
+        return new ResponseEntity<Player>(temp_player, HttpStatus.OK);
     }
 
 
@@ -215,12 +215,12 @@ public class GameController {
     // Cell related Request
 
     @PutMapping(value = "/update/cell/{cellId}",
-            consumes = {"application/json"})
-    public ResponseEntity<?> updateCell (@RequestBody Cell cell, @PathVariable long cellId) throws URISyntaxException {
-        Cell tempCell = new Cell();
+            consumes = {"application/json"},produces = {"application/json"})
+    public ResponseEntity<Cell> updateCell (HttpServletRequest request, @RequestBody Cell cell, @PathVariable long cellId) throws URISyntaxException {
+      Cell tempCell = new Cell();
         tempCell= cellService.updateCell(cell,cellId);
-        //System.out.println(tempCell);
-        return new ResponseEntity<>(tempCell, HttpStatus.OK);
+     //   System.out.println(tempCell);
+        return new ResponseEntity<Cell>(tempCell, HttpStatus.OK);
 
     }
 
@@ -234,14 +234,15 @@ public class GameController {
 
     }
 
-
     @PutMapping(value ="/update/grid/{mapid}",
-            consumes = {"application/json"})
-    public ResponseEntity<?> updateGrid (HttpServletRequest request, @RequestBody String grid, @PathVariable long mapid) throws URISyntaxException {
+            consumes = {"application/x-www-form-urlencoded"},
+            produces = {"application/json"})
+    public ResponseEntity<Map> updateGrid (HttpServletRequest request, @RequestBody String grid, @PathVariable long mapid) throws URISyntaxException {
+
         String returnGrid = mapService.updateGrid(grid, mapid);
         Map map = new Map();
         map.setGrid(returnGrid);
-        return new ResponseEntity<>(map, HttpStatus.OK);
+        return new ResponseEntity<Map>(map, HttpStatus.OK);
     }
 
 
